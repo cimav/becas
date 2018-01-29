@@ -13,6 +13,7 @@
 !/log/.keep
 !/tmp/.keep
 .idea
+.idea/*
 Gemfile.lock
 
 
