@@ -4,7 +4,28 @@
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title Becas
     = csrf_meta_tags
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
+    %link{:href => "https://fonts.googleapis.com/icon?family=Material+Icons", :rel => "stylesheet"}
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
-    = yield
+
+    %ul#side-menu.side-nav.fixed
+
+      %li{class:active_class('/scholarships')}
+        %a{href:'/scholarships'}
+          %i.material-icons
+            folder_special
+      %li{class:active_class('/users')}
+        %a{href:'/users'}
+          %i.material-icons
+            people
+    %a.button-collapse{"data-activates" => "side-menu", :href => "#"}
+      %i.material-icons menu
+    %main
+      .container
+        = yield
+
+
+:javascript
+  Materialize.toast("#{notice}", 3000)

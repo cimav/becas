@@ -1,27 +1,18 @@
-%h1 Listing users
+.row
+  .col.l12.m12
+    %h1
+      Administradores
+    .collection
+      -@admins.each do |user|
+        =link_to edit_user_path(user.id), class:'collection-item'do
+          =user.name
+      -@viewers.each do |user|
+        =link_to edit_user_path(user.id), class:'collection-item' do
+          %i.material-icons{"aria-hidden" => "true", style:"padding-right:1rem;"}
+            remove_red_eye
+          =user.name
 
-%table
-  %thead
-    %tr
-      %th Name
-      %th Email
-      %th User type
-      %th Status
-      %th
-      %th
-      %th
-
-  %tbody
-    - @users.each do |user|
-      %tr
-        %td= user.name
-        %td= user.email
-        %td= user.user_type
-        %td= user.status
-        %td= link_to 'Show', user
-        %td= link_to 'Edit', edit_user_path(user)
-        %td= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }
-
-%br
-
-= link_to 'New User', new_user_path
+.fixed-action-btn
+  =link_to new_user_path, class:'btn-floating btn-large red tooltipped', "data-position" => "left", "data-tooltip" => "Nuevo usuario", "data-delay" => "100" do
+    %i.material-icons
+      add

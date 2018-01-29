@@ -14,9 +14,7 @@
     = f.text_field :email
   .field
     = f.label :user_type
-    = f.number_field :user_type
-  .field
-    = f.label :status
-    = f.number_field :status
+    = f.select :user_type, User::USER_TYPES.invert.sort {|a,b| a[1] <=> b[1] }
   .actions
     = f.submit 'Save'
+

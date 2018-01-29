@@ -4,7 +4,8 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @admins = User.where(user_type:User::ADMIN)
+    @viewers = User.where(user_type:User::VIEWER)
   end
 
   # GET /users/1

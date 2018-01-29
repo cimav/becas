@@ -4,6 +4,8 @@ class User < ApplicationRecord
   VIEWER = 2
   SUPER_USER = 1000
 
-  USER_TYPE = {ADMIN:'Administrador', VIEWER:'Espectador'}
+  DELETED = 99
+
+  USER_TYPES = {ADMIN:'Administrador', VIEWER:'Espectador'}
 
 end

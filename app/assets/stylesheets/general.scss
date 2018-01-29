@@ -1,0 +1,65 @@
+$color-menu: #222222;
+$color-background: #F3F3F3;
+$color-icons: #6B6B6B;
+$color-icons-lighter: #d2d2d2;
+
+body{
+  background-color: $color-background;
+}
+
+.no-link{
+  color: inherit;
+}
+.config-breadcrumb {
+  background: none;
+  border: none;
+  .breadcrumb {
+    color: #2196f3 !important;
+    font-size: 150% !important;
+    &:before {
+      font-size: 150% !important;
+      color: #666 !important;
+    }
+    &:last-of-type{
+      color: #7a7a7a !important;
+    }
+  }
+}
+
+ul.collection{
+  .collection-item{
+    color: inherit !important;}
+}
+
+.tr-click{
+  cursor: pointer;
+}
+
+header, main, footer {
+  padding-left: 80px;
+}
+
+@media only screen and (max-width : 992px) {
+  header, main, footer {
+    padding-left: 0;
+  }
+}
+
+#side-menu{
+  background-color: $color-menu;
+  li{
+    .divider{
+      background-color: $color-icons;
+    }
+    i{
+      color: $color-icons;
+    }
+  }
+  li.active {
+    background-color: $color-menu;
+    i {
+      color: $color-icons-lighter;
+    }
+  }
+
+}
