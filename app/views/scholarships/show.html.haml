@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Person type:
+  = @scholarship.person_type
+%p
+  %b Person:
+  = @scholarship.person_id
+%p
+  %b Amount:
+  = @scholarship.amount
+%p
+  %b Start date:
+  = @scholarship.start_date
+%p
+  %b End date:
+  = @scholarship.end_date
+%p
+  %b Scholarship type:
+  = @scholarship.scholarship_type
+%p
+  %b Status:
+  = @scholarship.status
+
+= link_to 'Edit', edit_scholarship_path(@scholarship)
+\|
+= link_to 'Back', scholarships_path

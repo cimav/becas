@@ -1,0 +1,21 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Becas
+    = csrf_meta_tags
+    %link{:href => "https://fonts.googleapis.com/icon?family=Material+Icons", :rel => "stylesheet"}/
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    %link{:href => "https://fonts.googleapis.com/icon?family=Material+Icons", :rel => "stylesheet"}/
+  %body
+    .slider.fullscreen
+      %ul.slides
+        %li
+          =# image_tag "cimav-6.jpg", class: 'slide-image'
+
+    = yield
+    :javascript
+      $(document).ready(function(){
+          $('.slider').slider({indicators: false});
+      });
