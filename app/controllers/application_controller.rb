@@ -6,10 +6,7 @@ class ApplicationController < ActionController::Base
 
   def authenticated?
     if session[:user_auth].blank?
-      logger.info "############### |#{session[:user_email]}|"
       user = User.where(:email => session[:user_email]).first
-      logger.info "############### |#{user.email rescue "NULL"}|"
-
       session[:user_auth] = user && user.email == session[:user_email]
       if session[:user_auth]
         session[:user_id] = user.id

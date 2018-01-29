@@ -16,5 +16,5 @@
     = f.label :user_type
     = f.select :user_type, User::USER_TYPES.invert.sort {|a,b| a[1] <=> b[1] }
   .actions
-    = f.submit 'Save'
+    = f.submit 'Save', class:'btn'
 
