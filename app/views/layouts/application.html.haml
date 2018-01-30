@@ -12,6 +12,10 @@
 
     %ul#side-menu.side-nav.fixed
 
+      %li{class:"#{'active' if request.path.eql?'/'}"}
+        %a{href:'/'}
+          %i.material-icons
+            home
       %li{class:active_class('/scholarships')}
         %a{href:'/scholarships'}
           %i.material-icons
