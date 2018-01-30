@@ -47,10 +47,10 @@ header, main, footer {
 
 #side-menu{
   background-color: $color-menu;
+  .divider{
+    background-color: $color-icons;
+  }
   li{
-    .divider{
-      background-color: $color-icons;
-    }
     i{
       color: $color-icons;
     }

@@ -20,10 +20,11 @@
         %a{href:'/scholarships'}
           %i.material-icons
             folder_special
-      %li{class:active_class('/users')}
-        %a{href:'/users'}
-          %i.material-icons
-            people
+      -if is_admin?
+        %li{class:active_class('/users')}
+          %a{href:'/users'}
+            %i.material-icons
+              people
       .divider
       %li{class:active_class('/logout')}
         %a{href:'/logout'}

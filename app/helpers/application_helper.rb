@@ -8,12 +8,14 @@ module ApplicationHelper
   end
 
   def current_staff
-    @current_user ||= Staff.find(session[:user_id]) if session[:user_id]
+    @current_staff ||= Staff.find(session[:user_id]) if session[:user_id]
   end
 
 
   def is_admin?
-    current_user.user_type == User::ADMIN || current_user.user_type == User::SUPER_USER
+    if (user = current_user if session[:user_type].eql? 'User')
+      user.user_type == User::ADMIN || current_user.user_type == User::SUPER_USER
+    end
   end
 
 end
