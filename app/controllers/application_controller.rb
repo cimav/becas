@@ -6,13 +6,32 @@ class ApplicationController < ActionController::Base
 
   def authenticated?
     if session[:user_auth].blank?
-      user = User.where(:email => session[:user_email]).first
-      session[:user_auth] = user && user.email == session[:user_email]
-      if session[:user_auth]
-        session[:user_id] = user.id
-      end
+      user_access
     else
       session[:user_auth]
+    end
+  end
+
+  def user_access
+    user = User.where(:email => session[:user_email]).first
+    session[:user_auth] = user && user.email == session[:user_email]
+
+    if session[:user_auth]
+      session[:user_id] = user.id
+      session[:user_type] = 'User'
+    else
+      # Si no existe un usuario busca en docentes
+      staff_access
+    end
+  end
+
+  def staff_access
+    staff = Staff.where(:email => session[:user_email]).first
+    session[:user_auth] = staff && staff.email == session[:user_email]
+
+    if session[:user_auth]
+      session[:user_id] = staff.id
+      session[:user_type] = 'Staff'
     end
   end
 
