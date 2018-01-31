@@ -19,3 +19,23 @@ $(document).on('ready turbolinks:load', function() {
 
 
 });
+
+
+function get_internship(internship_id){
+    //alert(internship_id)
+    var jqxhr = $.get( "/internship_data/"+internship_id, function() {
+        })
+        .done(function() {
+            internship = jQuery.parseJSON(jqxhr.responseText);
+
+            $('#scholarship_internship_type').val(internship.internship_type.name);
+            Materialize.updateTextFields();
+            console.log(internship.internship_type.name);
+        })
+        .fail(function() {
+            Materialize.toast("No se pueden cargar los datos", 3000)
+        })
+        .always(function() {
+        });
+
+}

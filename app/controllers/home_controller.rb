@@ -16,4 +16,9 @@ class HomeController < ApplicationController
   def user_index
     @internships = Internship.all
   end
+
+  def get_internship
+    render json:Internship.find(params[:id]), :include => {:internship_type => {:only => :name}}
+  end
+
 end

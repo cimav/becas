@@ -5,7 +5,7 @@ class CreateScholarships < ActiveRecord::Migration[5.1]
       t.decimal :amount
       t.date :start_date
       t.date :end_date
-      t.integer :scholarship_type
+      t.references :scholarship_type
       t.integer :status
 
       t.timestamps

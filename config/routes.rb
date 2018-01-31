@@ -10,4 +10,7 @@ Rails.application.routes.draw do
   get '/auth/failure' => 'sessions#failure'
   get '/logout' => 'sessions#destroy'
 
+  ##########################################
+  get '/internship_data/:id' => 'home#get_internship'
+
 end

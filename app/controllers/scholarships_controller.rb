@@ -31,7 +31,7 @@ class ScholarshipsController < ApplicationController
         format.html { redirect_to @scholarship, notice: 'Scholarship was successfully created.' }
         format.json { render :show, status: :created, location: @scholarship }
       else
-        format.html { render :new }
+        format.html { render :new, notice: @scholarships.errors }
         format.json { render json: @scholarship.errors, status: :unprocessable_entity }
       end
     end
@@ -69,6 +69,6 @@ class ScholarshipsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def scholarship_params
-      params.require(:scholarship).permit(:person_type, :person_id, :amount, :start_date, :end_date, :scholarship_type, :status)
+      params.require(:scholarship).permit(:person_type, :person_id, :scholarship_type_id, :amount, :start_date, :end_date, :scholarship_type, :status)
     end
 end

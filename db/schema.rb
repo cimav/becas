@@ -18,12 +18,13 @@ ActiveRecord::Schema.define(version: 20180129160520) do
     t.decimal "amount", precision: 10
     t.date "start_date"
     t.date "end_date"
-    t.integer "scholarship_type"
+    t.bigint "scholarship_type_id"
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["person_id", "person_type"], name: "index_scholarships_on_person_id_and_person_type"
     t.index ["person_type", "person_id"], name: "index_scholarships_on_person_type_and_person_id"
+    t.index ["scholarship_type_id"], name: "index_scholarships_on_scholarship_type_id"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
