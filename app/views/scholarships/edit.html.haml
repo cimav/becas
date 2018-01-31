@@ -1,6 +1,6 @@
 %h1 Editar beca
 
-= render 'form'
-
-= link_to 'Show', @scholarship
-
+-if is_admin?
+  = render 'form'
+-else
+  =render 'staff_scholarship_form'
