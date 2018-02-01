@@ -13,8 +13,18 @@ class Scholarship < ApplicationRecord
 
   AMOUNTS = [1000,1500,2000]
 
+  STATUS = {REQUESTED:'Solicitada',
+            APPROVED: 'Aprobada',
+            REJECTED: 'Rechazada',
+            DELETED: 'Eliminada'
+  }
+
   def get_amounts
   "$ #{AMOUNTS}"
+  end
+
+  def get_status
+    STATUS[self.status]
   end
 
 end

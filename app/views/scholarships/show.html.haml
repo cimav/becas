@@ -7,20 +7,20 @@
   %b Nombre:
   = @scholarship.person.full_name
 %p
-  %b Amount:
-  = @scholarship.amount
+  %b Monto:
+  = "$#{@scholarship.amount}"
 %p
-  %b Start date:
-  = @scholarship.start_date
+  %b Fecha de inicio:
+  = f_date(@scholarship.start_date)
 %p
-  %b End date:
-  = @scholarship.end_date
+  %b Fecha de término:
+  = f_date(@scholarship.end_date)
 %p
-  %b Scholarship type:
+  %b Tipo de beca:
   = @scholarship.scholarship_type.name
 %p
-  %b Status:
-  = @scholarship.status
+  %b Estatus:
+  = @scholarship.get_status
 
 = link_to 'Edit', edit_scholarship_path(@scholarship)
 \|

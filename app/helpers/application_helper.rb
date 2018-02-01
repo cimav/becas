@@ -1,4 +1,9 @@
 module ApplicationHelper
+
+  def f_date(date)
+    I18n.l(date, format: '%d de %B %Y').capitalize
+  end
+
   def active_class(link_path)
     "active" if request.path.start_with?(link_path)
   end
