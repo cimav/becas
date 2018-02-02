@@ -22,20 +22,25 @@ $(document).on('ready turbolinks:load', function() {
 
 
 function get_internship(internship_id){
-    //alert(internship_id)
     var jqxhr = $.get( "/internship_data/"+internship_id, function() {
         })
         .done(function() {
             internship = jQuery.parseJSON(jqxhr.responseText);
 
-            $('#scholarship_internship_type').val(internship.internship_type.name);
+            $('#scholarship_internship_type').text(internship.internship_type.name);
             Materialize.updateTextFields();
-            console.log(internship.internship_type.name);
         })
         .fail(function() {
             Materialize.toast("No se pueden cargar los datos", 3000)
         })
         .always(function() {
         });
+}
 
+function calculate_amount(){
+    max_amount = $('#scholarship_scholarship_type_id option:selected').attr('data-amount');
+    percent = $('#scholarship_percent').val();
+    amount = max_amount*(percent/100);
+    $('#scholarship_max_amount').text(max_amount);
+    $('#scholarship_amount').text(amount);
 }

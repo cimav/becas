@@ -1,0 +1,27 @@
+%h1 Listing scholarship_types
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Description
+      %th Category
+      %th Max amount
+      %th
+      %th
+      %th
+
+  %tbody
+    - @scholarship_types.each do |scholarship_type|
+      %tr
+        %td= scholarship_type.name
+        %td= scholarship_type.description
+        %td= scholarship_type.category
+        %td= scholarship_type.max_amount
+        %td= link_to 'Show', scholarship_type
+        %td= link_to 'Edit', edit_scholarship_type_path(scholarship_type)
+        %td= link_to 'Destroy', scholarship_type, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Scholarship type', new_scholarship_type_path

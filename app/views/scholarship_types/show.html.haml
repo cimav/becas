@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @scholarship_type.name
+%p
+  %b Description:
+  = @scholarship_type.description
+%p
+  %b Category:
+  = @scholarship_type.category
+%p
+  %b Max amount:
+  = @scholarship_type.max_amount
+
+= link_to 'Edit', edit_scholarship_type_path(@scholarship_type)
+\|
+= link_to 'Back', scholarship_types_path

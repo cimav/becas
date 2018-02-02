@@ -1,0 +1,22 @@
+= form_for @scholarship_type do |f|
+  - if @scholarship_type.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@scholarship_type.errors.count, "error")} prohibited this scholarship_type from being saved:"
+      %ul
+        - @scholarship_type.errors.full_messages.each do |message|
+          %li= message
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :description
+    = f.text_field :description
+  .field
+    = f.label :category
+    = f.number_field :category
+  .field
+    = f.label :max_amount
+    = f.text_field :max_amount
+  .actions
+    = f.submit 'Save'

@@ -11,8 +11,6 @@ class Scholarship < ApplicationRecord
   REJECTED =   5
   DELETED =   99
 
-  AMOUNTS = [1000,1500,2000]
-
   STATUS = {REQUESTED:'Solicitada',
             APPROVED: 'Aprobada',
             REJECTED: 'Rechazada',

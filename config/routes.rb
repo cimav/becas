@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :scholarship_types
   resources :users
   resources :scholarships
   root 'home#index'
@@ -12,5 +13,6 @@ Rails.application.routes.draw do
 
   ##########################################
   get '/internship_data/:id' => 'home#get_internship'
+  get '/scholarship_type_data/:id' => 'home#get_scholarship_type'
 
 end

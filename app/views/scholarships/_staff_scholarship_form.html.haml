@@ -4,22 +4,31 @@
       =f.select :person_id,Internship.where(staff_id:current_staff.id).where(status:Internship::ACTIVE).collect {|p| [ p.full_name, p.id ] }
       =f.label :person_id, 'Practicante'
     .input-field.col.s12.m3
-      =text_field_tag 'scholarship[internship_type]', '',disabled:true
-      =label_tag 'scholarship[internship_type]', 'Tipo de servicio', class:'active'
+      %p{id:'scholarship_internship_type',disabled:true}
+      =label_tag 'scholarship_internship_type', 'Tipo de servicio', class:'active'
     .input-field.col.s12.m3
-      =f.select :scholarship_type_id, ScholarshipType.where(scholarship_category_id:2).order('id DESC').collect {|p| [p.name, p.id]}
-      =f.label :scholarship_type_id, 'Monto'
+      =f.select :scholarship_type_id, ScholarshipType.where(category: ScholarshipType::INTERN).order('id DESC').map {|p| [p.name, p.id, { 'data-amount' => p.max_amount}]}
+      =f.label :scholarship_type_id, 'Tipo de beca'
 
   .row
-    .input-field.col.s12.m4
+    .input-field.col.s12.m6
       =f.text_field :start_date, class: "datepicker",placeholder:'Selecciona la fecha de inicio', type:'date'
       =f.label :start_date, 'Fecha de inicio'
-    .input-field.col.s12.m4
+    .input-field.col.s12.m6
       =f.text_field :end_date, class: "datepicker",placeholder:'Selecciona la fecha de término', type:'date'
       =f.label :end_date, 'Fecha de término'
+  .row
+    .input-field.col.s12.m2
+      %i.material-icons.prefix
+        \%
+      =f.number_field :percent, min:1,max: 100
+      =f.label :percent, 'Porcentaje'
+    .input-field.col.s12.m2
+      %p{id:'scholarship_max_amount',disabled:true}
+      =f.label :max_amount, 'Monto máximo', class:'active'
     .input-field.col.s12.m4
-      =f.select :amount, Scholarship::AMOUNTS.collect {|p| ["$#{p}", p]}
-      =f.label :amount, 'Monto'
+      %p.green-text{id:'scholarship_amount',disabled:true}
+      =label_tag 'scholarship_amount', 'Monto final', class:'active'
   .row
     .input-field.col.s12.m12
       =f.hidden_field :person_type, value:'Internship'
@@ -28,6 +37,7 @@
 :javascript
   $(document).ready( function() {
     get_internship($('#scholarship_person_id').val());
+    calculate_amount();
   })
 
   $('.datepicker').pickadate({
@@ -60,4 +70,11 @@
 
   $('#scholarship_person_id').on('change', function() {
     get_internship(this.value);
+  });
+
+  $('#scholarship_scholarship_type_id').on('change', function() {
+    calculate_amount();
+  });
+  $('#scholarship_percent').on('change', function() {
+    calculate_amount();
   })

@@ -21,4 +21,8 @@ class HomeController < ApplicationController
     render json:Internship.find(params[:id]), :include => {:internship_type => {:only => :name}}
   end
 
+  def get_scholarship_type
+    render json:ScholarshipType.find(params[:id])
+  end
+
 end

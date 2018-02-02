@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180129160520) do
+ActiveRecord::Schema.define(version: 20180202181320) do
+
+  create_table "scholarship_types", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.string "name"
+    t.string "description"
+    t.integer "category"
+    t.float "max_amount", limit: 24
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "scholarships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "person_type"
@@ -18,10 +27,12 @@ ActiveRecord::Schema.define(version: 20180129160520) do
     t.decimal "amount", precision: 10
     t.date "start_date"
     t.date "end_date"
-    t.bigint "scholarship_type_id"
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "scholarship_type_id"
+    t.float "max_amount", limit: 24
+    t.float "percent", limit: 24
     t.index ["person_id", "person_type"], name: "index_scholarships_on_person_id_and_person_type"
     t.index ["person_type", "person_id"], name: "index_scholarships_on_person_type_and_person_id"
     t.index ["scholarship_type_id"], name: "index_scholarships_on_scholarship_type_id"
@@ -36,4 +47,5 @@ ActiveRecord::Schema.define(version: 20180129160520) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "scholarships", "scholarship_types"
 end
