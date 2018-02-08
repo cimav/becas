@@ -1,9 +1,13 @@
 .row
-  .col.s12.m8
+  .col.s12.m12
     .card
       .card-content
         .card-title
           Becas
+        =link_to new_scholarship_path, class:'waves-effect waves-light btn-large blue' do
+          %i.material-icons.left
+            add
+          Solicitar nueva beca
         %table.bordered.highlight.responsive-table
           %thead
             %tr
@@ -24,9 +28,3 @@
                   %i.material-icons.left.valign-wrapper{class:status_color(scholarship.status)}
                     lens
                   =scholarship.get_status
-
-.center
-  =link_to new_scholarship_path, class:'waves-effect waves-light btn-large blue' do
-    %i.material-icons.left
-      add
-    Solicitar nueva beca

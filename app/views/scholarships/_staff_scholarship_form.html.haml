@@ -11,12 +11,22 @@
       =f.label :scholarship_type_id, 'Tipo de beca'
 
   .row
-    .input-field.col.s12.m6
+    .input-field.col.s12.m3
       =f.text_field :start_date, class: "datepicker",placeholder:'Selecciona la fecha de inicio', type:'date'
       =f.label :start_date, 'Fecha de inicio'
-    .input-field.col.s12.m6
+    .input-field.col.s12.m3
       =f.text_field :end_date, class: "datepicker",placeholder:'Selecciona la fecha de término', type:'date'
       =f.label :end_date, 'Fecha de término'
+    .input-field.col.s12.m3
+      %i.material-icons.prefix.tooltipped{'data-tooltip':'El número de proyecto y de solicitud se pueden cosultar en el sistema Unix Help, si aun no conoce estos datos, déjelos en blanco y posteriormente regrese a llenarlos'}
+        help
+      =f.text_field :project_number,placeholder:'Número de proyecto en el Unix'
+      =f.label :project_number, 'Proyecto'
+    .input-field.col.s12.m3
+      %i.material-icons.prefix.tooltipped{'data-tooltip':'El número de proyecto y de solicitud se pueden cosultar en el sistema Unix Help, si aun no conoce estos datos, déjelos en blanco y posteriormente regrese a llenarlos'}
+        help
+      =f.text_field :request_number,placeholder:'Solicitud de beca en el Unix'
+      =f.label :request_number, 'Número de solicitud'
   .row
     .input-field.col.s12.m2
       %i.material-icons.prefix

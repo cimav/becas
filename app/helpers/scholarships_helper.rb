@@ -10,6 +10,8 @@ module ScholarshipsHelper
       color = 'green-text'
       when Scholarship::INACTIVE
       color = 'grey-text'
+      when Scholarship::REJECTED
+        color = 'red-text'
     end
   end
 end
