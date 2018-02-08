@@ -3,26 +3,20 @@ class HomeController < ApplicationController
 
   def index
     if session[:user_type].eql? 'User'
+      @internships = Internship.all
       render template: 'home/user_index'
     else
+      # se ordena por estatus de manera personalizada
+      @scholarships = Scholarship.where(person_type:'Internship').where.not(status:Scholarship::DELETED).where(person_id:(Internship.where(staff_id:current_staff.id).pluck(:id)))
+                          .order("CASE
+                                WHEN status = #{Scholarship::ACTIVE} THEN 1
+                                WHEN status = #{Scholarship::APPROVED} THEN 2
+                                WHEN status = #{Scholarship::REQUESTED} THEN 3
+                                WHEN status = #{Scholarship::REJECTED} THEN 4
+                                WHEN status = #{Scholarship::INACTIVE} THEN 5
+                              END")
       render template: 'home/staff_index'
     end
-  end
-
-  def staff_index
-    @internships = Internship.where(staff_id:current_staff.id).where(status:Internship::ACTIVE)
-  end
-
-  def user_index
-    @internships = Internship.all
-  end
-
-  def get_internship
-    render json:Internship.find(params[:id]), :include => {:internship_type => {:only => :name}}
-  end
-
-  def get_scholarship_type
-    render json:ScholarshipType.find(params[:id])
   end
 
 end

@@ -1,27 +1,52 @@
-%p#notice= notice
-
-%p
-  %b Person type:
-  = @scholarship.person_type
-%p
-  %b Nombre:
-  = @scholarship.person.full_name
-%p
-  %b Monto:
-  = "$#{@scholarship.amount}"
-%p
-  %b Fecha de inicio:
-  = f_date(@scholarship.start_date)
-%p
-  %b Fecha de término:
-  = f_date(@scholarship.end_date)
-%p
-  %b Tipo de beca:
-  = @scholarship.scholarship_type.name
-%p
-  %b Estatus:
-  = @scholarship.get_status
-
-= link_to 'Edit', edit_scholarship_path(@scholarship)
-\|
-= link_to 'Back', scholarships_path
+.row
+  .card
+    .card-content
+      .card-title
+        Información de la beca
+      .row
+        .col.s12.m1
+          %img.responsive-img.circle{src:"http://posgrado.cimav.edu.mx/imagen/#{@scholarship.person_type.downcase}/#{@scholarship.person_id}"}
+        .col.s12.m11
+          .right.valign-wrapper
+            %i.material-icons.left{class:status_color(@scholarship.status)}
+              lens
+            =@scholarship.get_status
+          %h4
+            = @scholarship.person.full_name
+          .row
+            .col.s12.m6
+              %p
+                %b Fecha de inicio:
+                = f_date(@scholarship.start_date)
+              %p
+                %b Fecha de término:
+                = f_date(@scholarship.end_date)
+              %p
+                %b Tipo de beca:
+                = @scholarship.scholarship_type.name
+            .col.s12.m6
+              %table.grey.lighten-4
+                %thead
+                  %tr
+                    %th
+                      Concepto
+                    %th
+                      Cantidad
+                %tbody
+                  %tr
+                    %th
+                      Monto
+                    %td
+                      = "$#{@scholarship.max_amount}"
+                  %tr
+                    %th
+                      Porcentaje
+                    %td
+                      = "#{@scholarship.percent}%"
+                  %tr.grey.lighten-2
+                    %th
+                      Monto
+                    %th
+                      = "$#{@scholarship.amount}"
+      %a.btn-floating.btn-large.waves-effect.waves-light.grey.tooltipped{href:"/scholarships/#{@scholarship.id}/formato_solicitud",'data-tooltip':"Formato de solicitud de beca", target:'_blank'}
+        %i.material-icons insert_drive_file

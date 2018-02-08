@@ -1,4 +1,5 @@
 class ScholarshipTypesController < ApplicationController
+  before_action :auth_required
   before_action :set_scholarship_type, only: [:show, :edit, :update, :destroy]
 
   # GET /scholarship_types

@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20180202181320) do
   create_table "scholarships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "person_type"
     t.bigint "person_id"
-    t.decimal "amount", precision: 10
+    t.float "amount", limit: 24
     t.date "start_date"
     t.date "end_date"
     t.integer "status"

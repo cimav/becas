@@ -8,18 +8,18 @@ class Scholarship < ApplicationRecord
 
   REQUESTED =   1
   APPROVED =   2
+  ACTIVE =   3
+  INACTIVE =   4
   REJECTED =   5
   DELETED =   99
 
-  STATUS = {REQUESTED:'Solicitada',
-            APPROVED: 'Aprobada',
-            REJECTED: 'Rechazada',
-            DELETED: 'Eliminada'
+  STATUS = {REQUESTED=>'Solicitada',
+            APPROVED=> 'Aprobada',
+            REJECTED=> 'Rechazada',
+            ACTIVE=> 'Activa',
+            INACTIVE=> 'Inactiva',
+            DELETED=> 'Eliminada'
   }
-
-  def get_amounts
-  "$ #{AMOUNTS}"
-  end
 
   def get_status
     STATUS[self.status]
