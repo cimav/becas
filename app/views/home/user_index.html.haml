@@ -1,0 +1,28 @@
+.row
+  .col.s12.m12
+    .card
+      .card-content
+        .card-title
+          Becas
+          %span.new.badge.orange{"data-badge-caption" => "solicitudes"}
+            =@scholarships.where(status:Scholarship::REQUESTED).size
+        %table.bordered.highlight.responsive-table
+          %thead
+            %tr
+              %th Tipo de beca
+              %th Estudiante
+              %th Monto
+              %th Estatus
+          %tbody
+            -@scholarships.each do |scholarship|
+              %tr.tr-click{href:"/scholarships/#{scholarship.id}"}
+                %td
+                  =scholarship.scholarship_type.name
+                %td
+                  =scholarship.person.full_name
+                %td
+                  ="$#{scholarship.amount}"
+                %td
+                  %i.material-icons.left.valign-wrapper{class:status_color(scholarship.status)}
+                    lens
+                  =scholarship.get_status
