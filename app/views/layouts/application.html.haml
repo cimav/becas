@@ -15,15 +15,18 @@
 
     %ul#side-menu.side-nav.fixed
 
-      %li{class:"#{'active' if request.path.eql?'/'}"}
-        %a{href:'/'}
-          %i.material-icons
-            home
-      %li{class:active_class('/scholarships')}
+      %a.navbar-logo{href:'/'}
+        =image_tag 'logo-becas-osc.png', class:'responsive-img navbar-logo'
+      %li{class:"#{active_class('/scholarships')} #{'active' if request.path.eql?'/'}"}
         %a{href:'/scholarships'}
           %i.material-icons
             folder_special
+
       -if is_admin?
+        %li{class:active_class('/scholarship_types')}
+          %a{href:'/scholarship_types'}
+            %i.material-icons
+              folder
         %li{class:active_class('/users')}
           %a{href:'/users'}
             %i.material-icons
