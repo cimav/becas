@@ -1,3 +1,13 @@
+%nav.config-breadcrumb.z-depth-0
+  .nav-wrapper
+    .row
+      .col.s12.m12.l12
+        =link_to root_path, class:'breadcrumb' do
+          Listado de becas
+        %a.breadcrumb{}
+          =@scholarship.scholarship_type.name
+
+
 .row
   .card
     .card-content
@@ -15,6 +25,13 @@
             = @scholarship.person.full_name
           .row
             .col.s12.m6
+              %p
+                %b Curp:
+                -if !@scholarship.person.curp.blank?
+                  = @scholarship.person.curp rescue 'Sin capturar'
+                -else
+                  %span.red-text
+                    Sin capturar
               %p
                 %b Fecha de inicio:
                 = f_date(@scholarship.start_date)

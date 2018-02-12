@@ -5,7 +5,7 @@ class ScholarshipsController < ApplicationController
   # GET /scholarships
   # GET /scholarships.json
   def index
-    @scholarships = Scholarship.all
+    redirect_to root_path
   end
 
   # GET /scholarships/1
