@@ -21,7 +21,7 @@
                 %td
                   =scholarship.person.full_name
                 %td
-                  ="$#{scholarship.amount}"
+                  =number_to_currency(scholarship.amount,unit: "$", separator: ".", delimiter: ",", format: "%u%n")
                 %td
                   %i.material-icons.left.valign-wrapper{class:status_color(scholarship.status)}
                     lens
