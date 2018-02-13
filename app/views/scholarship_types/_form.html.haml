@@ -1,22 +1,31 @@
 = form_for @scholarship_type do |f|
-  - if @scholarship_type.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@scholarship_type.errors.count, "error")} prohibited this scholarship_type from being saved:"
-      %ul
-        - @scholarship_type.errors.full_messages.each do |message|
-          %li= message
-
-  .field
-    = f.label :name
+  .input-field
+    = f.label :name, 'Nombre'
     = f.text_field :name
-  .field
-    = f.label :description
+  .input-field
+    = f.label :description, 'Descripción'
     = f.text_field :description
-  .field
-    = f.label :category
-    = f.number_field :category
-  .field
-    = f.label :max_amount
-    = f.text_field :max_amount
-  .actions
-    = f.submit 'Save'
+  .row
+    .col.s12.m6
+      = f.label :category, 'Categoría', class:'active'
+      = f.select :category, ScholarshipType::CATEGORIES.invert
+    .col.s12.m6
+      = f.label :max_amount, 'Monto máximo'
+      = f.number_field :max_amount, step: :any
+  .row
+    .col.s12.m12
+      .right
+        = f.button type:'submit',class:'btn-floating btn-large green tooltipped', 'data-tooltip':'Guardar','data-delay':40 do
+          %i.material-icons
+            done
+        -if screen.eql?'edit'
+          -if Scholarship.where(scholarship_type:@scholarship_type).where.not(status:Scholarship::DELETED).size == 0
+            = link_to @scholarship_type,class:'btn-floating btn-large red tooltipped', 'data-tooltip':'Eliminar','data-delay':40,method: :delete, data: { confirm: '¿Estás seguro?' }  do
+              %i.material-icons
+                delete
+          -else
+            %button{class:'btn-floating btn-large disabled'}
+              %i.material-icons
+                delete
+            %i.material-icons.tooltipped.grey-text{'data-tooltip':'No se pueden eliminar ya que hay becas de este tipo'}
+              help

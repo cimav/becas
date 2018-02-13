@@ -67,13 +67,19 @@
                       = "$#{@scholarship.amount}"
       %a.btn-floating.btn-large.waves-effect.waves-light.grey.tooltipped{href:"/scholarships/#{@scholarship.id}/formato_solicitud",'data-tooltip':"Formato de solicitud de beca", target:'_blank'}
         %i.material-icons insert_drive_file
--if is_admin?
-  .fixed-action-btn
-    %a.btn-floating.btn-large.blue.darken-2
-      %i.material-icons
-        more_vert
-    %ul
+
+.fixed-action-btn
+  %a.btn-floating.btn-large.blue.darken-2
+    %i.material-icons
+      more_vert
+  %ul
+    %li
+      %a.btn-floating.blue.tooltipped{href:"#{edit_scholarship_path}","data-position":"left", "data-tooltip": "Editar beca","data-delay":40}
+        %i.material-icons
+          edit
+    -if is_admin?
       %li
         %a.btn-floating.blue.tooltipped{href:"#{edit_scholarship_path}","data-position":"left", "data-tooltip": "Editar beca","data-delay":40}
           %i.material-icons
             edit
+

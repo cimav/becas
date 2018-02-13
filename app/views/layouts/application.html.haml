@@ -43,6 +43,10 @@
       .container
         = yield
 
-
+/ Mensajes
+-if alert
+  -alert.each do |error|
+    :javascript
+      Materialize.toast("#{error}", 4500, 'orange darken-4')
 :javascript
-  Materialize.toast("#{notice}", 3000)
+      Materialize.toast("#{notice}", 3000)

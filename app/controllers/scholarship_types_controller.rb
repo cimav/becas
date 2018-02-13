@@ -5,7 +5,7 @@ class ScholarshipTypesController < ApplicationController
   # GET /scholarship_types
   # GET /scholarship_types.json
   def index
-    @scholarship_types = ScholarshipType.all
+    @scholarship_types = ScholarshipType.where.not(status:ScholarshipType::DELETED)
   end
 
   # GET /scholarship_types/1
@@ -29,7 +29,7 @@ class ScholarshipTypesController < ApplicationController
 
     respond_to do |format|
       if @scholarship_type.save
-        format.html { redirect_to @scholarship_type, notice: 'Scholarship type was successfully created.' }
+        format.html { redirect_to scholarship_types_path, notice: 'Tipo de beca creado' }
         format.json { render :show, status: :created, location: @scholarship_type }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class ScholarshipTypesController < ApplicationController
   def update
     respond_to do |format|
       if @scholarship_type.update(scholarship_type_params)
-        format.html { redirect_to @scholarship_type, notice: 'Scholarship type was successfully updated.' }
+        format.html { redirect_to scholarship_types_path, notice: 'Tipo de beca actualizado.' }
         format.json { render :show, status: :ok, location: @scholarship_type }
       else
         format.html { render :edit }
@@ -55,10 +55,14 @@ class ScholarshipTypesController < ApplicationController
   # DELETE /scholarship_types/1
   # DELETE /scholarship_types/1.json
   def destroy
-    @scholarship_type.destroy
     respond_to do |format|
-      format.html { redirect_to scholarship_types_url, notice: 'Scholarship type was successfully destroyed.' }
-      format.json { head :no_content }
+      if @scholarship_type.update(status:ScholarshipType::DELETED)
+        format.html { redirect_to scholarship_types_url, notice: 'Se eliminó el tipo de beca' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to scholarship_types_url, notice: 'Error al eliminar tipo de beca' }
+        format.json { head :no_content }
+      end
     end
   end
 
