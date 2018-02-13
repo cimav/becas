@@ -52,9 +52,9 @@
                 %tbody
                   %tr
                     %th
-                      Monto
+                      Monto máximo
                     %td
-                      = "$#{@scholarship.max_amount}"
+                      = number_to_currency(@scholarship.max_amount,unit: "$", separator: ".", delimiter: ",", format: "%u%n")
                   %tr
                     %th
                       Porcentaje
@@ -64,7 +64,7 @@
                     %th
                       Monto
                     %th
-                      = "$#{@scholarship.amount}"
+                      = number_to_currency(@scholarship.amount,unit: "$", separator: ".", delimiter: ",", format: "%u%n")
       %a.btn-floating.btn-large.waves-effect.waves-light.grey.tooltipped{href:"/scholarships/#{@scholarship.id}/formato_solicitud",'data-tooltip':"Formato de solicitud de beca", target:'_blank'}
         %i.material-icons insert_drive_file
 
