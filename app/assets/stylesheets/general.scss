@@ -45,6 +45,14 @@ header, main, footer {
   }
 }
 
+.picker__weekday-display{
+  background-color: black;
+}
+
+.picker__date-display{
+  background-color: #212121 !important;
+}
+
 #side-menu{
   background-color: $color-menu;
   .divider{
@@ -80,3 +88,4 @@ a.navbar-logo{
 .blue-hover:hover{
   color:#2196f3
 }
+
