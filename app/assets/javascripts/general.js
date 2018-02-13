@@ -32,5 +32,5 @@ function calculate_amount(){
     percent = $('#scholarship_percent').val();
     amount = max_amount*(percent/100);
     $('#scholarship_max_amount').text("$"+max_amount);
-    $('#scholarship_amount').text("$"+amount);
+    $('#scholarship_amount').text("$"+amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
 }
