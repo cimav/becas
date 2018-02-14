@@ -15,6 +15,7 @@ class ScholarshipsController < ApplicationController
 
   # GET /scholarships/new
   def new
+    @person = params[:scholarship_person_type]
     @scholarship = Scholarship.new(percent:0)
   end
 
@@ -28,7 +29,7 @@ class ScholarshipsController < ApplicationController
     @scholarship = Scholarship.new(scholarship_params)
     @scholarship.status = Scholarship::REQUESTED
     @scholarship.max_amount = @scholarship.scholarship_type.max_amount
-    @scholarship.amount = @scholarship.max_amount*(@scholarship.percent/100);
+    @scholarship.amount = @scholarship.max_amount*(@scholarship.percent/100)
 
     respond_to do |format|
       if @scholarship.save
