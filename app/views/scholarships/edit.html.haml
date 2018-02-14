@@ -10,6 +10,9 @@
 %h1 Editar beca
 
 -if is_admin?
-  = render 'form'
+  -if @scholarship.person_type.eql?'Internship'
+    = render 'internships_form'
+  -elsif @scholarship.person_type.eql?'Student'
+    = render 'students_form'
 -else
   =render 'staff_scholarship_form'

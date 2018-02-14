@@ -1,0 +1,95 @@
+= form_for @scholarship do |f|
+  .row
+    .input-field.col.s12.m6
+      =f.select :person_id,Student.where.not(status:Student::DELETED).collect {|p| [ p.full_name, p.id,{'data-student-program':p.program.name,'data-curp':p.curp}] }
+      =f.label :person_id, 'Estudiante'
+    .input-field.col.s12.m6
+      %p{id:'scholarship_student_program',disabled:true}
+      =label_tag 'scholarship_student_program', 'Programa', class:'active'
+
+  .row
+    .input-field.col.s12.m4
+      =f.select :scholarship_type_id, ScholarshipType.where.not(status:ScholarshipType::DELETED).where.not(category: ScholarshipType::FISCAL).order('id DESC').map {|p| [p.name, p.id, { 'data-amount' => p.max_amount}]}
+      =f.label :scholarship_type_id, 'Tipo de beca'
+    .input-field.col.s12.m4
+      =f.text_field :start_date, class: "datepicker",placeholder:'Selecciona la fecha de inicio', type:'date'
+      =f.label :start_date, 'Fecha de inicio'
+    .input-field.col.s12.m4
+      =f.text_field :end_date, class: "datepicker",placeholder:'Selecciona la fecha de término', type:'date'
+      =f.label :end_date, 'Fecha de término'
+  .row
+    .input-field.col.s12.m4
+      %p{id:'scholarship_curp',disabled:true}
+      =label_tag 'scholarship_curp', 'Curp', class:'active'
+    .input-field.col.s12.m4
+      %i.material-icons.prefix.tooltipped{'data-tooltip':'El número de proyecto y de solicitud se pueden cosultar en el sistema Unix Help, si aun no conoce estos datos, déjelos en blanco y posteriormente regrese a llenarlos'}
+        help
+      =f.text_field :project_number,placeholder:'Número de proyecto en el Unix'
+      =f.label :project_number, 'Proyecto'
+    .input-field.col.s12.m4
+      %i.material-icons.prefix.tooltipped{'data-tooltip':'El número de proyecto y de solicitud se pueden cosultar en el sistema Unix Help, si aun no conoce estos datos, déjelos en blanco y posteriormente regrese a llenarlos'}
+        help
+      =f.text_field :request_number,placeholder:'Solicitud de beca en el Unix'
+      =f.label :request_number, 'Número de solicitud'
+  .row
+    .input-field.col.s12.m2
+      %i.material-icons.prefix
+        \%
+      =f.number_field :percent, min:1,max: 100
+      =f.label :percent, 'Porcentaje'
+    .input-field.col.s12.m2
+      %p{id:'scholarship_max_amount',disabled:true}
+      =f.label :max_amount, 'Monto máximo', class:'active'
+    .input-field.col.s12.m4
+      %p.green-text.text-darken-2{id:'scholarship_amount',disabled:true}
+      =label_tag 'scholarship_amount', 'Monto final', class:'active'
+  .row
+    .input-field.col.s12.m12
+      =f.hidden_field :person_type, value:'Student'
+      =f.submit 'Guardar', class:'btn-large'
+
+:javascript
+  $(document).on('ready turbolinks:load', function() {
+    get_student();
+    calculate_amount();
+    Materialize.updateTextFields();
+  })
+
+  $('.datepicker').pickadate({
+
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 15, // Creates a dropdown of 15 years to control year,
+
+    // The title label to use for the month nav buttons
+        labelMonthNext: 'Mes siguiente',
+        labelMonthPrev: 'Mes anterior',
+
+  // The title label to use for the dropdown selectors
+        labelMonthSelect: 'Selecciona un mes',
+        labelYearSelect: 'Selecciona un año',
+
+  // Months and weekdays
+        monthsFull: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
+        monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+        weekdaysFull: [ 'Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado' ],
+        weekdaysShort: [ 'Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab' ],
+
+  // Materialize modified
+        weekdaysLetter: [ 'D', 'L', 'M', 'X', 'J', 'V', 'S' ],
+
+  // Today and clear
+        today: 'Hoy',
+        clear: 'Limpiar',
+        close: 'Cerrar',
+  });
+
+  $('#scholarship_person_id').on('change', function() {
+    get_student();
+  });
+
+  $('#scholarship_scholarship_type_id').on('change', function() {
+    calculate_amount();
+  });
+  $('#scholarship_percent').on('change', function() {
+    calculate_amount();
+  })

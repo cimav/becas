@@ -10,6 +10,9 @@
 %h1 Nueva beca
 
 -if is_admin?
-  = render 'form'
+  -if @person.eql?'Internship'
+    = render 'internships_form'
+  -if @person.eql?'Student'
+    = render 'students_form'
 -else
   =render 'staff_scholarship_form'
