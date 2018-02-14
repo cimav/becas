@@ -1,7 +1,7 @@
 = form_for @scholarship do |f|
   .row
     .input-field.col.s12.m6
-      =f.select :person_id,Student.where.not(status:Student::DELETED).collect {|p| [ p.full_name, p.id,{'data-student-program':p.program.name,'data-curp':p.curp}] }
+      =f.select :person_id,Student.where(status:Student::ACTIVE).collect {|p| [ p.full_name, p.id,{'data-student-program':p.program.name,'data-curp':p.curp}] }
       =f.label :person_id, 'Estudiante'
     .input-field.col.s12.m6
       %p{id:'scholarship_student_program',disabled:true}

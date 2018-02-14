@@ -25,6 +25,10 @@
             = @scholarship.person.full_name
           .row
             .col.s12.m6
+              -if @scholarship.person_type.eql?'Student'
+                %p
+                  %b Programa:
+                  =@scholarship.person.program.name
               %p
                 %b Curp:
                 -if !@scholarship.person.curp.blank?
@@ -65,8 +69,9 @@
                       Monto
                     %th
                       = number_to_currency(@scholarship.amount,unit: "$", separator: ".", delimiter: ",", format: "%u%n")
-      %a.btn-floating.btn-large.waves-effect.waves-light.grey.tooltipped{href:"/scholarships/#{@scholarship.id}/formato_solicitud",'data-tooltip':"Formato de solicitud de beca", target:'_blank'}
-        %i.material-icons insert_drive_file
+      -if @scholarship.person_type.eql?'Internship'
+        %a.btn-floating.btn-large.waves-effect.waves-light.grey.tooltipped{href:"/scholarships/#{@scholarship.id}/formato_solicitud",'data-tooltip':"Formato de solicitud de beca", target:'_blank'}
+          %i.material-icons insert_drive_file
 -if @scholarship.status.eql?Scholarship::REQUESTED
   .fixed-action-btn
     %a.btn-floating.btn-large.blue.darken-2
