@@ -32,16 +32,24 @@
               %p
                 %b Curp:
                 -if !@scholarship.person.curp.blank?
-                  = @scholarship.person.curp rescue 'Sin capturar'
+                  = @scholarship.person.curp
                 -else
                   %span.red-text
                     Sin capturar
               %p
                 %b Fecha de inicio:
-                = f_date(@scholarship.start_date)
+                -if !@scholarship.start_date.blank?
+                  = f_date(@scholarship.start_date)
+                -else
+                  %span.red-text
+                    Sin capturar
               %p
-                %b Fecha de término:
-                = f_date(@scholarship.end_date)
+                %b Fecha de inicio:
+                -if !@scholarship.end_date.blank?
+                  = f_date(@scholarship.end_date)
+                -else
+                  %span.red-text
+                    Sin capturar
               %p
                 %b Tipo de beca:
                 = @scholarship.scholarship_type.name
@@ -70,8 +78,11 @@
                     %th
                       = number_to_currency(@scholarship.amount,unit: "$", separator: ".", delimiter: ",", format: "%u%n")
       -if @scholarship.person_type.eql?'Internship'
-        %a.btn-floating.btn-large.waves-effect.waves-light.grey.tooltipped{href:"/scholarships/#{@scholarship.id}/formato_solicitud",'data-tooltip':"Formato de solicitud de beca", target:'_blank'}
+        %a.btn-floating.btn-large.waves-effect.waves-light.grey.darken-2.tooltipped{href:"/scholarships/#{@scholarship.id}/formato_solicitud",'data-tooltip':"Formato de solicitud de beca", target:'_blank'}
           %i.material-icons insert_drive_file
+        -if is_admin?
+          %a.btn-floating.btn-large.waves-effect.waves-light.purple.tooltipped.modal-trigger{href:"#new_comment_modal",'data-tooltip':"Escribir comentario"}
+            %i.material-icons insert_comment
 -if @scholarship.status.eql?Scholarship::REQUESTED
   .fixed-action-btn
     %a.btn-floating.btn-large.blue.darken-2
@@ -93,3 +104,14 @@
           %i.material-icons
             edit
 
+#new_comment_modal.modal
+  .modal-content
+    %h5 Escribir comentario
+
+
+
+:javascript
+  $(document).on('ready turbolinks:load',function(){
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+  });
