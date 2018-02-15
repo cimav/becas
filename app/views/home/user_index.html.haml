@@ -31,7 +31,12 @@
 
 #new_scholarship_modal.modal
   .modal-content
-    =link_to 'Estudiante',new_scholarship_path(scholarship_person_type:'Student')
+    .center
+      %h5
+        ¿A quién se otorgará la beca?
+      .section
+        =link_to 'Estudiante',new_scholarship_path(scholarship_person_type:'Student'),class:'btn brown'
+        =link_to 'Practicante',new_scholarship_path(scholarship_person_type:'Internship'),class:'btn purple'
 :javascript
   $(document).ready(function(){
     $('.modal').modal();

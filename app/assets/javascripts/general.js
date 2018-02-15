@@ -15,7 +15,7 @@ $(document).on('ready turbolinks:load', function() {
     );
 
 
-
+    $('.modal').modal();
 
 
 });
@@ -26,11 +26,11 @@ function get_student(){
     $('#scholarship_student_program').text(program);
     if(curp==null || curp.length<1){
         curp = "Sin capturar";
-        $('#scholarship_student_curp').addClass('red-text');
+        $('#scholarship_curp').addClass('red-text');
     }else{
-        $('#scholarship_student_curp').removeClass('red-text');
+        $('#scholarship_curp').removeClass('red-text');
     }
-    $('#scholarship_student_curp').text(curp);
+    $('#scholarship_curp').text(curp);
     Materialize.updateTextFields();
 }
 
@@ -39,9 +39,9 @@ function get_internship(){
     curp = $('#scholarship_person_id option:selected').attr('data-curp');
     if(curp==null || curp.length<1){
         curp = "Sin capturar";
-        $('#scholarship_student_curp').addClass('red-text');
+        $('#scholarship_curp').addClass('red-text');
     }else{
-        $('#scholarship_student_curp').removeClass('red-text');
+        $('#scholarship_curp').removeClass('red-text');
     }
     $('#scholarship_internship_type').text(program);
     $('#scholarship_curp').text(curp);

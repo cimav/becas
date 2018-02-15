@@ -1,28 +1,32 @@
 = form_for @scholarship do |f|
   .row
     .input-field.col.s12.m6
-      =f.select :person_id,Internship.where(staff_id:current_staff.id).where(status:Internship::ACTIVE).collect {|p| [ p.full_name, p.id, {'data-internship-type':p.internship_type.name} ] }
+      =f.select :person_id,Internship.where(staff_id:current_staff.id).where(status:Internship::ACTIVE).collect {|p| [ p.full_name, p.id, {'data-internship-type':p.internship_type.name, 'data-curp':p.curp} ] }
       =f.label :person_id, 'Practicante'
-    .input-field.col.s12.m3
+    .input-field.col.s12.m6
       %p{id:'scholarship_internship_type',disabled:true}
       =label_tag 'scholarship_internship_type', 'Tipo de servicio', class:'active'
-    .input-field.col.s12.m3
-      =f.select :scholarship_type_id, ScholarshipType.where.not(status:ScholarshipType::DELETED).where.not(category: ScholarshipType::CONACYT).order('id DESC').map {|p| [p.name, p.id, { 'data-amount' => p.max_amount}]}
-      =f.label :scholarship_type_id, 'Tipo de beca'
 
   .row
-    .input-field.col.s12.m3
+    .input-field.col.s12.m4
+      =f.select :scholarship_type_id, ScholarshipType.where.not(status:ScholarshipType::DELETED).where.not(category: ScholarshipType::CONACYT).order('id DESC').map {|p| [p.name, p.id, { 'data-amount' => p.max_amount}]}
+      =f.label :scholarship_type_id, 'Tipo de beca'
+    .input-field.col.s12.m4
       =f.text_field :start_date, class: "datepicker",placeholder:'Selecciona la fecha de inicio', type:'date'
       =f.label :start_date, 'Fecha de inicio'
-    .input-field.col.s12.m3
+    .input-field.col.s12.m4
       =f.text_field :end_date, class: "datepicker",placeholder:'Selecciona la fecha de término', type:'date'
       =f.label :end_date, 'Fecha de término'
-    .input-field.col.s12.m3
+  .row
+    .input-field.col.s12.m4
+      %p{id:'scholarship_curp',disabled:true}
+      =label_tag 'scholarship_curp', 'Curp', class:'active'
+    .input-field.col.s12.m4
       %i.material-icons.prefix.tooltipped{'data-tooltip':'El número de proyecto y de solicitud se pueden cosultar en el sistema Unix Help, si aun no conoce estos datos, déjelos en blanco y posteriormente regrese a llenarlos'}
         help
       =f.text_field :project_number,placeholder:'Número de proyecto en el Unix'
       =f.label :project_number, 'Proyecto'
-    .input-field.col.s12.m3
+    .input-field.col.s12.m4
       %i.material-icons.prefix.tooltipped{'data-tooltip':'El número de proyecto y de solicitud se pueden cosultar en el sistema Unix Help, si aun no conoce estos datos, déjelos en blanco y posteriormente regrese a llenarlos'}
         help
       =f.text_field :request_number,placeholder:'Solicitud de beca en el Unix'
