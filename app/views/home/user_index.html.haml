@@ -26,7 +26,7 @@
                   %i.material-icons.left.valign-wrapper{class:status_color(scholarship.status)}
                     lens
                   =scholarship.get_status
-        %a.btn.modal-trigger{href:'#new_scholarship_modal'}
+        %button.btn{onclick:"openModal($('#new_scholarship_modal'));"}
           Nueva beca
 
 #new_scholarship_modal.modal
@@ -37,7 +37,3 @@
       .section
         =link_to 'Estudiante',new_scholarship_path(scholarship_person_type:'Student'),class:'btn brown'
         =link_to 'Practicante',new_scholarship_path(scholarship_person_type:'Internship'),class:'btn purple'
-:javascript
-  $(document).ready(function(){
-    $('.modal').modal();
-  });

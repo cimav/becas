@@ -81,7 +81,7 @@
         %a.btn-floating.btn-large.waves-effect.waves-light.grey.darken-2.tooltipped{href:"/scholarships/#{@scholarship.id}/formato_solicitud",'data-tooltip':"Formato de solicitud de beca", target:'_blank'}
           %i.material-icons insert_drive_file
         -if is_admin?
-          %a.btn-floating.btn-large.waves-effect.waves-light.purple.tooltipped.modal-trigger{href:"#new_comment_modal",'data-tooltip':"Escribir comentario"}
+          %button.btn-floating.btn-large.waves-effect.waves-light.purple.tooltipped{'data-tooltip':"Escribir comentario", onclick:"openModal($('#new_comment_modal'));"}
             %i.material-icons insert_comment
 -if @scholarship.status.eql?Scholarship::REQUESTED
   .fixed-action-btn
@@ -109,9 +109,3 @@
     %h5 Escribir comentario
 
 
-
-:javascript
-  $(document).on('ready turbolinks:load',function(){
-    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
-    $('.modal').modal();
-  });
