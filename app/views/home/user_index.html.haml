@@ -37,3 +37,9 @@
       .section
         =link_to 'Estudiante',new_scholarship_path(scholarship_person_type:'Student'),class:'btn brown'
         =link_to 'Practicante',new_scholarship_path(scholarship_person_type:'Internship'),class:'btn purple'
+
+:javascript
+  $(document).ready(function(){
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal('close');
+  });
