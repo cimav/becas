@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :scholarship_comments, as: :person
 
   ADMIN = 1
   VIEWER = 2

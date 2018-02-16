@@ -1,6 +1,7 @@
 class Scholarship < ApplicationRecord
   belongs_to :person, polymorphic: true
   belongs_to :scholarship_type
+  has_many :scholarship_comments
 
   before_create do
     self.status = REQUESTED

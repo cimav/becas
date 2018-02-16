@@ -107,8 +107,15 @@
 #new_comment_modal.modal
   .modal-content
     %h5 Escribir comentario
-
-
+    .row
+      =form_for ScholarshipComment.new, url:"/scholarships/#{@scholarship.id}/create_comment", class:'col s12 m12' do |f|
+        .input-field.col.s12.m12
+          =f.label :content,'Mensaje'
+          =f.text_area :content, class:'materialize-textarea'
+        .input-field.col.s12.m12.right-align
+          %button.btn-floating.green.darken-1{type:'submit',value:"Submit"}
+            %i.material-icons
+              send
 :javascript
   $(document).ready(function(){
     // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered

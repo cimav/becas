@@ -1,6 +1,6 @@
 class ScholarshipsController < ApplicationController
   before_action :auth_required
-  before_action :set_scholarship, only: [:show, :edit, :update, :destroy, :internship_request_file]
+  before_action :set_scholarship, only: [:show, :edit, :update, :destroy, :internship_request_file, :create_comment]
 
   # GET /scholarships
   # GET /scholarships.json
@@ -111,6 +111,18 @@ class ScholarshipsController < ApplicationController
     pdf.text text, align: :center, inline_format:true
 
     send_data pdf.render, filename: "Solicitud de beca#{@scholarship.id}.pdf", type: 'application/pdf', disposition: 'inline'
+  end
+
+  def create_comment
+    comment = @scholarship.scholarship_comments.new(content:params[:scholarship_comment][:content])
+    if is_admin?
+      comment.person = current_user
+    else
+      comment.person = current_staff
+    end
+    if comment.save
+      redirect_to @scholarship
+    end
   end
 
   private
