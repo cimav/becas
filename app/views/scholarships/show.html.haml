@@ -39,14 +39,14 @@
               %p
                 %b Fecha de inicio:
                 -if !@scholarship.start_date.blank?
-                  = f_date(@scholarship.start_date)
+                  = f_date_no_time(@scholarship.start_date)
                 -else
                   %span.red-text
                     Sin capturar
               %p
                 %b Fecha de inicio:
                 -if !@scholarship.end_date.blank?
-                  = f_date(@scholarship.end_date)
+                  = f_date_no_time(@scholarship.end_date)
                 -else
                   %span.red-text
                     Sin capturar
