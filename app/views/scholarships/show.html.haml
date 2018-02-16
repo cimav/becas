@@ -83,6 +83,27 @@
         -if is_admin?
           %button.btn-floating.btn-large.waves-effect.waves-light.purple.tooltipped{'data-tooltip':"Escribir comentario", onclick:"openModal($('#new_comment_modal'));"}
             %i.material-icons insert_comment
+
+.row
+  %ul.collapsible
+    %li
+      .collapsible-header
+        Mensajes
+        %span.badge{'data-badge-caption':"#{@scholarship.scholarship_comments.size==1?'Mensaje':'Mensajes'}"}
+          =@scholarship.scholarship_comments.size
+      .collapsible-body
+        =render 'scholarship_messages'
+
+
+
+
+
+
+
+
+
+
+
 -if @scholarship.status.eql?Scholarship::REQUESTED
   .fixed-action-btn
     %a.btn-floating.btn-large.blue.darken-2

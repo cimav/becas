@@ -1,0 +1,6 @@
+-@scholarship.scholarship_comments.each do |comment|
+  .row
+    .col.m10
+      =comment.person.full_name
+    .col.m2
+      =f_date(comment.updated_at)
