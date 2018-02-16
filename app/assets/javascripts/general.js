@@ -56,3 +56,7 @@ function calculate_amount(){
     $('#scholarship_max_amount').text("$"+max_amount);
     $('#scholarship_amount').text("$"+amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
 }
+
+function openModal(modal){
+    modal.modal('open');
+}

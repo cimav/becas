@@ -14,7 +14,6 @@
 !/tmp/.keep
 .idea
 .idea/*
-Gemfile.lock
 
 
 /node_modules
