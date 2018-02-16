@@ -12,6 +12,9 @@ module ApplicationHelper
     elsif "#{date.year}#{date.month}#{date.day}" == "#{Time.now.year}#{Time.now.month}#{Time.now.day - 1}"
       r_date = "Ayer"
       r_date = r_date + " a las " + date.strftime("%l:%M %P") if (date.hour != nil)
+    elsif "#{date.year}#{date.month}#{date.day}" == "#{Time.now.year}#{Time.now.month}#{Time.now.day - 2}"
+      r_date = "Hace 2 días"
+      r_date = r_date + " a las " + date.strftime("%l:%M %P") if (date.hour != nil)
     elsif "#{date.year}#{date.month}#{date.day}" == "#{Time.now.year}#{Time.now.month}#{Time.now.day + 1}"
       r_date = "Mañana"
       r_date = r_date + " a las " + date.strftime("%l:%M %P") if (date.hour != nil)

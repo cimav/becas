@@ -1,6 +1,10 @@
 -@scholarship.scholarship_comments.each do |comment|
-  .row
-    .col.m10
+  .row.section.purple.lighten-5
+    .col.s12.m9
       =comment.person.full_name
-    .col.m2.grey-text
+    .col.s12.m3.grey-text
       =f_date(comment.updated_at)
+    .col.s12.m12
+      .message_content
+        =comment.content
+  .divider
