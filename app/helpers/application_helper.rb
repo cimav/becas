@@ -42,6 +42,13 @@ module ApplicationHelper
     @current_staff ||= Staff.find(session[:user_id]) if session[:user_id]
   end
 
+  def current_person
+    if (session[:user_type].eql? 'User')
+      current_user
+    elsif (session[:user_type].eql? 'Staff')
+      current_staff
+    end
+  end
 
   def is_admin?
     if (user = current_user if session[:user_type].eql? 'User')

@@ -1,10 +1,13 @@
 -@scholarship.scholarship_comments.each do |comment|
-  .row.section.purple.lighten-5
-    .col.s12.m9
+  -klass = 'pink'
+  -if comment.person.eql? current_person
+    -klass = 'indigo'
+  .row.section.lighten-5{class:"#{klass}"}
+    .col.s12.m9.text-darken-4{class:"#{klass}-text"}
       =comment.person.full_name
     .col.s12.m3.grey-text
       =f_date(comment.updated_at)
     .col.s12.m12
-      .message_content
+      .message_content.grey-text.text-darken-4
         =comment.content
   .divider
