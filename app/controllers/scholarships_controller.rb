@@ -91,7 +91,7 @@ class ScholarshipsController < ApplicationController
     pdf.font_size 10
     pdf.move_down 30
     table_data = [['Actividad','Monto', 'Periodo','Responsable','Proyecto','No. solicitud'],
-                  [@scholarship.person.internship_type.name,"$#{@scholarship.amount}","#{(I18n.l(@scholarship.start_date, format: '%B %Y')).capitalize} - #{(I18n.l(@scholarship.end_date, format: '%B %Y'))}", @scholarship.person.staff.full_name, '5432168', '']]
+                  [@scholarship.person.internship_type.name,"$#{@scholarship.amount}","#{(I18n.l(@scholarship.start_date, format: '%B %Y')).capitalize} - #{(I18n.l(@scholarship.end_date, format: '%B %Y'))}", @scholarship.person.staff.full_name, '', '']]
     pdf.table table_data, :position=>:center, header:true
     pdf.font_size 12
     text = "\n\n Sin más por el momento reciba un cordial saludo.."
