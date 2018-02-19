@@ -87,16 +87,31 @@
           %i.material-icons gavel
 -if @scholarship.scholarship_comments.size>0
   .row
-    %ul.collapsible
-      %li
-        .collapsible-header
+    .card
+      .card-content
+        .card-title
           Mensajes
-          %span.badge{'data-badge-caption':"#{@scholarship.scholarship_comments.size==1?'Mensaje':'Mensajes'}"}
-            =@scholarship.scholarship_comments.size
-        .collapsible-body
-          =render 'scholarship_messages'
+        %ul.collapsible
+          %li
+            .collapsible-header
+              Mensajes
+              %span.badge{'data-badge-caption':"#{@scholarship.scholarship_comments.size==1?'Mensaje':'Mensajes'}"}
+                =@scholarship.scholarship_comments.size
+            .collapsible-body
+              =render 'scholarship_messages'
+        .right-align
+          %button.btn-floating.btn-large.waves-effect.waves-light.purple.tooltipped{'data-tooltip':"Responder", onclick:"openModal($('#new_comment_modal'));"}
+            %i.material-icons insert_comment
 
 
+.row
+  .card
+    .card-content
+      .card-title
+        Documentos
+      #internship_files
+        :javascript
+          refreshInternshipFiles("#{@scholarship.id}");
 
 
 

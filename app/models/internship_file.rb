@@ -1,4 +1,5 @@
 class InternshipFile < SaposModels
+  mount_uploader :file, InternshipFileUploader
 
   NORMAL              = 1
   SIGN_REQUEST        = 2

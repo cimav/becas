@@ -1,6 +1,6 @@
 class ScholarshipsController < ApplicationController
   before_action :auth_required
-  before_action :set_scholarship, only: [:show, :edit, :update, :destroy, :internship_request_file, :create_comment]
+  before_action :set_scholarship, only: [:show, :edit, :update, :destroy, :internship_request_file, :create_comment, :internship_files]
 
   # GET /scholarships
   # GET /scholarships.json
@@ -123,6 +123,11 @@ class ScholarshipsController < ApplicationController
     if comment.save
       redirect_to @scholarship
     end
+  end
+
+  def internship_files
+    @files = @scholarship.person.internship_file
+    render layout:false
   end
 
   private

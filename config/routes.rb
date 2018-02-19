@@ -14,5 +14,6 @@ Rails.application.routes.draw do
   resources :scholarships
   get '/scholarships/:id/formato_solicitud' => 'scholarships#internship_request_file'
   post '/scholarships/:id/create_comment' => 'scholarships#create_comment'
+  get '/scholarships/:id/internship_files' => 'scholarships#internship_files'
 
 end
