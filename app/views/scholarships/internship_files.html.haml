@@ -1,29 +1,54 @@
--if @files.size>0
-  %table.bordered
-    %thead
-      %tr
-        %th
-        %th
-    %tbody
-      -@files.each do |file|
-        %tr
-          %td
-            =link_to "http://posgrado.cimav.edu.mx/internados/aspirantes/file/#{file.id}?disposition=inline" ,target: :_blank, class:'grey-text text-darken-2' do
-              -case File.extname(file.description)
-                -when '.jpg','.png'
-                  %i.material-icons
-                    image
-                -when '.pdf', '.docx'
-                  %i.material-icons
-                    insert_drive_file
-          %td
-            =link_to "http://posgrado.cimav.edu.mx/internados/aspirantes/file/#{file.id}?disposition=inline" ,target: :_blank, class:'grey-text text-darken-2' do
-              .truncate
-                =file.description
-          -#%td
-            =link_to "/scholarships/#{@scholarship.id}/delete_image/#{image.id}", class:'delete_image grey-text', method:'delete', pc_id:@product_category.id, psc_id:@product_sub_category.id,p_id:@product.id, remote:true do
-              %i.material-icons.red-hover
-                close
--else
-  %blockquote
-    No hay imágenes
+%table.bordered.file-table
+  %thead
+    %tr
+  %tbody
+    %tr
+      %th
+        Constancia de estudios
+      %td
+        =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::REGISTRATION_PROOF).last}
+    %tr
+      %th
+        Copia de credencial del IFE o INE
+      %td
+        =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::IFE).last}
+    %tr
+      %th
+        Centa bancaria con CLABE
+      %td
+        =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::BANK_ACCOUNT).last}
+    %tr
+      %th
+        Copia del CURP
+      %td
+        =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::CURP).last}
+    %tr
+      %th
+        Comprobante de domicilio
+      %td
+        =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::ADDRESS_BILL).last}
+    %tr
+      %th
+        Plan de trabajo detallado
+      %td
+        =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::WORKPLAN).last}
+    %tr
+      %th
+        Comprobante de seguro médico
+      %td
+        =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::INSURANCE).last}
+    %tr
+      %th
+        Curso de seguridad e higiene
+      %td
+        =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::COURSE).last}
+
+
+
+
+
+      -#%td
+      -#%td
+        =link_to "/scholarships/#{@scholarship.id}/delete_image/#{image.id}", class:'delete_image grey-text', method:'delete', pc_id:@product_category.id, psc_id:@product_sub_category.id,p_id:@product.id, remote:true do
+          %i.material-icons.red-hover
+            close

@@ -33,7 +33,7 @@ class ScholarshipsController < ApplicationController
 
     respond_to do |format|
       if @scholarship.save
-        format.html { redirect_to @scholarship, notice: 'Scholarship was successfully created.' }
+        format.html { redirect_to @scholarship, notice: 'Beca creada' }
         format.json { render :show, status: :created, location: @scholarship }
       else
         format.html { render :new, notice: @scholarships.errors }
@@ -47,7 +47,7 @@ class ScholarshipsController < ApplicationController
   def update
     respond_to do |format|
       if @scholarship.update(scholarship_params)
-        format.html { redirect_to @scholarship, notice: 'Scholarship was successfully updated.' }
+        format.html { redirect_to @scholarship, notice: 'Se actualizó la beca' }
         format.json { render :show, status: :ok, location: @scholarship }
       else
         format.html { render :edit }
@@ -59,9 +59,9 @@ class ScholarshipsController < ApplicationController
   # DELETE /scholarships/1
   # DELETE /scholarships/1.json
   def destroy
-    @scholarship.destroy
+    @scholarship.update(status:Scholarship::DELETED)
     respond_to do |format|
-      format.html { redirect_to scholarships_url, notice: 'Scholarship was successfully destroyed.' }
+      format.html { redirect_to scholarships_url, notice: 'Se liminó la beca' }
       format.json { head :no_content }
     end
   end

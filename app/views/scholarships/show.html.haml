@@ -37,14 +37,21 @@
                   %span.red-text
                     Sin capturar
               %p
-                %b Fecha de inicio:
+                %b Correo electrónico:
+                -if !@scholarship.person.email.blank?
+                  = @scholarship.person.email
+                -else
+                  %span.red-text
+                    Sin capturar
+              %p
+                %b Fecha de inicio (beca):
                 -if !@scholarship.start_date.blank?
                   = f_date_no_time(@scholarship.start_date)
                 -else
                   %span.red-text
                     Sin capturar
               %p
-                %b Fecha de inicio:
+                %b Fecha de inicio (beca):
                 -if !@scholarship.end_date.blank?
                   = f_date_no_time(@scholarship.end_date)
                 -else
