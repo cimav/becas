@@ -116,15 +116,12 @@
     .card-content
       .card-title
         Documentos
+        %a.btn-floating.right
+          %i.material-icons.green.darken-2{onclick:"openModal($('#upload_file_modal'));"}
+            add
       #internship_files
         :javascript
           refreshInternshipFiles("#{@scholarship.id}");
-
-
-
-
-
-
 
 
 
@@ -140,7 +137,7 @@
             edit
 -if is_admin?
   .fixed-action-btn
-    %a.btn-floating.btn-large.blue.darken-2
+    %button.btn-floating.btn-large.blue.darken-2
       %i.material-icons
         more_vert
     %ul
@@ -148,6 +145,12 @@
         %a.btn-floating.blue.tooltipped{href:"#{edit_scholarship_path}","data-position":"left", "data-tooltip": "Editar beca","data-delay":40}
           %i.material-icons
             edit
+
+
+
+
+
+
 
 #new_comment_modal.modal
   .modal-content
@@ -169,6 +172,18 @@
         .input-field.col.s12.m12
           =f.label :status,'Mensaje', class:'active'
           =f.select :status, Scholarship::STATUS.except(Scholarship::DELETED).invert
+        .input-field.col.s12.m12.right-align
+          %button.btn-floating.green.darken-1{type:'submit',value:"Submit"}
+            %i.material-icons
+              send
+#upload_file_modal.modal
+  .modal-content
+    %h5 Subir documento
+    =form_for InternshipFile.new, url:'', class:'col s12 m12' do |f|
+      .row
+        .input-field.col.s12.m12
+          =f.label :file_type,'Tipo de documento', class:'active'
+          =f.select :file_type, InternshipFile::REQUESTED_DOCUMENTS.except(InternshipFile::COURSE,InternshipFile::NORMAL).invert
         .input-field.col.s12.m12.right-align
           %button.btn-floating.green.darken-1{type:'submit',value:"Submit"}
             %i.material-icons

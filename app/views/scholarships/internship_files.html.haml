@@ -1,44 +1,46 @@
 %table.bordered.file-table
   %thead
     %tr
+      %th Tipo de documento
+      %th Archivo
   %tbody
     %tr
-      %th
+      %td
         Constancia de estudios
       %td
         =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::REGISTRATION_PROOF).last}
     %tr
-      %th
+      %td
         Copia de credencial del IFE o INE
       %td
         =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::IFE).last}
     %tr
-      %th
+      %td
         Centa bancaria con CLABE
       %td
         =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::BANK_ACCOUNT).last}
     %tr
-      %th
+      %td
         Copia del CURP
       %td
         =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::CURP).last}
     %tr
-      %th
+      %td
         Comprobante de domicilio
       %td
         =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::ADDRESS_BILL).last}
     %tr
-      %th
+      %td
         Plan de trabajo detallado
       %td
         =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::WORKPLAN).last}
     %tr
-      %th
+      %td
         Comprobante de seguro médico
       %td
         =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::INSURANCE).last}
     %tr
-      %th
+      %td
         Curso de seguridad e higiene
       %td
         =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::COURSE).last}
