@@ -4,10 +4,10 @@
       .card-content
         .card-title
           Becas
-        =link_to new_scholarship_path, class:'waves-effect waves-light btn-large blue' do
-          %i.material-icons.left
-            add
-          Solicitar nueva beca
+          =link_to new_scholarship_path, class:'btn-floating green darken-2 tooltipped right', 'data-tooltip':'Solicitar nueva beca','data-position':'right' do
+            %i.material-icons.left
+              add
+            Solicitar nueva beca
         %table.bordered.highlight.responsive-table
           %thead
             %tr
