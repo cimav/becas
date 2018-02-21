@@ -18,7 +18,7 @@ class InternshipFile < SaposModels
       NORMAL              => 'Documento genérico',
       SIGN_REQUEST        => 'Solicitud con firmas',
       INSTITUTION_REQUEST => 'Solicitud oficial de la institución de procedencia',
-      REGISTRATION_PROOF  => 'Constancia de inscripción de institución de procedencia',
+      REGISTRATION_PROOF  => 'Constancia de estudios',
       COURSE              => 'Curso de seguridad e higiene aprobado',
       IFE                 => 'Credencial del INE o IFE',
       BANK_ACCOUNT        => 'Cuenta bancaria',

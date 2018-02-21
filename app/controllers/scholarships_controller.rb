@@ -1,6 +1,6 @@
 class ScholarshipsController < ApplicationController
   before_action :auth_required
-  before_action :set_scholarship, only: [:show, :edit, :update, :destroy, :internship_request_file, :create_comment, :internship_files]
+  before_action :set_scholarship, only: [:show, :edit, :update, :destroy, :internship_request_file, :create_comment, :internship_files, :upload_internship_file]
 
   # GET /scholarships
   # GET /scholarships.json
@@ -128,6 +128,23 @@ class ScholarshipsController < ApplicationController
   def internship_files
     @files = @scholarship.person.internship_file
     render layout:false
+  end
+
+  def upload_internship_file
+    file = InternshipFile.new
+    file.internship_id = @scholarship.person.id
+    file.file_type = params[:internship_file]['file_type']
+    file.file = params[:internship_file]['file']
+    file.description = params[:internship_file]['file'].original_filename rescue 'Sin nombre'
+    respond_to do |format|
+      if file.save
+        format.html { redirect_to @scholarship, notice: 'Se subió el documento' }
+        format.json { render json: file, status: :ok}
+      else
+        format.html { redirect_to @scholarship, notice: 'Error al subir documento'}
+        format.json { render json: file.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   private

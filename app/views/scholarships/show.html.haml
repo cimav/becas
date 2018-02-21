@@ -179,11 +179,13 @@
 #upload_file_modal.modal
   .modal-content
     %h5 Subir documento
-    =form_for InternshipFile.new, url:'', class:'col s12 m12' do |f|
+    =form_for InternshipFile.new, url:"/scholarships/#{@scholarship.id}/upload_internship_file", class:'col s12 m12' do |f|
       .row
         .input-field.col.s12.m12
           =f.label :file_type,'Tipo de documento', class:'active'
-          =f.select :file_type, InternshipFile::REQUESTED_DOCUMENTS.except(InternshipFile::COURSE,InternshipFile::NORMAL).invert
+          =f.select :file_type, InternshipFile::REQUESTED_DOCUMENTS.except(InternshipFile::COURSE,InternshipFile::NORMAL,InternshipFile::INSTITUTION_REQUEST).invert
+        .input-field.col.s12.m12
+          =f.file_field :file
         .input-field.col.s12.m12.right-align
           %button.btn-floating.green.darken-1{type:'submit',value:"Submit"}
             %i.material-icons

@@ -5,7 +5,7 @@
         check_circle
       Curso aprobado
   -else
-    =link_to "http://posgrado.cimav.edu.mx/internados/aspirantes/file/#{file.id}?disposition=inline" ,target: :_blank, class:'grey-text text-darken-2' do
+    =link_to "#{ENV['SAPOS_URL']}/internados/aspirantes/file/#{file.id}?disposition=inline" ,target: :_blank, class:'grey-text text-darken-2' do
       %i.material-icons.left
         -case File.extname(file.description)
           -when '.jpg','.JPG','.jpeg','.JPEG','.png','.PNG'

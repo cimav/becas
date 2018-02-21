@@ -3,7 +3,7 @@ class InternshipFileUploader < CarrierWave::Uploader::Base
   storage :file
 
   def store_dir
-    "../sapos/private/files/internships/#{model.internship_id}"
+    "#{ENV['SAPOS_DIR']}/private/files/internships/#{model.internship_id}"
   end
 
 end
