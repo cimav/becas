@@ -4,8 +4,11 @@
       .card-content
         .card-title
           Becas
-          %span.new.badge.orange{"data-badge-caption" => "solicitudes"}
-            =@scholarships.where(status:Scholarship::REQUESTED).size
+          %button.btn-floating.right.green.darken-2.tooltipped{'data-tooltip':'Nueva beca','data-delay':40,'data-position':'right',onclick:"openModal($('#new_scholarship_modal'));"}
+            %i.material-icons
+              add
+        %span.new.badge.orange{"data-badge-caption" => "solicitudes"}
+          =@scholarships.where(status:Scholarship::REQUESTED).size
         %table.bordered.highlight.responsive-table
           %thead
             %tr
@@ -26,8 +29,6 @@
                   %i.material-icons.left.valign-wrapper{class:status_color(scholarship.status)}
                     lens
                   =scholarship.get_status
-        %button.btn{onclick:"openModal($('#new_scholarship_modal'));"}
-          Nueva beca
 
 #new_scholarship_modal.modal
   .modal-content
