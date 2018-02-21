@@ -88,11 +88,12 @@
         %a.btn-floating.btn-large.waves-effect.waves-light.grey.darken-2.tooltipped{href:"/scholarships/#{@scholarship.id}/formato_solicitud",'data-tooltip':"Formato de solicitud de beca",'data-delay':30, target:'_blank'}
           %i.material-icons insert_drive_file
       -if is_admin?
-        %button.btn-floating.btn-large.waves-effect.waves-light.purple.tooltipped{'data-tooltip':"Escribir comentario",'data-delay':30, onclick:"openModal($('#new_comment_modal'));"}
-          %i.material-icons insert_comment
+        -if @comments.size==0
+          %button.btn-floating.btn-large.waves-effect.waves-light.purple.tooltipped{'data-tooltip':"Escribir comentario",'data-delay':30, onclick:"openModal($('#new_comment_modal'));"}
+            %i.material-icons insert_comment
         %button.btn-floating.btn-large.waves-effect.waves-light.indigo.tooltipped{'data-tooltip':"Cambiar estatus",'data-delay':30, onclick:"openModal($('#change_status_modal'));"}
           %i.material-icons gavel
--if @scholarship.scholarship_comments.size>0
+-if @comments.size>0
   .row
     .card
       .card-content
@@ -102,8 +103,8 @@
           %li
             .collapsible-header
               Mensajes
-              %span.badge{'data-badge-caption':"#{@scholarship.scholarship_comments.size==1?'Mensaje':'Mensajes'}"}
-                =@scholarship.scholarship_comments.size
+              %span.badge{'data-badge-caption':"#{@comments.size==1?'Mensaje':'Mensajes'}"}
+                =@comments.size
             .collapsible-body
               =render 'scholarship_messages'
         .right-align

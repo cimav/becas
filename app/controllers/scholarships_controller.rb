@@ -11,6 +11,7 @@ class ScholarshipsController < ApplicationController
   # GET /scholarships/1
   # GET /scholarships/1.json
   def show
+   @comments = @scholarship.scholarship_comments.where.not(status: ScholarshipComment::DELETED)
   end
 
   # GET /scholarships/new
