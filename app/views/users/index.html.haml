@@ -5,12 +5,12 @@
     .collection
       -@admins.each do |user|
         =link_to edit_user_path(user.id), class:'collection-item'do
-          =user.name
+          =user.full_name
       -@viewers.each do |user|
         =link_to edit_user_path(user.id), class:'collection-item' do
           %i.material-icons{"aria-hidden" => "true", style:"padding-right:1rem;"}
             remove_red_eye
-          =user.name
+          =user.full_name
 
 .fixed-action-btn
   =link_to new_user_path, class:'btn-floating btn-large red tooltipped', "data-position" => "left", "data-tooltip" => "Nuevo usuario", "data-delay" => "100" do
