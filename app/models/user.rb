@@ -7,6 +7,6 @@ class User < ApplicationRecord
 
   DELETED = 99
 
-  USER_TYPES = {ADMIN:'Administrador', VIEWER:'Espectador'}
+  USER_TYPES = {ADMIN=>'Administrador', VIEWER=>'Espectador'}
 
 end
