@@ -4,10 +4,10 @@
       Administradores
     .collection
       -@admins.each do |user|
-        =link_to edit_user_path(user.id), class:'collection-item'do
+        =link_to user, class:'collection-item'do
           =user.full_name
       -@viewers.each do |user|
-        =link_to edit_user_path(user.id), class:'collection-item' do
+        =link_to user, class:'collection-item' do
           %i.material-icons{"aria-hidden" => "true", style:"padding-right:1rem;"}
             remove_red_eye
           =user.full_name

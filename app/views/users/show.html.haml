@@ -1,18 +1,34 @@
-%p#notice= notice
+%nav.config-breadcrumb.z-depth-0
+  .nav-wrapper
+    .row
+      .col.s12.m12.l12
+        =link_to users_path, class:'breadcrumb' do
+          Usuarios
+        %a.breadcrumb{}
+          =@user.full_name
+
 
 %p
-  %b Name:
+  %b Nombre:
   = @user.full_name
 %p
   %b Email:
   = @user.email
 %p
-  %b User type:
-  = @user.user_type
-%p
-  %b Status:
-  = @user.status
+  %b Tipo de usuario:
+  = @user.get_type
 
-= link_to 'Edit', edit_user_path(@user)
-\|
-= link_to 'Back', users_path
+-if is_admin?
+  .fixed-action-btn
+    %button.btn-floating.btn-large.blue.darken-2
+      %i.material-icons
+        more_vert
+    %ul
+      %li
+        =link_to @user, class:'btn-floating red tooltipped', method: 'delete',"data-position":"left", "data-tooltip": "Eliminar usuario","data-delay":40, data:{confirm:'¿Estás seguro?'} do
+          %i.material-icons
+            delete
+      %li
+        %a.btn-floating.blue.tooltipped{href:"#{edit_user_path}","data-position":"left", "data-tooltip": "Editar usuario","data-delay":40}
+          %i.material-icons
+            edit

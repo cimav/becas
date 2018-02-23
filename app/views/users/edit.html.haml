@@ -1,7 +1,14 @@
+%nav.config-breadcrumb.z-depth-0
+  .nav-wrapper
+    .row
+      .col.s12.m12.l12
+        =link_to users_path, class:'breadcrumb' do
+          Usuarios
+        =link_to user_path, class:'breadcrumb' do
+          =@user.full_name
+        %a.breadcrumb{}
+          Editar
+
 %h1 Editing user
 
 = render 'form'
-
-= link_to 'Show', @user
-\|
-= link_to 'Back', users_path

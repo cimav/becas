@@ -1,3 +1,12 @@
+%nav.config-breadcrumb.z-depth-0
+  .nav-wrapper
+    .row
+      .col.s12.m12.l12
+        =link_to users_path, class:'breadcrumb' do
+          Usuarios
+        %a.breadcrumb{}
+          Nuevo
+
 %h1 Nuevo usuario
 
 = render 'form'
