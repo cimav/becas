@@ -7,28 +7,32 @@
           %button.btn-floating.right.green.darken-2.tooltipped{'data-tooltip':'Nueva beca','data-delay':40,'data-position':'right',onclick:"openModal($('#new_scholarship_modal'));"}
             %i.material-icons
               add
-        %span.new.badge.orange{"data-badge-caption" => "solicitudes"}
-          =@scholarships.where(status:Scholarship::REQUESTED).size
-        %table.bordered.highlight.responsive-table
-          %thead
-            %tr
-              %th Tipo de beca
-              %th Estudiante
-              %th Monto
-              %th Estatus
-          %tbody
-            -@scholarships.each do |scholarship|
-              %tr.tr-click{href:"/scholarships/#{scholarship.id}"}
-                %td
-                  =scholarship.scholarship_type.name
-                %td
-                  =scholarship.person.full_name
-                %td
-                  =number_to_currency(scholarship.amount,unit: "$", separator: ".", delimiter: ",", format: "%u%n")
-                %td
-                  %i.material-icons.left.valign-wrapper{class:status_color(scholarship.status)}
-                    lens
-                  =scholarship.get_status
+        -if @scholarships.where(status:Scholarship::REQUESTED).size > 0
+          %span.new.badge.orange{"data-badge-caption" => "solicitudes"}
+            =@scholarships.where(status:Scholarship::REQUESTED).size
+        -if @scholarships.size > 0
+          %table.bordered.highlight.responsive-table
+            %thead
+              %tr
+                %th Tipo de beca
+                %th Estudiante
+                %th Monto
+                %th Estatus
+            %tbody
+              -@scholarships.each do |scholarship|
+                %tr.tr-click{href:"/scholarships/#{scholarship.id}"}
+                  %td
+                    =scholarship.scholarship_type.name
+                  %td
+                    =scholarship.person.full_name
+                  %td
+                    =number_to_currency(scholarship.amount,unit: "$", separator: ".", delimiter: ",", format: "%u%n")
+                  %td
+                    %i.material-icons.left.valign-wrapper{class:status_color(scholarship.status)}
+                      lens
+                    =scholarship.get_status
+        -else
+          Aun no hay becas
 
 #new_scholarship_modal.modal
   .modal-content
