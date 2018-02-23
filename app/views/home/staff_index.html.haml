@@ -8,23 +8,27 @@
             %i.material-icons.left
               add
             Solicitar nueva beca
-        %table.bordered.highlight.responsive-table
-          %thead
-            %tr
-              %th Tipo de beca
-              %th Estudiante
-              %th Monto
-              %th Estatus
-          %tbody
-            -@scholarships.each do |scholarship|
-              %tr.tr-click{href:"/scholarships/#{scholarship.id}"}
-                %td
-                  =scholarship.scholarship_type.name
-                %td
-                  =scholarship.person.full_name
-                %td
-                  =number_to_currency(scholarship.amount,unit: "$", separator: ".", delimiter: ",", format: "%u%n")
-                %td
-                  %i.material-icons.left.valign-wrapper{class:status_color(scholarship.status)}
-                    lens
-                  =scholarship.get_status
+        -if @scholarships.size > 0
+          %table.bordered.highlight.responsive-table
+            %thead
+              %tr
+                %th Tipo de beca
+                %th Estudiante
+                %th Monto
+                %th Estatus
+            %tbody
+              -@scholarships.each do |scholarship|
+                %tr.tr-click{href:"/scholarships/#{scholarship.id}"}
+                  %td
+                    =scholarship.scholarship_type.name
+                  %td
+                    =scholarship.person.full_name
+                  %td
+                    =number_to_currency(scholarship.amount,unit: "$", separator: ".", delimiter: ",", format: "%u%n")
+                  %td
+                    %i.material-icons.left.valign-wrapper{class:status_color(scholarship.status)}
+                      lens
+                    =scholarship.get_status
+        -else
+          %blockquote
+            Aun no hay becas
