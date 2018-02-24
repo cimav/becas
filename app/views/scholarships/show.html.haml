@@ -184,7 +184,7 @@
       .row
         .input-field.col.s12.m12
           =f.label :file_type,'Tipo de documento', class:'active'
-          =f.select :file_type, InternshipFile::REQUESTED_DOCUMENTS.except(InternshipFile::COURSE,InternshipFile::NORMAL,InternshipFile::INSTITUTION_REQUEST).invert
+          =f.select :file_type, InternshipFile::REQUESTED_DOCUMENTS.except(InternshipFile::COURSE,InternshipFile::NORMAL,InternshipFile::INSTITUTION_REQUEST,InternshipFile::SIGN_REQUEST).invert
         .input-field.col.s12.m12
           =f.file_field :file
         .input-field.col.s12.m12.right-align
