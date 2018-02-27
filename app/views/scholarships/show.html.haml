@@ -60,6 +60,24 @@
               %p
                 %b Tipo de beca:
                 = @scholarship.scholarship_type.name
+              %p
+                %b Docente responsable:
+                = @scholarship.person.staff.full_name
+              %p
+                %b Proyecto:
+                -if !@scholarship.project_number.blank?
+                  = @scholarship.project_number
+                -else
+                  %span.red-text
+                    Sin capturar
+              -if is_admin?
+                %p
+                  %b Número de solicitud:
+                  -if !@scholarship.request_number.blank?
+                    = @scholarship.request_number
+                  -else
+                    %span.red-text
+                      Sin capturar
             .col.s12.m6
               %table.grey.lighten-4
                 %thead
