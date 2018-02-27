@@ -7,6 +7,14 @@ es:
         restrict_dependent_destroy:
           has_one: No se puede eliminar el registro porque existe un %{record} dependiente
           has_many: No se puede eliminar el registro porque existen %{record} dependientes
+
+    attributes:
+      scholarship:
+          start_date: Fecha de inicio
+          end_date: Fecha de término
+          project_number: Número de proyecto
+          amount: Monto
+
   date:
     abbr_day_names:
     - dom

@@ -3,6 +3,9 @@ class Scholarship < ApplicationRecord
   belongs_to :scholarship_type
   has_many :scholarship_comments
 
+  validates :start_date, presence: true
+  validates :end_date, presence: true
+
   before_create do
     self.status = REQUESTED
   end

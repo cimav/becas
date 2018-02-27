@@ -13,10 +13,10 @@
       =f.label :scholarship_type_id, 'Tipo de beca'
     .input-field.col.s12.m4
       =f.text_field :start_date, class: "datepicker",placeholder:'Selecciona la fecha de inicio', type:'date'
-      =f.label :start_date, 'Fecha de inicio'
+      =f.label :start_date, 'Fecha de inicio (beca)', class:'active'
     .input-field.col.s12.m4
       =f.text_field :end_date, class: "datepicker",placeholder:'Selecciona la fecha de término', type:'date'
-      =f.label :end_date, 'Fecha de término'
+      =f.label :end_date, 'Fecha de término (beca)', class:'active'
   .row
     .input-field.col.s12.m4
       %p{id:'scholarship_curp',disabled:true}

@@ -32,13 +32,14 @@ class ScholarshipsController < ApplicationController
     @scholarship.status = Scholarship::REQUESTED
     @scholarship.max_amount = @scholarship.scholarship_type.max_amount
     @scholarship.amount = @scholarship.max_amount*(@scholarship.percent/100)
+    @person='Internship'
 
     respond_to do |format|
       if @scholarship.save
-        format.html { redirect_to @scholarship, notice: 'Beca creada' }
+        format.html { redirect_to @scholarship,notice: 'Beca creada' }
         format.json { render :show, status: :created, location: @scholarship }
       else
-        format.html { render :new, notice: @scholarships.errors }
+        format.html { render :new }
         format.json { render json: @scholarship.errors, status: :unprocessable_entity }
       end
     end
