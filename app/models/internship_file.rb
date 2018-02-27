@@ -13,6 +13,7 @@ class InternshipFile < SaposModels
   ADDRESS_BILL        = 10
   WORKPLAN            = 11
   INSURANCE           = 12
+  CIMAV_CREDENTIAL    = 13
 
   REQUESTED_DOCUMENTS = {
       NORMAL              => 'Documento genérico',
@@ -25,7 +26,8 @@ class InternshipFile < SaposModels
       CURP                => 'CURP',
       ADDRESS_BILL        => 'Comprobante de domicilio',
       WORKPLAN            => 'Plan de trabajo',
-      INSURANCE           => 'Seguro médico'
+      INSURANCE           => 'Seguro médico',
+      CIMAV_CREDENTIAL    => 'Credencial del CIMAV'
   }
 
   def get_document_text

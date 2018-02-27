@@ -1,6 +1,7 @@
 class ScholarshipsController < ApplicationController
   before_action :auth_required
-  before_action :set_scholarship, only: [:show, :edit, :update, :destroy, :internship_request_file, :create_comment, :internship_files, :upload_internship_file]
+  before_action :set_scholarship, only: [:show, :edit, :update, :destroy, :print_internship_cep_file, :create_comment, :internship_files, :upload_internship_file]
+  include ActionView::Helpers::NumberHelper
 
   # GET /scholarships
   # GET /scholarships.json
@@ -67,7 +68,9 @@ class ScholarshipsController < ApplicationController
     end
   end
 
-  def internship_request_file
+  def print_internship_cep_file
+
+
     pdf = Prawn::Document.new(background: "private/membretada2018.png", background_scale: 0.36, right_margin: 20)
     pdf.font_size 12
     # Cabecera
@@ -92,7 +95,7 @@ class ScholarshipsController < ApplicationController
     pdf.font_size 10
     pdf.move_down 30
     table_data = [['Actividad','Monto', 'Periodo','Responsable','Proyecto','No. solicitud'],
-                  [@scholarship.person.internship_type.name,"$#{@scholarship.amount}","#{(I18n.l(@scholarship.start_date, format: '%B %Y')).capitalize} - #{(I18n.l(@scholarship.end_date, format: '%B %Y'))}", @scholarship.person.staff.full_name, '', '']]
+                  [@scholarship.person.internship_type.name,number_to_currency(@scholarship.amount,unit: "$", separator: ".", delimiter: ",", format: "%u%n"),"#{(I18n.l(@scholarship.start_date, format: '%B %Y')).capitalize} - #{(I18n.l(@scholarship.end_date, format: '%B %Y')).capitalize}", @scholarship.person.staff.full_name, (@scholarship.project_number rescue ''), (@scholarship.request_number rescue '')]]
     pdf.table table_data, :position=>:center, header:true
     pdf.font_size 12
     text = "\n\n Sin más por el momento reciba un cordial saludo.."
@@ -156,6 +159,6 @@ class ScholarshipsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def scholarship_params
-      params.require(:scholarship).permit(:person_type, :person_id, :status, :scholarship_type_id, :amount, :start_date, :end_date, :scholarship_type, :percent, :max_amount)
+      params.require(:scholarship).permit(:person_type, :person_id, :status, :scholarship_type_id, :amount, :start_date, :end_date, :scholarship_type, :percent, :max_amount, :project_number, :request_number)
     end
 end

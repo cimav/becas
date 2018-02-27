@@ -11,6 +11,11 @@
         =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::REGISTRATION_PROOF).last}
     %tr
       %td
+        Solicitud oficial de la institución de procedencia
+      %td
+        =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::INSTITUTION_REQUEST).last}
+    %tr
+      %td
         Copia de credencial del IFE o INE
       %td
         =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::IFE).last}
@@ -39,6 +44,11 @@
         Comprobante de seguro médico
       %td
         =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::INSURANCE).last}
+    %tr
+      %td
+        Credencial del CIMAV vigente
+      %td
+        =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::CIMAV_CREDENTIAL).last}
     %tr
       %td
         Curso de seguridad e higiene

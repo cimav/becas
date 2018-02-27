@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   ########################################## becas
   resources :scholarships
-  get '/scholarships/:id/formato_solicitud' => 'scholarships#internship_request_file'
+  get '/scholarships/:id/formato_solicitud_cep' => 'scholarships#print_internship_cep_file'
   post '/scholarships/:id/create_comment' => 'scholarships#create_comment'
   get '/scholarships/:id/internship_files' => 'scholarships#internship_files'
   post '/scholarships/:id/upload_internship_file' => 'scholarships#upload_internship_file'
