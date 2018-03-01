@@ -18,7 +18,7 @@ class ScholarshipsController < ApplicationController
   # GET /scholarships/new
   def new
     @person = params[:scholarship_person_type]
-    @scholarship = Scholarship.new(percent:0)
+    @scholarship = Scholarship.new
   end
 
   # GET /scholarships/1/edit
@@ -31,11 +31,11 @@ class ScholarshipsController < ApplicationController
     @scholarship = Scholarship.new(scholarship_params)
     @scholarship.status = Scholarship::REQUESTED
     @scholarship.max_amount = @scholarship.scholarship_type.max_amount
-    @scholarship.amount = @scholarship.max_amount*(@scholarship.percent/100)
     @person='Internship'
 
     respond_to do |format|
       if @scholarship.save
+
         format.html { redirect_to @scholarship,notice: 'Beca creada' }
         format.json { render :show, status: :created, location: @scholarship }
       else
@@ -50,6 +50,7 @@ class ScholarshipsController < ApplicationController
   def update
     respond_to do |format|
       if @scholarship.update(scholarship_params)
+        ScholarshipsMailer.new_scholarship(@scholarship,User.find_by_email('geovany.gameros@cimav.edu.mx')).deliver_now
         format.html { redirect_to @scholarship, notice: 'Se actualizó la beca' }
         format.json { render :show, status: :ok, location: @scholarship }
       else
@@ -160,6 +161,6 @@ class ScholarshipsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def scholarship_params
-      params.require(:scholarship).permit(:person_type, :person_id, :status, :scholarship_type_id, :amount, :start_date, :end_date, :scholarship_type, :percent, :max_amount, :project_number, :request_number)
+      params.require(:scholarship).permit(:person_type, :person_id, :status, :scholarship_type_id, :amount, :start_date, :end_date, :scholarship_type, :max_amount, :project_number, :request_number)
     end
 end

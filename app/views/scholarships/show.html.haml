@@ -92,14 +92,9 @@
                       Monto máximo
                     %td
                       = number_to_currency(@scholarship.max_amount,unit: "$", separator: ".", delimiter: ",", format: "%u%n")
-                  %tr
-                    %th
-                      Porcentaje
-                    %td
-                      = "#{@scholarship.percent}%"
                   %tr.grey.lighten-2
                     %th
-                      Monto
+                      Monto a otorgar
                     %th
                       = number_to_currency(@scholarship.amount,unit: "$", separator: ".", delimiter: ",", format: "%u%n")
       -if is_admin?

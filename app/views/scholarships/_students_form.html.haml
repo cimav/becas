@@ -1,4 +1,8 @@
 = form_for @scholarship do |f|
+  - if @scholarship.errors.any?
+    -@scholarship.errors.full_messages.each do |error|
+      :javascript
+         Materialize.toast("#{error}",4500, 'orange darken-4')
   .row
     .input-field.col.s12.m6
       =f.select :person_id,Student.where(status:Student::ACTIVE).collect {|p| [ p.full_name, p.id,{'data-student-program':p.program.name,'data-curp':p.curp}] }

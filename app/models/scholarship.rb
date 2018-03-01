@@ -1,10 +1,21 @@
+class MaxAmountGreaterThanAmount < ActiveModel::Validator
+  def validate(record)
+    unless record.max_amount >= record.amount
+      record.errors[:amount] << 'no puede ser mayor al monto máximo'
+    end
+  end
+end
+
 class Scholarship < ApplicationRecord
   belongs_to :person, polymorphic: true
   belongs_to :scholarship_type
   has_many :scholarship_comments
 
   validates :start_date, presence: true
+  validates :amount, presence: true
   validates :end_date, presence: true
+  validates :amount, numericality: true
+  validates_with MaxAmountGreaterThanAmount
 
   before_create do
     self.status = REQUESTED

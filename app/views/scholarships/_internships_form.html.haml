@@ -38,16 +38,11 @@
       =f.label :request_number, 'Número de solicitud'
   .row
     .input-field.col.s12.m2
-      %i.material-icons.prefix
-        \%
-      =f.number_field :percent, min:1,max: 100
-      =f.label :percent, 'Porcentaje'
-    .input-field.col.s12.m2
       %p{id:'scholarship_max_amount',disabled:true}
       =f.label :max_amount, 'Monto máximo', class:'active'
     .input-field.col.s12.m4
-      %p.green-text.text-darken-2{id:'scholarship_amount',disabled:true}
-      =label_tag 'scholarship_amount', 'Monto final', class:'active'
+      =f.label :amount, 'Monto a otorgar', class:'active'
+      =f.text_field :amount
   .row
     .input-field.col.s12.m12
       =f.hidden_field :person_type, value:'Internship'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180216214849) do
+ActiveRecord::Schema.define(version: 20180227203350) do
 
   create_table "scholarship_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "person_type"
@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(version: 20180216214849) do
     t.datetime "updated_at", null: false
     t.bigint "scholarship_type_id"
     t.float "max_amount", limit: 24
-    t.float "percent", limit: 24
     t.string "project_number"
     t.string "request_number"
     t.index ["person_id", "person_type"], name: "index_scholarships_on_person_id_and_person_type"
