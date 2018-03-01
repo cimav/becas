@@ -50,7 +50,7 @@ class ScholarshipsController < ApplicationController
   def update
     respond_to do |format|
       if @scholarship.update(scholarship_params)
-        ScholarshipsMailer.new_scholarship(@scholarship,User.find_by_email('geovany.gameros@cimav.edu.mx')).deliver_now
+        @scholarship.send_new_scholarship_email
         format.html { redirect_to @scholarship, notice: 'Se actualizó la beca' }
         format.json { render :show, status: :ok, location: @scholarship }
       else

@@ -40,4 +40,7 @@ class Scholarship < ApplicationRecord
     STATUS[self.status]
   end
 
+  def send_new_scholarship_email_admin
+    SendNewScholarshipEmailJob.perform_later(self.id,User.last.id)
+  end
 end
