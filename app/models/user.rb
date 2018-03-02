@@ -4,13 +4,14 @@ class User < ApplicationRecord
 
   ADMIN = 1
   VIEWER = 2
+  DEPARTMENT_ASSISTANT = 3
   SUPER_USER = 1000
 
 
   ACTIVE = 1
   DELETED = 99
 
-  USER_TYPES = {ADMIN=>'Administrador', VIEWER=>'Espectador'}
+  USER_TYPES = {ADMIN=>'Administrador', VIEWER=>'Espectador', DEPARTMENT_ASSISTANT=>'Asistente de departamento'}
 
   def set_status
     self.status = ACTIVE
