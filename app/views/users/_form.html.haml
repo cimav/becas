@@ -1,21 +1,25 @@
 = form_for @user do |f|
 
   .row
-    .col.s12.m6
+    .col.s12.m4
       = f.label :full_name, 'Nombre completo'
       = f.text_field :full_name
-    .col.s12.m6
+    .col.s12.m4
       = f.label :email
       = f.text_field :email
-  .row
-    .col.s12.m6
-      =f.collection_check_boxes :areas, Area.all, :id,:name
-    .col.s12.m6
+    .col.s12.m4
       = f.label :user_type, 'Tipo de usuario'
       = f.select :user_type, User::USER_TYPES.invert.sort {|a,b| a[1] <=> b[1] }
+  .row
+    .col.s12.m12
+      =f.label :areas,'Áreas permitidas'
+      =f.collection_check_boxes :areas, Area.all, :id,:name do |b|
+        .col.s12.m12
+          =b.check_box
+          =b.label
 
   .row
-    = f.button type:'submit',class:'btn-floating btn-large green tooltipped', 'data-tooltip':'Guardar','data-delay':40 do
+    = f.button type:'submit',class:'btn-floating btn-large green tooltipped right', 'data-tooltip':'Guardar','data-delay':40 do
       %i.material-icons
         done
 
