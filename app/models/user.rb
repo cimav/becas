@@ -13,12 +13,22 @@ class User < ApplicationRecord
 
   USER_TYPES = {ADMIN=>'Administrador', VIEWER=>'Espectador', DEPARTMENT_ASSISTANT=>'Asistente de departamento'}
 
+
   def set_status
     self.status = ACTIVE
   end
 
   def get_type
     USER_TYPES[self.user_type]
+  end
+
+  def get_departments
+    departments = {}
+    departments['TODOS'] = 'Todos los departamentos'
+    No20.all.each do |no20|
+      departments[no20.no20_depto] = no20.no20_nombre.capitalize
+    end
+    departments
   end
 
 end

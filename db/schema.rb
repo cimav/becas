@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180227203350) do
+ActiveRecord::Schema.define(version: 20180302185903) do
 
   create_table "scholarship_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "person_type"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 20180227203350) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "department"
   end
 
   add_foreign_key "scholarship_comments", "scholarships"

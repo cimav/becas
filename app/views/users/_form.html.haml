@@ -2,15 +2,18 @@
 
   .row
     .col.s12.m6
-      = f.label :full_name
+      = f.label :full_name, 'Nombre completo'
       = f.text_field :full_name
     .col.s12.m6
       = f.label :email
       = f.text_field :email
   .row
     .col.s12.m6
-      = f.label :user_type
+      = f.label :user_type, 'Tipo de usuario'
       = f.select :user_type, User::USER_TYPES.invert.sort {|a,b| a[1] <=> b[1] }
+    .col.s12.m6
+      = f.label :department, 'Departamento'
+      = f.select :department, @user.get_departments.invert
   .row
     = f.button type:'submit',class:'btn-floating btn-large green tooltipped', 'data-tooltip':'Guardar','data-delay':40 do
       %i.material-icons

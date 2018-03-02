@@ -5,8 +5,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @admins = User.where(user_type:User::ADMIN)
-    @viewers = User.where(user_type:User::VIEWER)
+    @users = User.where.not(user_type:User::SUPER_USER)
   end
 
   # GET /users/1
@@ -71,6 +70,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:full_name, :email, :user_type, :status)
+      params.require(:user).permit(:full_name, :email, :user_type, :status, :department)
     end
 end

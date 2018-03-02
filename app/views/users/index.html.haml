@@ -3,14 +3,11 @@
     %h1
       Administradores
     .collection
-      -@admins.each do |user|
+      -@users.each do |user|
         =link_to user, class:'collection-item'do
           =user.full_name
-      -@viewers.each do |user|
-        =link_to user, class:'collection-item' do
-          %i.material-icons{"aria-hidden" => "true", style:"padding-right:1rem;"}
-            remove_red_eye
-          =user.full_name
+          .right
+            =user.get_type
 
 .fixed-action-btn
   =link_to new_user_path, class:'btn-floating btn-large red tooltipped', "data-position" => "left", "data-tooltip" => "Nuevo usuario", "data-delay" => "100" do
