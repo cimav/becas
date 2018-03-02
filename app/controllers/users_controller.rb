@@ -42,7 +42,10 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
-      if @user.update(user_params)
+      custom_params = user_params
+      # areas llega como un arreglo de strings y siempre con el primer elemento vacío así que se cambia el formato
+      custom_params[:areas]= custom_params[:areas].drop(1).map(&:to_i)
+      if @user.update(custom_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -70,6 +73,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:full_name, :email, :user_type, :status, :department)
+      params.require(:user).permit(:full_name, :email, :user_type, :status, areas:[])
     end
 end

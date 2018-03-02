@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_many :scholarship_comments, as: :person
   before_create :set_status
+  serialize :areas, Array
 
   ADMIN = 1
   VIEWER = 2
