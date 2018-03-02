@@ -25,7 +25,10 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params)
+    custom_params = user_params
+    # areas llega como un arreglo de strings y siempre con el primer elemento vacío así que se cambia el formato
+    custom_params[:areas]= custom_params[:areas].drop(1).map(&:to_i)
+    @user = User.new(custom_params)
 
     respond_to do |format|
       if @user.save
