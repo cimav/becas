@@ -4,9 +4,14 @@
       .card-content
         .card-title
           Becas
-          %button.btn-floating.right.green.darken-2.tooltipped{'data-tooltip':'Nueva beca','data-delay':40,'data-position':'right',onclick:"openModal($('#new_scholarship_modal'));"}
-            %i.material-icons
-              add
+          -if is_admin?
+            %button.btn-floating.right.green.darken-2.tooltipped{'data-tooltip':'Nueva beca','data-delay':40,'data-position':'right',onclick:"openModal($('#new_scholarship_modal'));"}
+              %i.material-icons
+                add
+          -elsif current_user.user_type.eql?User::DEPARTMENT_ASSISTANT
+            =link_to new_scholarship_path, class:'btn-floating green darken-2 tooltipped right', 'data-tooltip':'Solicitar nueva beca','data-position':'right' do
+              %i.material-icons.left
+                add
         -if @scholarships.where(status:Scholarship::REQUESTED).size > 0
           %span.new.badge.orange{"data-badge-caption" => "solicitudes"}
             =@scholarships.where(status:Scholarship::REQUESTED).size

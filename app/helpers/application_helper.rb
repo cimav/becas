@@ -56,6 +56,12 @@ module ApplicationHelper
     end
   end
 
+  def is_assitant?
+    if (user = current_user if session[:user_type].eql? 'User')
+      user.user_type == User::DEPARTMENT_ASSISTANT
+    end
+  end
+
 
   def print_document(to, content,file_name)
     pdf = Prawn::Document.new(background: "private/membretada2018.png", background_scale: 0.36, right_margin: 20)

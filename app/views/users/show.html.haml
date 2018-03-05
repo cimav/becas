@@ -18,6 +18,14 @@
   %b Tipo de usuario:
   = @user.get_type
 
+.section
+  %b Áreas permitidas:
+  %ul
+    -areas = ''
+    -@user.areas.each do |area|
+      %li
+        =Area.find(area).name
+
 -if is_admin?
   .fixed-action-btn
     %button.btn-floating.btn-large.blue.darken-2

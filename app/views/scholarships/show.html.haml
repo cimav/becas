@@ -25,10 +25,17 @@
             = @scholarship.person.full_name
           .row
             .col.s12.m6
-              -if @scholarship.person_type.eql?'Student'
+              -if @scholarship.person_type.eql?'Student' # Campos específicos de estudiantes y practicantes
                 %p
                   %b Programa:
                   =@scholarship.person.program.name
+                %p
+                  %b Director de tesis:
+                  = @scholarship.person.supervisor.full_name
+              -else
+                %p
+                  %b Área:
+                  =@scholarship.person.area.name
               %p
                 %b Curp:
                 -if !@scholarship.person.curp.blank?
@@ -36,6 +43,7 @@
                 -else
                   %span.red-text
                     Sin capturar
+
               %p
                 %b Correo electrónico:
                 -if !@scholarship.person.email.blank?
@@ -60,9 +68,6 @@
               %p
                 %b Tipo de beca:
                 = @scholarship.scholarship_type.name
-              %p
-                %b Docente responsable:
-                = @scholarship.person.staff.full_name
               %p
                 %b Proyecto:
                 -if !@scholarship.project_number.blank?

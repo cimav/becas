@@ -3,6 +3,7 @@ class Student < SaposModels
   belongs_to :campus
   has_many :scholarships, as: :person
   has_many :term_students
+  belongs_to :supervisor, :foreign_key => "supervisor", :class_name => "Staff"
 
   DELETED      = 0
   ACTIVE       = 1

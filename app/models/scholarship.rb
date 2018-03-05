@@ -1,7 +1,9 @@
 class MaxAmountGreaterThanAmount < ActiveModel::Validator
   def validate(record)
-    unless record.max_amount >= record.amount
-      record.errors[:amount] << 'no puede ser mayor al monto máximo'
+    if record.amount
+      unless record.max_amount >= record.amount
+        record.errors[:amount] << 'no puede ser mayor al monto máximo'
+      end
     end
   end
 end

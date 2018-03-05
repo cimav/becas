@@ -23,13 +23,12 @@ class User < ApplicationRecord
     USER_TYPES[self.user_type]
   end
 
-  def get_departments
-    departments = {}
-    departments['TODOS'] = 'Todos los departamentos'
-    No20.all.each do |no20|
-      departments[no20.no20_depto] = no20.no20_nombre.capitalize
+  def get_user_areas
+    areas = ''
+    self.areas.each do |area|
+      areas+= " #{Area.find(area).name},"
     end
-    departments
+    areas.chop
   end
 
 end
