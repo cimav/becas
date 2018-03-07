@@ -9,15 +9,15 @@ function refreshInternshipFiles(scholarship_id){
 // Respuesta al subir archivo por ajax
 //-------------------------------------
 
-$(document).on("ajax:success","#internships-files-form", function(ev,data){
-        refreshInternshipFiles(data.object.id); // se pasa el id de la beca
+$(document).on("ajax:success","#internship-files-form", function(ev,data){
         $('.modal').modal('close');
+        refreshInternshipFiles(data.object.id); // se pasa el id de la beca
         Materialize.toast(data.message, 4000);
         // se puede acceder al objeto  por ejemplo data.object.id
 });
 
 
-$(document).on("ajax:error","#remote-form", function(ev,data){
+$(document).on("ajax:error","#internship-files-form", function(ev,data){
     $('.modal').modal('close');
     Materialize.toast('Error al subir documento', 4000);
     for (i = 0; i<data.errors.length;i++) {

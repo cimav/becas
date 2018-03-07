@@ -198,7 +198,7 @@
 #upload_file_modal.modal
   .modal-content
     %h5 Subir documento
-    =form_for InternshipFile.new, url:"/scholarships/#{@scholarship.id}/upload_internship_file", remote:true, html:{id:'internships-files-form', class:'col s12 m12'} do |f|
+    =form_for InternshipFile.new, url:"/scholarships/#{@scholarship.id}/upload_internship_file", remote:true, html:{id:'internship-files-form', class:'col s12 m12'} do |f|
       .row
         .input-field.col.s12.m12
           =f.label :file_type,'Tipo de documento', class:'active'
