@@ -14,7 +14,7 @@
 !/tmp/.keep
 .idea
 .idea/*
-
+/public/uploads/*
 
 /node_modules
 /yarn-error.log

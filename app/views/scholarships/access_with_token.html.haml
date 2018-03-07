@@ -6,10 +6,57 @@
         .card
           .card-content
             .card-title
+              Información de la beca
+            .row
+              .col.s12.m1
+                %img.responsive-img.circle{src:"http://posgrado.cimav.edu.mx/imagen/#{@scholarship.person_type.downcase}/#{@scholarship.person_id}"}
+              .col.s12.m11
+                .right.valign-wrapper
+                  %i.material-icons.left{class:status_color(@scholarship.status)}
+                    lens
+                  =@scholarship.get_status
+                %h4
+                  = @scholarship.person.full_name
+                .row
+                  .col.s12.m6
+                    -if @scholarship.person_type.eql?'Student' # Campos específicos de estudiantes y practicantes
+                      %p
+                        %b Programa:
+                        =@scholarship.person.program.name
+                      %p
+                        %b Director de tesis:
+                        = @scholarship.person.supervisor.full_name
+                    -else
+                      %p
+                        %b Área:
+                        =@scholarship.person.area.name
+                    %p
+                      %b Fecha de inicio (beca):
+                      -if !@scholarship.start_date.blank?
+                        = f_date_no_time(@scholarship.start_date)
+                      -else
+                        %span.red-text
+                          Sin capturar
+                    %p
+                      %b Fecha de inicio (beca):
+                      -if !@scholarship.end_date.blank?
+                        = f_date_no_time(@scholarship.end_date)
+                      -else
+                        %span.red-text
+                          Sin capturar
+                    %p
+                      %b Tipo de beca:
+                      = @scholarship.scholarship_type.name
+
+      .row
+        .card
+          .card-content
+            .card-title
               Documentos
-              %a.btn-floating.right
-                %i.material-icons.green.darken-2{onclick:"openModal($('#upload_file_modal'));"}
-                  add
+              -if (@scholarship.status.eql? Scholarship::REQUESTED) && (@scholarship.person_type.eql? 'Internship')
+                %a.btn-floating.right
+                  %i.material-icons.green.darken-2{onclick:"openModal($('#upload_file_modal'));"}
+                    add
             #internship_files
               :javascript
                 refreshInternshipFiles("#{@scholarship.id}");
