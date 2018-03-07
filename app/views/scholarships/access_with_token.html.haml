@@ -1,0 +1,56 @@
+-if @scholarship.scholarship_token
+  -if @scholarship.scholarship_token.token == @token
+    -if @scholarship.scholarship_token.status.eql? ScholarshipToken::ACTIVE
+      / El token es el correcto y se tiene acceso
+      .row
+        .card
+          .card-content
+            .card-title
+              Documentos
+              %a.btn-floating.right
+                %i.material-icons.green.darken-2{onclick:"openModal($('#upload_file_modal'));"}
+                  add
+            #internship_files
+              :javascript
+                refreshInternshipFiles("#{@scholarship.id}");
+      #upload_file_modal.modal
+        .modal-content
+          %h5 Subir documento
+          =form_for InternshipFile.new, url:"/scholarships/#{@scholarship.id}/upload_internship_file", class:'col s12 m12 remote-form', remote:true do |f|
+            .row
+              .input-field.col.s12.m12
+                =f.label :file_type,'Tipo de documento', class:'active'
+                =f.select :file_type, InternshipFile::REQUESTED_DOCUMENTS.except(InternshipFile::COURSE,InternshipFile::NORMAL,InternshipFile::SIGN_REQUEST).invert
+              .input-field.col.s12.m12
+                =f.file_field :file
+              .input-field.col.s12.m12.right-align
+                %button.btn-floating.green.darken-1{type:'submit',value:"Submit", 'data-remote':'true'}
+                  %i.material-icons
+                    send
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    -else
+      %h1.center.red
+        Ya no tiene acceso a este enlace
+  -else
+    No tiene acceso a este enlace
+-else
+  No tiene acceso a este enlace
+
+:javascript
+  $(document).ready(function(){
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal('close');
+  });

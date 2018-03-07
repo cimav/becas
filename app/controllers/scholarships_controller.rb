@@ -1,6 +1,6 @@
 class ScholarshipsController < ApplicationController
-  before_action :auth_required
-  before_action :set_scholarship, only: [:show, :edit, :update, :destroy, :print_internship_cep_file, :create_comment, :internship_files, :upload_internship_file]
+  skip_before_action :auth_required, only: [:access_with_token, :upload_internship_file, :internship_files]
+  before_action :set_scholarship, only: [:show, :edit, :update, :destroy, :print_internship_cep_file, :create_comment, :internship_files, :upload_internship_file, :access_with_token]
   include ActionView::Helpers::NumberHelper
 
   # GET /scholarships
@@ -36,6 +36,7 @@ class ScholarshipsController < ApplicationController
     respond_to do |format|
       if @scholarship.save
 
+
         format.html { redirect_to @scholarship,notice: 'Beca creada' }
         format.json { render :show, status: :created, location: @scholarship }
       else
@@ -50,7 +51,8 @@ class ScholarshipsController < ApplicationController
   def update
     respond_to do |format|
       if @scholarship.update(scholarship_params)
-        @scholarship.send_new_scholarship_email
+        @scholarship.notice_admin # se envía correo a los administradores para notificar nueva beca
+        @scholarship.notice_student # se envía correo con token para para que el alumno accese
         format.html { redirect_to @scholarship, notice: 'Se actualizó la beca' }
         format.json { render :show, status: :ok, location: @scholarship }
       else
@@ -137,21 +139,27 @@ class ScholarshipsController < ApplicationController
   end
 
   def upload_internship_file
+    response = {}
     file = InternshipFile.new
     file.internship_id = @scholarship.person.id
     file.file_type = params[:internship_file]['file_type']
     file.file = params[:internship_file]['file']
     file.description = params[:internship_file]['file'].original_filename rescue 'Sin nombre'
-    respond_to do |format|
-      if file.save
-        format.html { redirect_to @scholarship, notice: 'Se subió el documento' }
-        format.json { render json: file, status: :ok}
-      else
-        format.html { redirect_to @scholarship, notice: 'Error al subir documento'}
-        format.json { render json: file.errors, status: :unprocessable_entity }
-      end
+    response[:object] = file
+    if file.save
+      response[:message] = 'Se subió el documento'
+    else
+      response[:message] = 'Error al subir documento'
+      response[:errors] = file.errors.full_messages
     end
+
   end
+
+  def access_with_token
+    @token = params[:token]
+  end
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

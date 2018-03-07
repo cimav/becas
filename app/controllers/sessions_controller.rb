@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  skip_before_action :auth_required
+
   def create
     session[:user_email] = auth_hash['info']['email']
 

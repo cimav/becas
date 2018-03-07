@@ -1,0 +1,11 @@
+%p
+  Estimado
+  =@to.full_name
+
+%p
+  Se le informa que se ha registrado una solicitud para otorgarle una beca. Para seguir el estado de la solicitud puede dar click en el siguiente enlace:
+  %br
+  ="http://becas.cimav.edu.mx/scholarships/#{@scholarship.id}/token/#{@scholarship.scholarship_token.token}"
+
+%p
+  Que tenga un excelente día.

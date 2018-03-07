@@ -1,10 +1,9 @@
 class ApplicationController < ActionController::Base
+  before_action :auth_required
   protect_from_forgery with: :exception
-  helper_method :is_admin?
-  helper_method :current_user
   include ApplicationHelper
 
-  def authenticated?
+  def  authenticated?
     if session[:user_auth].blank?
       user_access
     else

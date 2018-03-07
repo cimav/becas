@@ -12,6 +12,7 @@ class Scholarship < ApplicationRecord
   belongs_to :person, polymorphic: true
   belongs_to :scholarship_type
   has_many :scholarship_comments
+  has_one :scholarship_token
 
   validates :start_date, presence: true
   validates :amount, presence: true
@@ -42,7 +43,14 @@ class Scholarship < ApplicationRecord
     STATUS[self.status]
   end
 
-  def send_new_scholarship_email_admin
-    SendNewScholarshipEmailJob.perform_later(self.id,User.last.id)
+  def notice_admin
+    User.where(user_type: User::ADMIN).each do |user|
+      ScholarshipNoticeAdminJob.perform_later(self.id, user.id)
+    end
   end
+
+  def notice_student
+    ScholarshipNoticeStudentJob.perform_later(self.id, self.person_id, self.person_type)
+  end
+
 end

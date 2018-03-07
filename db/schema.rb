@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180302185903) do
+ActiveRecord::Schema.define(version: 20180305233226) do
 
   create_table "scholarship_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "person_type"
@@ -23,6 +23,15 @@ ActiveRecord::Schema.define(version: 20180302185903) do
     t.index ["person_id", "person_type"], name: "index_scholarship_comments_on_person_id_and_person_type"
     t.index ["person_type", "person_id"], name: "index_scholarship_comments_on_person_type_and_person_id"
     t.index ["scholarship_id"], name: "index_scholarship_comments_on_scholarship_id"
+  end
+
+  create_table "scholarship_tokens", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.bigint "scholarship_id"
+    t.string "token"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["scholarship_id"], name: "index_scholarship_tokens_on_scholarship_id"
   end
 
   create_table "scholarship_types", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
