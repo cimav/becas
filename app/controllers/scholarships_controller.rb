@@ -157,6 +157,7 @@ class ScholarshipsController < ApplicationController
 
   def access_with_token
     @token = params[:token]
+    render layout: 'empty_layout'
   end
 
 

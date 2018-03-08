@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     if authenticated?
       redirect_to '/'
     else
-      render 'login/unauthorized', :status => 401, layout: false
+      render 'login/unauthorized', :status => 401, layout: 'empty_layout'
     end
   end
 

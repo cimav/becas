@@ -92,9 +92,11 @@
       %h1.center.red
         Ya no tiene acceso a este enlace
   -else
-    No tiene acceso a este enlace
+    %h1.center.red
+      No existe el enlace
 -else
-  No tiene acceso a este enlace
+  %h1.center.red
+    No tiene acceso a este enlace
 
 :javascript
   $(document).ready(function(){
