@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.where.not(user_type:User::SUPER_USER)
+    @users = User.where.not(user_type:User::SUPER_USER).where.not(status:User::DELETED)
   end
 
   # GET /users/1
