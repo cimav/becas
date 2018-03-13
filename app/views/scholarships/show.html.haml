@@ -129,18 +129,18 @@
           %button.btn-floating.btn-large.waves-effect.waves-light.purple.tooltipped{'data-tooltip':"Responder", onclick:"openModal($('#new_comment_modal'));"}
             %i.material-icons insert_comment
 
-
-.row
-  .card
-    .card-content
-      .card-title
-        Documentos
-        %a.btn-floating.right
-          %i.material-icons.green.darken-2{onclick:"openModal($('#upload_file_modal'));"}
-            add
-      #internship_files
-        :javascript
-          refreshInternshipFiles("#{@scholarship.id}");
+-if @scholarship.person_type.eql?'Internship'
+  .row
+    .card
+      .card-content
+        .card-title
+          Documentos
+          %a.btn-floating.right
+            %i.material-icons.green.darken-2{onclick:"openModal($('#upload_file_modal'));"}
+              add
+        #internship_files
+          :javascript
+            refreshInternshipFiles("#{@scholarship.id}");
 
 
 

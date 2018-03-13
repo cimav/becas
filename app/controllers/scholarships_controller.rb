@@ -31,11 +31,15 @@ class ScholarshipsController < ApplicationController
     @scholarship = Scholarship.new(scholarship_params)
     @scholarship.status = Scholarship::REQUESTED
     @scholarship.max_amount = @scholarship.scholarship_type.max_amount
-    @person = 'Internship'
+    @person = @scholarship.person_type
 
     respond_to do |format|
       if @scholarship.save
 
+        @scholarship.notice_admin # se envía correo a los administradores para notificar nueva beca
+        if @scholarship.person_type.eql? 'Internship'
+          @scholarship.notice_student # se envía correo con token para para que el alumno accese
+        end
 
         format.html {redirect_to @scholarship, notice: 'Beca creada'}
         format.json {render :show, status: :created, location: @scholarship}
@@ -51,8 +55,6 @@ class ScholarshipsController < ApplicationController
   def update
     respond_to do |format|
       if @scholarship.update(scholarship_params)
-        @scholarship.notice_admin # se envía correo a los administradores para notificar nueva beca
-        @scholarship.notice_student # se envía correo con token para para que el alumno accese
         format.html {redirect_to @scholarship, notice: 'Se actualizó la beca'}
         format.json {render :show, status: :ok, location: @scholarship}
       else
@@ -100,7 +102,8 @@ class ScholarshipsController < ApplicationController
     pdf.move_down 30
     table_data = [['Actividad', 'Monto', 'Periodo', 'Responsable', 'Proyecto', 'No. solicitud'],
                   [@scholarship.person.internship_type.name, number_to_currency(@scholarship.amount, unit: "$", separator: ".", delimiter: ",", format: "%u%n"), "#{(I18n.l(@scholarship.start_date, format: '%B %Y')).capitalize} - #{(I18n.l(@scholarship.end_date, format: '%B %Y')).capitalize}", @scholarship.person.staff.full_name, (@scholarship.project_number rescue ''), (@scholarship.request_number rescue '')]]
-    pdf.table table_data, :position => :center, header: true
+    pdf.table table_data, :position => :center, header:     @person = 'Internship'
+true
     pdf.font_size 12
     text = "\n\n Sin más por el momento reciba un cordial saludo.."
     pdf.move_down 20
