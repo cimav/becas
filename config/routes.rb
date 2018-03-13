@@ -17,5 +17,6 @@ Rails.application.routes.draw do
   post '/scholarships/:id/create_comment' => 'scholarships#create_comment'
   get '/scholarships/:id/internship_files' => 'scholarships#internship_files'
   post '/scholarships/:id/upload_internship_file' => 'scholarships#upload_internship_file'
+  post '/scholarships/:id/upload_internship_file_with_token' => 'scholarships#upload_internship_file_with_token'
 
 end
