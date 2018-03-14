@@ -9,7 +9,10 @@
               add
             Solicitar nueva beca
         -if @scholarships.size > 0
-          %table.bordered.highlight.responsive-table
+          .row
+            .col.l4.input-field
+              %input#scholarships-search{:required => "", :type => "search", placeholder:'Buscar'}
+          %table#scholarships-table.bordered.highlight.responsive-table
             %thead
               %tr
                 %th Tipo de beca
@@ -32,3 +35,20 @@
         -else
           %blockquote
             Aun no hay becas
+
+:javascript
+  $(document).ready(function(){
+    $("#scholarships-search").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#scholarships-table tbody tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase()
+        .replace( /á/g, 'a' )
+        .replace( /é/g, 'e' )
+        .replace( /í/g, 'i' )
+        .replace( /ó/g, 'o' )
+        .replace( /ú/g, 'u' )
+        .replace( /ü/g, 'u' )
+        .indexOf(value) > -1)
+      });
+    });
+  });
