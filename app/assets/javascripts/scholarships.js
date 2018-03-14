@@ -25,3 +25,4 @@ $(document).on("ajax:error","#internship-files-form", function(ev,data){
     }
     // se puede acceder al objeto  por ejemplo data.object.id
 });
+
