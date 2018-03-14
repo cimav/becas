@@ -26,3 +26,7 @@ $(document).on("ajax:error","#internship-files-form", function(ev,data){
     // se puede acceder al objeto  por ejemplo data.object.id
 });
 
+function setScholarshipsHeight(){
+    var screenHeight = window.innerHeight;
+    document.getElementById("scholarships-wrapper").style.maxHeight = screenHeight-300 + "px";
+}
