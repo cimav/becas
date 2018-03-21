@@ -161,9 +161,13 @@
         more_vert
     %ul
       %li
+        %button.btn-floating.waves-effect.waves-light.orange.tooltipped{"data-position":"left", "data-tooltip": "Cambiar estatus","data-delay":40, onclick:"openModal($('#change_status_modal'));"}
+          %i.material-icons settings
+      %li
         %a.btn-floating.blue.tooltipped{href:"#{edit_scholarship_path}","data-position":"left", "data-tooltip": "Editar beca","data-delay":40}
           %i.material-icons
             edit
+
 
 
 
@@ -210,7 +214,7 @@
       .row
         .input-field.col.s12.m12
           =f.label :status,'Estatus', class:'active'
-          =f.select :status, Scholarship::STATUS.except(Scholarship::DELETED).invert
+          =f.select :status, Scholarship::STATUS.except(Scholarship::DELETED,Scholarship::TO_COMMITTEE).invert
         .input-field.col.s12.m12.right-align
           %button.btn-floating.green.darken-1{type:'submit',value:"Submit"}
             %i.material-icons
