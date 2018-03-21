@@ -14,6 +14,8 @@ class Scholarship < ApplicationRecord
   has_many :scholarship_comments
   has_one :scholarship_token
 
+  has_one :agreement, as: :agreeable, dependent: :destroy
+
   validates :start_date, presence: true
   validates :amount, presence: true
   validates :end_date, presence: true

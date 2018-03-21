@@ -38,6 +38,7 @@
 
 :javascript
   $(document).ready(function(){
+    setScholarshipsHeight();
     $("#scholarships-search").on("keyup", function() {
       var value = $(this).val().toLowerCase();
       $("#scholarships-table tbody tr").filter(function() {
