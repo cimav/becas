@@ -4,7 +4,7 @@ class Internship < SaposModels
   belongs_to :internship_type
   belongs_to :area
 
-  has_many :internship_file
+  has_many :internship_files
   has_many :scholarships, as: :person
 
   ACTIVE    = 0

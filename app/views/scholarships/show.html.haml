@@ -109,9 +109,8 @@
         -if @comments.size==0
           %button.btn-floating.btn-large.waves-effect.waves-light.purple.tooltipped{'data-tooltip':"Escribir comentario",'data-delay':30, onclick:"openModal($('#new_comment_modal'));"}
             %i.material-icons insert_comment
-        -if !@scholarship.agreement
-          %button.btn-floating.btn-large.waves-effect.waves-light.indigo.tooltipped{'data-tooltip':"Enviar a comité",'data-delay':30, onclick:"openModal($('#send_to_cep_modal'));"}
-            %i.material-icons gavel
+        %button.btn-floating.btn-large.waves-effect.waves-light.indigo.tooltipped{'data-tooltip':"Enviar a comité",'data-delay':30, onclick:"openModal($('#send_to_cep_modal'));", class:"#{enable_cep_button(@scholarship)}"}
+          %i.material-icons gavel
 -if @comments.size>0
   .row
     .card
@@ -201,6 +200,7 @@
           %p.purple-text.text-darken-2
             Al dar click en "crear acuerdo" el acuerdo se enviará al CEP para la autorización de la beca. Revise bien la sesión a la que enviará el acuerdo
             ya que no se podrá modificar más adelante
+      .row
         .col.s12.m12.right-align
           =f.submit 'Crear acuerdo', class:'btn btn-large purple'
 #change_status_modal.modal

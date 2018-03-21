@@ -137,7 +137,7 @@ true
   end
 
   def internship_files
-    @files = @scholarship.person.internship_file
+    @files = @scholarship.person.internship_files
     render layout: false
   end
 
