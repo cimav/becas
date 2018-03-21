@@ -1,6 +1,6 @@
 class ScholarshipsController < ApplicationController
   skip_before_action :auth_required, only: [:access_with_token, :upload_internship_file_with_token, :internship_files]
-  before_action :set_scholarship, only: [:show, :edit, :update, :destroy, :print_internship_cep_file, :create_comment, :internship_files, :upload_internship_file, :upload_internship_file_with_token, :access_with_token]
+  before_action :set_scholarship, only: [:show, :edit, :update, :destroy, :print_internship_cep_file, :create_comment, :internship_files, :upload_internship_file, :upload_internship_file_with_token, :access_with_token, :send_to_committee]
   include ActionView::Helpers::NumberHelper
 
   # GET /scholarships
@@ -69,7 +69,7 @@ class ScholarshipsController < ApplicationController
   def destroy
     @scholarship.update(status: Scholarship::DELETED)
     respond_to do |format|
-      format.html {redirect_to scholarships_url, notice: 'Se liminó la beca'}
+      format.html {redirect_to scholarships_url, notice: 'Se eliminó la beca'}
       format.json {head :no_content}
     end
   end
@@ -187,6 +187,24 @@ true
   def access_with_token
     @token = params[:token]
     render layout: 'empty_layout'
+  end
+
+  def send_to_committee
+    meeting_id = params[:meeting_id]
+    notes = params[:notes]
+
+    agreement = @scholarship.build_agreement(meeting_id:meeting_id, notes:notes)
+    respond_to do |format|
+      if agreement.save
+        @scholarship.status = Scholarship::TO_COMMITTEE
+        @scholarship.save
+        message = 'Acuerdo enviado a comité'
+      else
+        message = 'Error al crear acuerdo'
+      end
+      format.html {redirect_to scholarships_url, notice:message}
+      format.json {head :no_content}
+    end
   end
 
 

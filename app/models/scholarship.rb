@@ -31,6 +31,7 @@ class Scholarship < ApplicationRecord
   ACTIVE =   3
   INACTIVE =   4
   REJECTED =   5
+  TO_COMMITTEE =   6
   DELETED =   99
 
   STATUS = {REQUESTED=>'Solicitada',
@@ -38,6 +39,7 @@ class Scholarship < ApplicationRecord
             REJECTED=> 'Rechazada',
             ACTIVE=> 'Activa',
             INACTIVE=> 'Inactiva',
+            TO_COMMITTEE=> 'Enviado a comité',
             DELETED=> 'Eliminada'
   }
 

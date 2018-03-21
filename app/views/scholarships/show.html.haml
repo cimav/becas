@@ -109,8 +109,9 @@
         -if @comments.size==0
           %button.btn-floating.btn-large.waves-effect.waves-light.purple.tooltipped{'data-tooltip':"Escribir comentario",'data-delay':30, onclick:"openModal($('#new_comment_modal'));"}
             %i.material-icons insert_comment
-        %button.btn-floating.btn-large.waves-effect.waves-light.indigo.tooltipped{'data-tooltip':"Enviar a comité",'data-delay':30, onclick:"openModal($('#send_to_cep_modal'));"}
-          %i.material-icons gavel
+        -if !@scholarship.agreement
+          %button.btn-floating.btn-large.waves-effect.waves-light.indigo.tooltipped{'data-tooltip':"Enviar a comité",'data-delay':30, onclick:"openModal($('#send_to_cep_modal'));"}
+            %i.material-icons gavel
 -if @comments.size>0
   .row
     .card
@@ -186,22 +187,29 @@
 #send_to_cep_modal.modal
   .modal-content
     %h5 Crear acuerdo en CEP
-    =form_for @scholarship, class:'col s12 m12' do |f|
+    =form_for @scholarship, class:'col s12 m12', url:"/scholarships/#{@scholarship.id}/send_to_committee", method:'post' do |f|
       .row
         .input-field.col.s12.m12
-          =f.label :status,'Mensaje', class:'active'
-          =f.select :status, Scholarship::STATUS.except(Scholarship::DELETED).invert
-        .input-field.col.s12.m12.right-align
-          %button.btn-floating.green.darken-1{type:'submit',value:"Submit"}
-            %i.material-icons
-              send
+          =label_tag :meeting_id,'Sesión', class:'active'
+          =select_tag :meeting_id, options_from_collection_for_select(Meeting.where(status:Meeting::OPENED).order('id_key desc'), "id", "id_key")
+
+        .input-field.col.s12.m12
+          =label_tag :notes,'Nota', class:'active'
+          =text_field_tag :notes,'' ,placeholder:'Escriba una nota sobre la beca que sea importante para la decisión deel CEP'
+      .row
+        .col.s12.m12
+          %p.purple-text.text-darken-2
+            Al dar click en "crear acuerdo" el acuerdo se enviará al CEP para la autorización de la beca. Revise bien la sesión a la que enviará el acuerdo
+            ya que no se podrá modificar más adelante
+        .col.s12.m12.right-align
+          =f.submit 'Crear acuerdo', class:'btn btn-large purple'
 #change_status_modal.modal
   .modal-content
     %h5 Cambiar estatus
     =form_for @scholarship, class:'col s12 m12' do |f|
       .row
         .input-field.col.s12.m12
-          =f.label :status,'Mensaje', class:'active'
+          =f.label :status,'Estatus', class:'active'
           =f.select :status, Scholarship::STATUS.except(Scholarship::DELETED).invert
         .input-field.col.s12.m12.right-align
           %button.btn-floating.green.darken-1{type:'submit',value:"Submit"}

@@ -18,5 +18,6 @@ Rails.application.routes.draw do
   get '/scholarships/:id/internship_files' => 'scholarships#internship_files'
   post '/scholarships/:id/upload_internship_file' => 'scholarships#upload_internship_file'
   post '/scholarships/:id/upload_internship_file_with_token' => 'scholarships#upload_internship_file_with_token'
+  post '/scholarships/:id/send_to_committee' => 'scholarships#send_to_committee'
 
 end
