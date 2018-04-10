@@ -9,6 +9,7 @@ class MaxAmountGreaterThanAmount < ActiveModel::Validator
 end
 
 class Scholarship < ApplicationRecord
+  audited
   belongs_to :person, polymorphic: true
   belongs_to :scholarship_type
   has_many :scholarship_comments

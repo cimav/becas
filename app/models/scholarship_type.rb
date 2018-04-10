@@ -1,4 +1,5 @@
 class ScholarshipType < ApplicationRecord
+  audited
   has_many :scholarships
   before_create :set_status
 
