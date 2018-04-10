@@ -20,13 +20,13 @@
       %li{class:"#{active_class('/scholarships')} #{'active' if request.path.eql?'/'}"}
         %a{href:'/scholarships'}
           %i.material-icons
-            folder_special
+            school
 
       -if is_admin?
         %li{class:active_class('/scholarship_types')}
           %a{href:'/scholarship_types'}
             %i.material-icons
-              folder
+              list
         %li{class:active_class('/users')}
           %a{href:'/users'}
             %i.material-icons

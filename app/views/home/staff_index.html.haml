@@ -16,6 +16,7 @@
             %thead
               %tr
                 %th Tipo de beca
+                %th Responsable
                 %th Estudiante
                 %th Monto
                 %th Estatus
@@ -24,6 +25,11 @@
                 %tr.tr-click{href:"/scholarships/#{scholarship.id}"}
                   %td
                     =scholarship.scholarship_type.name
+                  %td
+                    -if scholarship.person_type.eql?'Student'
+                      =scholarship.person.supervisor.full_name
+                    -else
+                      =scholarship.person.staff.full_name
                   %td
                     =scholarship.person.full_name
                   %td

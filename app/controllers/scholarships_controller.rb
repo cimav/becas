@@ -102,8 +102,8 @@ class ScholarshipsController < ApplicationController
     pdf.move_down 30
     table_data = [['Actividad', 'Monto', 'Periodo', 'Responsable', 'Proyecto', 'No. solicitud'],
                   [@scholarship.person.internship_type.name, number_to_currency(@scholarship.amount, unit: "$", separator: ".", delimiter: ",", format: "%u%n"), "#{(I18n.l(@scholarship.start_date, format: '%B %Y')).capitalize} - #{(I18n.l(@scholarship.end_date, format: '%B %Y')).capitalize}", @scholarship.person.staff.full_name, (@scholarship.project_number rescue ''), (@scholarship.request_number rescue '')]]
-    pdf.table table_data, :position => :center, header:     @person = 'Internship'
-true
+    pdf.table table_data, :position => :center, header: @person = 'Internship'
+    true
     pdf.font_size 12
     text = "\n\n Sin más por el momento reciba un cordial saludo.."
     pdf.move_down 20
@@ -193,7 +193,7 @@ true
     meeting_id = params[:meeting_id]
     notes = params[:notes]
 
-    agreement = @scholarship.build_agreement(meeting_id:meeting_id, notes:notes)
+    agreement = @scholarship.build_agreement(meeting_id: meeting_id, notes: notes)
     respond_to do |format|
       if agreement.save
         @scholarship.status = Scholarship::TO_COMMITTEE
@@ -202,7 +202,7 @@ true
       else
         message = 'Error al crear acuerdo'
       end
-      format.html {redirect_to scholarships_url, notice:message}
+      format.html {redirect_to scholarships_url, notice: message}
       format.json {head :no_content}
     end
   end
