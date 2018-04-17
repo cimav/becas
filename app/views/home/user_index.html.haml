@@ -12,43 +12,52 @@
             =link_to new_scholarship_path, class:'btn-floating green darken-2 tooltipped right', 'data-tooltip':'Solicitar nueva beca','data-position':'right' do
               %i.material-icons.left
                 add
-        -if @scholarships.where(status:Scholarship::REQUESTED).size > 0
-          %span.new.badge.orange{"data-badge-caption" => "solicitudes"}
-            =@scholarships.where(status:Scholarship::REQUESTED).size
-        -if @scholarships.size > 0
-          .row
-            .col.l4.input-field
-              %input#scholarships-search{:required => "", :type => "search", placeholder:'Buscar'}
-          #scholarships-wrapper
-            %table#scholarships-table.bordered.highlight
-              %thead
-                %tr
-                  %th Tipo de beca
-                  %th Responsable
-                  %th Estudiante
-                  %th Monto
-                  %th Estatus
-                %tbody
-                  -@scholarships.each do |scholarship|
-                    %tr.tr-click{href:"/scholarships/#{scholarship.id}"}
-                      %td
-                        =scholarship.scholarship_type.name
-                      %td
-                        -if scholarship.person_type.eql?'Student'
-                          =scholarship.person.supervisor.full_name
-                        -else
-                          =scholarship.person.staff.full_name
-                      %td
-                        =scholarship.person.full_name
-                      %td
-                        =number_to_currency(scholarship.amount,unit: "$", separator: ".", delimiter: ",", format: "%u%n")
-                      %td
-                        %i.material-icons.left.valign-wrapper{class:status_color(scholarship.status)}
-                          lens
-                        =scholarship.get_status
-        -else
-          %blockquote
-            Aun no hay becas
+
+        .row
+          %form#scholarships-search-form{'data-remote':true, action:'#'}
+            .row
+              .col.l4.input-field
+                =select_tag 'scholarships-search-type', options_from_collection_for_select(ScholarshipType.all,'id','name'), include_blank: 'Todos los tipos'
+                %label{for:'scholarships-search-type'} Tipo de beca
+              .col.l4.input-field
+                =select_tag 'scholarships-search-staff', options_from_collection_for_select(Staff.all,'id','full_name'), include_blank: 'Cualquiera', class:'do-select2'
+                %label.active{for:'scholarships-search-staff'} Responsable
+              .col.l4.input-field
+                %input#scholarships-search-student{placeholder:'Nombre del estudiante'}
+                %label.active{for:'scholarships-search-student'} Estudiante
+            .row
+              .col.l4.input-field
+                %input#scholarships-search-amount{placeholder:'$'}
+                %label.active{for:'scholarships-search-amount'} Monto
+              .col.l4.input-field
+                =select_tag 'scholarships-search-status', options_from_collection_for_select(Scholarship::STATUS.except(Scholarship::DELETED),:first, :last), include_blank: 'Todos los estatus'
+                %label{for:'scholarships-search-status'} Estatus
+              .col.l4
+                %button#scholarships-search-button.btn.btn-large.blue.waves-effect{type:'submit'}
+                  Buscar
+                  %i.material-icons.left
+                    search
+        #scholarships-wrapper
+          %table#scholarships-table.bordered.highlight
+            %thead
+              %tr
+                %th Tipo de beca
+                %th Responsable
+                %th Estudiante
+                %th Monto
+                %th Estatus
+              %tbody
+
+        .center-align
+          .preloader-wrapper.big.load-more.active{style:'display:none;'}
+            .spinner-layer.spinner-blue-only
+              .circle-clipper.left
+                .circle
+              .gap-patch
+                .circle
+              .circle-clipper.right
+                .circle
+
 
 #new_scholarship_modal.modal
   .modal-content
@@ -60,19 +69,57 @@
         =link_to 'Practicante',new_scholarship_path(scholarship_person_type:'Internship'),class:'btn purple'
 
 :javascript
+  var scholarships_loaded;
+  var searchObject = {staff:'', student:'', amount:'', type:'', status:''};
+  $("#scholarships-search-form").on('submit', function() {
+    searchScholarships();
+  });
   $(document).ready(function(){
     setScholarshipsHeight();
-    $("#scholarships-search").on("keyup", function() {
-      var value = $(this).val().toLowerCase();
-      $("#scholarships-table tbody tr").filter(function() {
-        $(this).toggle($(this).text().toLowerCase()
-        .replace( /á/g, 'a' )
-        .replace( /é/g, 'e' )
-        .replace( /í/g, 'i' )
-        .replace( /ó/g, 'o' )
-        .replace( /ú/g, 'u' )
-        .replace( /ü/g, 'u' )
-        .indexOf(value) > -1)
-      });
-    });
+    searchScholarships();
+    $(".do-select2").select2();
   });
+  $('#scholarships-wrapper').scroll(function (){
+     if($(this)[0].scrollHeight - $(this).scrollTop() === $(this).outerHeight()) {
+        loadScholarships();
+    }
+  });
+
+  function searchScholarships() {
+    scholarships_loaded = 0;
+    searchObject.staff = $("#scholarships-search-staff").val();
+    searchObject.student = $("#scholarships-search-student").val();
+    searchObject.amount = $("#scholarships-search-amount").val();
+    searchObject.type = $("#scholarships-search-type").val();
+    searchObject.status = $("#scholarships-search-status").val();
+    console.log(searchObject);
+    loadScholarships();
+
+  }
+
+  function loadScholarships(){
+    $.ajax({
+      type:'GET',
+      url:'/load_part_scholarships',
+      data :{
+        scholarships_loaded:scholarships_loaded,
+        staff:searchObject.staff,
+        student:searchObject.student,
+        type:searchObject.type,
+        status:searchObject.status,
+        amount:searchObject.amount
+      },
+      beforeSend:function(){
+        $('.load-more').show();
+      },
+      success:function(html){
+        if(scholarships_loaded == 0){
+          $("#scholarships-table tbody").html(html);
+        }else{
+          $("#scholarships-table tbody").append(html);
+        }
+        $('.load-more').hide();
+        scholarships_loaded += 10;
+      }
+    });
+  }

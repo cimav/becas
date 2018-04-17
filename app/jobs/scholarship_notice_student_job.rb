@@ -9,6 +9,6 @@ class ScholarshipNoticeStudentJob < ApplicationJob
     if !scholarship.scholarship_token
       scholarship.build_scholarship_token(token: (Digest::SHA256.hexdigest DateTime.now.to_s), status:ScholarshipToken::ACTIVE).save
     end
-    ScholarshipsMailer.notice_student(scholarship,student).deliver_now
+    ScholarshipsMailer.notice_student(scholarship,student).deliver_later
   end
 end

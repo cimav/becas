@@ -4,6 +4,6 @@ class ScholarshipNoticeAdminJob < ApplicationJob
   def perform(scholarship_id, user_id)
     scholarship = Scholarship.find(scholarship_id)
     user = User.find(user_id)
-    ScholarshipsMailer.notice_admin(scholarship, user).deliver_now
+    ScholarshipsMailer.notice_admin(scholarship, user).deliver_later
   end
 end

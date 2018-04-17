@@ -17,7 +17,9 @@
 //= require turbolinks
 //= require turbolinks-compatibility
 //= require materialize-sprockets
+//= require select2
 //= require_tree .
+
 
 $(document).on('ready turbolinks:load', function() {
     $(".dropdown-button").dropdown();

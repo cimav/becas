@@ -28,5 +28,13 @@ $(document).on("ajax:error","#internship-files-form", function(ev,data){
 
 function setScholarshipsHeight(){
     var screenHeight = window.innerHeight;
-    document.getElementById("scholarships-wrapper").style.maxHeight = screenHeight-300 + "px";
+    var searchHeight = document.getElementById("scholarships-search-form").offsetHeight;
+    document.getElementById("scholarships-wrapper").style.maxHeight = screenHeight-searchHeight-250 + "px";
 }
+
+
+
+
+//------------------------------------------------------------------------------
+// Tabla de becas
+//------------------------------------------------------------------------------
