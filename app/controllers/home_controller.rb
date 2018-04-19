@@ -18,9 +18,10 @@ class HomeController < ApplicationController
       @scholarships = Scholarship.where(person_type: 'Internship').where.not(status: Scholarship::DELETED).where(person_id: (Internship.where(staff_id: current_staff.id).pluck(:id)))
       render template: 'home/staff_index'
     end
-    puts '<------------------------>'
-    session[:user_type]
-    puts '<------------------------>'
+
+    puts '----------------------'
+    puts session[:user_type]
+    puts '----------------------'
 
   end
 

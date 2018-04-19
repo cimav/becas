@@ -30,6 +30,7 @@ module Becas
     # Don't generate system test files.
     config.generators.system_tests = nil
 
+    Audited.current_user_method = :current_person
     # Email Configuration
     config.action_mailer.raise_delivery_errors = true
     config.action_mailer.delivery_method = :smtp
