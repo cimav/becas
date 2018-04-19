@@ -20,14 +20,14 @@ class HomeController < ApplicationController
     end
   end
 
-  def load_part_scholarships
+  def load_scholarships
     ###################### Se reciben los parámetros
     scholarships_loaded = params[:scholarships_loaded].to_i
-    student_name = params[:student]
-    staff_id = params[:staff]
-    scholarship_type_id = params[:type]
-    status = params[:status]
-    amount = params[:amount]
+    student_name = params[:search_object][:student]
+    staff_id = params[:search_object][:staff]
+    scholarship_type_id = params[:search_object][:type]
+    status = params[:search_object][:status]
+    amount = params[:search_object][:amount]
 
     student_ids = []
     internship_ids = []
@@ -47,7 +47,10 @@ class HomeController < ApplicationController
       end
     end
 
-
+    puts '<------------------------>'
+    puts !student_ids.blank?
+    puts !internship_ids.blank?
+    puts '<------------------------>'
 
     @scholarships = Scholarship.where.not(status: Scholarship::DELETED)
     # filtro por el tipo de beca
@@ -55,12 +58,40 @@ class HomeController < ApplicationController
     # filtro por estatus
     @scholarships = @scholarships.where(status:status) if !status.blank?
     # filtro por el nombre de estudiante
-    @scholarships = @scholarships.where(person_type:'Internship').where(person_id:internship_ids).or(Scholarship.where(person_type:'Student').where(person_id:student_ids)) if !(student_ids.blank? || internship_ids.blank?)
+
     # filtro por el monto de la beca
     @scholarships = @scholarships.where(amount:amount) if !amount.blank?
 
-    @scholarships = @scholarships.offset(scholarships_loaded).limit(10)
-    render layout:false
+    if !student_name.blank? || !staff_id.blank?
+      @scholarships = @scholarships.where(person_type:'Student').where(person_id:student_ids).or(@scholarships.where(person_type:'Internship').where(person_id:internship_ids))
+    end
+
+    respond_to do |format|
+      format.html do
+        @scholarships = @scholarships.offset(scholarships_loaded).limit(50)
+        render layout:false
+      end
+      ############################## Exportar a excel
+      format.xls do
+        rows = Array.new
+
+        @scholarships.collect do |scholarship|
+              rows << {
+                  'Fecha de inicio'=> scholarship.start_date,
+                  'Fecha de término'=> scholarship.end_date,
+                  'Estado'=> scholarship.get_status,
+                  'Tipo de beca'=> scholarship.scholarship_type.name,
+                  'Id' => scholarship.id,
+                  'Monto' => scholarship.amount,
+                  'Estudiante' => scholarship.person.full_name,
+                  'Responsable'=> scholarship.person_type == 'Student' ? scholarship.person.supervisor.full_name : scholarship.person.staff.full_name
+          }
+        end
+        column_order = ['Id','Tipo de beca','Estudiante','Responsable','Fecha de inicio','Fecha de término','Monto','Estado']
+        to_excel(rows,column_order,"Servicios","Reporte_Becas")
+      end
+    end
+
   end
 
 end

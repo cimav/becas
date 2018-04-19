@@ -14,7 +14,7 @@
                 add
 
         .row
-          %form#scholarships-search-form{'data-remote':true, action:'#'}
+          %form#scholarships-search-form{'data-remote':true, action:'/load_part_scholarships'}
             .row
               .col.l4.input-field
                 =select_tag 'scholarships-search-type', options_from_collection_for_select(ScholarshipType.all,'id','name'), include_blank: 'Todos los tipos'
@@ -45,7 +45,7 @@
                 %th Responsable
                 %th Estudiante
                 %th Monto
-                %th Estatus
+                %th Estado
               %tbody
 
         .center-align
@@ -57,6 +57,9 @@
                 .circle
               .circle-clipper.right
                 .circle
+%button.btn-floating.right.green.darken-2.tooltipped{'data-tooltip':'Exportar a excel','data-delay':40,'data-position':'right',onclick:"getExcel();"}
+  %i.material-icons
+    add
 
 
 #new_scholarship_modal.modal
@@ -100,14 +103,10 @@
   function loadScholarships(){
     $.ajax({
       type:'GET',
-      url:'/load_part_scholarships',
+      url:'/load_scholarships',
       data :{
-        scholarships_loaded:scholarships_loaded,
-        staff:searchObject.staff,
-        student:searchObject.student,
-        type:searchObject.type,
-        status:searchObject.status,
-        amount:searchObject.amount
+        scholarships_loaded: scholarships_loaded,
+        search_object : searchObject
       },
       beforeSend:function(){
         $('.load-more').show();
@@ -119,7 +118,10 @@
           $("#scholarships-table tbody").append(html);
         }
         $('.load-more').hide();
-        scholarships_loaded += 10;
+        scholarships_loaded += 50;
       }
     });
+  }
+  function getExcel() {
+    window.open("/load_scholarships?"+$.param({search_object: searchObject, format: "xls"}));
   }

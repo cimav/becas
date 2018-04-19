@@ -21,6 +21,6 @@ Rails.application.routes.draw do
   post '/scholarships/:id/send_to_committee' => 'scholarships#send_to_committee'
 
   ########################################## home
-  get '/load_part_scholarships' => 'home#load_part_scholarships'
+  get '/load_scholarships' => 'home#load_scholarships'
 
 end
