@@ -18,6 +18,10 @@ class HomeController < ApplicationController
       @scholarships = Scholarship.where(person_type: 'Internship').where.not(status: Scholarship::DELETED).where(person_id: (Internship.where(staff_id: current_staff.id).pluck(:id)))
       render template: 'home/staff_index'
     end
+    puts '<------------------------>'
+    session[:user_type]
+    puts '<------------------------>'
+
   end
 
   def load_scholarships
@@ -46,11 +50,6 @@ class HomeController < ApplicationController
         internship_ids = Internship.where("first_name LIKE '%#{student_name}%'").or(Internship.where("last_name LIKE '%#{student_name}%'")).pluck(:id)
       end
     end
-
-    puts '<------------------------>'
-    puts !student_ids.blank?
-    puts !internship_ids.blank?
-    puts '<------------------------>'
 
     @scholarships = Scholarship.where.not(status: Scholarship::DELETED)
     # filtro por el tipo de beca
