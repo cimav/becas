@@ -16,10 +16,10 @@
 
     %ul#side-menu.side-nav.fixed
 
-      %a.navbar-logo{href:'/'}
+      %a.navbar-logo{href:'/', 'data-turbolinks':"false"}
         =image_tag 'logo-becas-osc.png', class:'responsive-img navbar-logo'
       %li{class:"#{active_class('/scholarships')} #{'active' if request.path.eql?'/'}"}
-        %a{href:'/scholarships'}
+        %a{href:'/scholarships','data-turbolinks':"false"}
           %i.material-icons
             school
 

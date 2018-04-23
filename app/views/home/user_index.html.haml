@@ -77,6 +77,16 @@
   $("#scholarships-search-form").on('submit', function() {
     searchScholarships();
   });
+  $("#scholarships-search-type").on('change', function() {
+    searchScholarships();
+  });
+  $("#scholarships-search-staff").on('change', function() {
+    searchScholarships();
+  });
+  $("#scholarships-search-status").on('change', function() {
+    searchScholarships();
+  });
+
   $(document).ready(function(){
     setScholarshipsHeight();
     searchScholarships();
