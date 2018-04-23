@@ -77,14 +77,14 @@ class HomeController < ApplicationController
 
         @scholarships.collect do |scholarship|
               rows << {
-                  'Fecha de inicio'=> scholarship.start_date,
-                  'Fecha de término'=> scholarship.end_date,
-                  'Estado'=> scholarship.get_status,
-                  'Tipo de beca'=> scholarship.scholarship_type.name,
-                  'Id' => scholarship.id,
-                  'Monto' => scholarship.amount,
-                  'Estudiante' => scholarship.person.full_name,
-                  'Responsable'=> scholarship.person_type == 'Student' ? scholarship.person.supervisor.full_name : scholarship.person.staff.full_name
+                  'Fecha de inicio'=> (scholarship.start_date rescue 'Sin información'),
+                  'Fecha de término'=> (scholarship.end_date rescue 'Sin información'),
+                  'Estado'=> (scholarship.get_status rescue 'Sin información'),
+                  'Tipo de beca'=> (scholarship.scholarship_type.name rescue 'Sin información'),
+                  'Id' => (scholarship.id rescue 'Sin información'),
+                  'Monto' => (scholarship.amount rescue 'Sin información'),
+                  'Estudiante' => (scholarship.person.full_name rescue 'Sin información'),
+                  'Responsable'=> (scholarship.person_type == 'Student' ? scholarship.person.supervisor.full_name : scholarship.person.staff.full_name rescue 'Sin información')
           }
         end
         column_order = ['Id','Tipo de beca','Estudiante','Responsable','Fecha de inicio','Fecha de término','Monto','Estado']
