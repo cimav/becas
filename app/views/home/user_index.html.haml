@@ -74,6 +74,7 @@
 :javascript
   var scholarships_loaded;
   var searchObject = {staff:'', student:'', amount:'', type:'', status:''};
+
   $("#scholarships-search-form").on('submit', function() {
     searchScholarships();
   });
@@ -92,9 +93,10 @@
     searchScholarships();
     $(".do-select2").select2();
   });
+
   $('#scholarships-wrapper').scroll(function (){
-     if($(this)[0].scrollHeight - $(this).scrollTop() === $(this).outerHeight()) {
-        loadScholarships();
+    if($(this)[0].scrollHeight - $(this).scrollTop() === $(this).outerHeight()) {
+      loadScholarships();
     }
   });
 
@@ -114,6 +116,7 @@
     $.ajax({
       type:'GET',
       url:'/load_scholarships',
+      chache:false,
       data :{
         scholarships_loaded: scholarships_loaded,
         search_object : searchObject
