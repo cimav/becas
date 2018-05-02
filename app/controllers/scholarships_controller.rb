@@ -54,7 +54,9 @@ class ScholarshipsController < ApplicationController
   # PATCH/PUT /scholarships/1.json
   def update
     respond_to do |format|
-      if @scholarship.update(scholarship_params)
+      data = scholarship_params
+      data[:max_amount] = ScholarshipType.find(data[:scholarship_type_id]).max_amount if data[:scholarship_type_id] != @scholarship.scholarship_type_id
+      if @scholarship.update(data)
         format.html {redirect_to @scholarship, notice: 'Se actualizó la beca'}
         format.json {render :show, status: :ok, location: @scholarship}
       else
