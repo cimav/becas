@@ -35,7 +35,11 @@
               -else
                 %p
                   %b Área:
-                  =@scholarship.person.area.name
+                  -if !@scholarship.person.area.blank?
+                    =@scholarship.person.area.name
+                  -else
+                    %span.red-text
+                      Sin capturar
                 %p
                   %b Responsable:
                   = @scholarship.person.staff.full_name
