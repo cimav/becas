@@ -1,6 +1,6 @@
 class ScholarshipsController < ApplicationController
   skip_before_action :auth_required, only: [:access_with_token, :upload_internship_file_with_token, :internship_files]
-  before_action :set_scholarship, only: [:show, :edit, :update, :destroy, :print_internship_cep_file, :create_comment, :internship_files, :upload_internship_file, :upload_internship_file_with_token, :access_with_token, :send_to_committee]
+  before_action :set_scholarship, only: [:show, :edit, :update, :destroy, :print_internship_cep_file, :create_comment, :internship_files, :upload_internship_file, :upload_internship_file_with_token, :access_with_token, :send_to_committee, :change_status]
   include ActionView::Helpers::NumberHelper
 
   # GET /scholarships
@@ -135,6 +135,18 @@ class ScholarshipsController < ApplicationController
     end
     if comment.save
       redirect_to @scholarship
+    end
+  end
+
+  def change_status
+    respond_to do |format|
+     if @scholarship.update(status: params[:scholarship][:status])
+        format.html {redirect_to @scholarship, notice: 'Se actualizó la beca'}
+        format.json {render :show, status: :ok, location: @scholarship}
+      else
+        format.html {render :edit}
+        format.json {render json: @scholarship.errors, status: :unprocessable_entity}
+      end
     end
   end
 

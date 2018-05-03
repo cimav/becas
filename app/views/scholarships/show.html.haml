@@ -210,7 +210,7 @@
 #change_status_modal.modal
   .modal-content
     %h5 Cambiar estatus
-    =form_for @scholarship, class:'col s12 m12' do |f|
+    =form_for @scholarship, url:"/scholarships/#{@scholarship.id}/change_status", class:'col s12 m12' do |f|
       .row
         .input-field.col.s12.m12
           =f.label :status,'Estatus', class:'active'
