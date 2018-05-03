@@ -30,15 +30,24 @@ class HomeController < ApplicationController
     scholarships_loaded = params[:scholarships_loaded].to_i
     student_name = params[:search_object][:student]
     staff_id = params[:search_object][:staff]
+    area_id = params[:search_object][:area]
     scholarship_type_id = params[:search_object][:type]
     status = params[:search_object][:status]
     amount = params[:search_object][:amount]
 
     student_ids = []
     internship_ids = []
+
+
+    # Se obtiene array con los ids de estudiantes que coincidan con los filtros de nombre, docente responsable y área
     if !staff_id.blank?
-      s = Student.where(supervisor:staff_id)
-      i = Internship.where(staff_id:staff_id)
+      if !area_id.blank?
+        s = Student.where(supervisor:Staff.where(area_id:area_id).pluck(:id)).where(supervisor:staff_id)
+        i = Internship.where(area:area_id).where(staff_id:staff_id)
+      else
+        s = Student.where(supervisor:staff_id)
+        i = Internship.where(staff_id:staff_id)
+      end
       if !student_name.blank?
         s = s.where("first_name LIKE '%#{student_name}%'").or(s.where("last_name LIKE '%#{student_name}%'"))
         i = i.where("first_name LIKE '%#{student_name}%'").or(i.where("last_name LIKE '%#{student_name}%'"))
@@ -47,22 +56,36 @@ class HomeController < ApplicationController
       internship_ids = i.pluck(:id)
     else
       if !student_name.blank?
-        student_ids = Student.where("first_name LIKE '%#{student_name}%'").or(Student.where("last_name LIKE '%#{student_name}%'")).pluck(:id)
-        internship_ids = Internship.where("first_name LIKE '%#{student_name}%'").or(Internship.where("last_name LIKE '%#{student_name}%'")).pluck(:id)
+        if !area_id.blank?
+          student_ids = Student.where(supervisor:Staff.where(area_id:area_id).pluck(:id)).where("first_name LIKE '%#{student_name}%'").or(Student.where("last_name LIKE '%#{student_name}%'")).pluck(:id)
+          internship_ids = Internship.where(area:area_id).where("first_name LIKE '%#{student_name}%'").or(Internship.where("last_name LIKE '%#{student_name}%'")).pluck(:id)
+        else
+          student_ids = Student.where("first_name LIKE '%#{student_name}%'").or(Student.where("last_name LIKE '%#{student_name}%'")).pluck(:id)
+          internship_ids = Internship.where("first_name LIKE '%#{student_name}%'").or(Internship.where("last_name LIKE '%#{student_name}%'")).pluck(:id)
+        end
+      else
+        if !area_id.blank?
+          student_ids = Student.where(supervisor:Staff.where(area_id:area_id).pluck(:id)).pluck(:id)
+          internship_ids = Internship.where(area:area_id).pluck(:id)
+        end
       end
     end
+
+    # filtro por área
+
 
     @scholarships = Scholarship.where.not(status: Scholarship::DELETED)
     # filtro por el tipo de beca
     @scholarships = @scholarships.where(scholarship_type_id:scholarship_type_id) if !scholarship_type_id.blank?
     # filtro por estatus
-    @scholarships = @scholarships.where(status:status) if !status.blank?
-    # filtro por el nombre de estudiante
+    @scholarships = @scholarships.where(status:status) unless status.blank?
 
     # filtro por el monto de la beca
-    @scholarships = @scholarships.where(amount:amount) if !amount.blank?
+    @scholarships = @scholarships.where(amount:amount) unless amount.blank?
 
-    if !student_name.blank? || !staff_id.blank?
+
+    # filtro por el nombre de estudiante o por área
+    if !student_name.blank? || !staff_id.blank? || !area_id.blank?
       @scholarships = @scholarships.where(person_type:'Student').where(person_id:student_ids).or(@scholarships.where(person_type:'Internship').where(person_id:internship_ids))
     end
 
@@ -84,10 +107,11 @@ class HomeController < ApplicationController
                   'Id' => (scholarship.id rescue 'Sin información'),
                   'Monto' => (scholarship.amount rescue 'Sin información'),
                   'Estudiante' => (scholarship.person.full_name rescue 'Sin información'),
-                  'Responsable'=> (scholarship.person_type == 'Student' ? scholarship.person.supervisor.full_name : scholarship.person.staff.full_name rescue 'Sin información')
+                  'Responsable'=> (scholarship.person_type == 'Student' ? scholarship.person.supervisor.full_name : scholarship.person.staff.full_name rescue 'Sin información'),
+                  'Área'=> (scholarship.person_type == 'Student' ? scholarship.person.supervisor.area.name : scholarship.person.area.name rescue 'Sin información')
           }
         end
-        column_order = ['Id','Tipo de beca','Estudiante','Responsable','Fecha de inicio','Fecha de término','Monto','Estado']
+        column_order = ['Id','Tipo de beca','Estudiante','Área','Responsable','Fecha de inicio','Fecha de término','Monto','Estado']
         to_excel(rows,column_order,"Servicios","Reporte_Becas")
       end
     end

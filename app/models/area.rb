@@ -1,6 +1,7 @@
 class Area < SaposModels
   has_one :staff
 
+
   NONE         = 0
   DIRECTION    = 1
   COORDINATION = 2

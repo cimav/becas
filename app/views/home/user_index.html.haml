@@ -26,13 +26,16 @@
                 %input#scholarships-search-student{placeholder:'Nombre del estudiante'}
                 %label.active{for:'scholarships-search-student'} Estudiante
             .row
-              .col.l4.input-field
+              .col.l2.input-field
                 %input#scholarships-search-amount{placeholder:'$'}
                 %label.active{for:'scholarships-search-amount'} Monto
-              .col.l4.input-field
+              .col.l3.input-field
                 =select_tag 'scholarships-search-status', options_from_collection_for_select(Scholarship::STATUS.except(Scholarship::DELETED),:first, :last), include_blank: 'Todos los estatus'
                 %label{for:'scholarships-search-status'} Estatus
-              .col.l4
+              .col.l4.input-field
+                =select_tag 'scholarships-search-area', options_from_collection_for_select(Area.all,'id','name'), include_blank: 'Todas las áreas'
+                %label{for:'scholarships-search-area'} Área
+              .col.l3
                 %button#scholarships-search-button.btn.btn-large.blue.waves-effect{type:'submit'}
                   Buscar
                   %i.material-icons.left
@@ -87,6 +90,9 @@
   $("#scholarships-search-status").on('change', function() {
     searchScholarships();
   });
+  $("#scholarships-search-area").on('change', function() {
+    searchScholarships();
+  });
 
   $(document).ready(function(){
     setScholarshipsHeight();
@@ -107,6 +113,7 @@
     searchObject.amount = $("#scholarships-search-amount").val();
     searchObject.type = $("#scholarships-search-type").val();
     searchObject.status = $("#scholarships-search-status").val();
+    searchObject.area = $("#scholarships-search-area").val();
     console.log(searchObject);
     loadScholarships();
 
