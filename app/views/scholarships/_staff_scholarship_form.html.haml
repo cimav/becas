@@ -6,9 +6,9 @@
   .row
     .input-field.col.s12.m6
       -if is_assitant?
-        =f.select :person_id,Internship.where(staff_id:Staff.where(area_id: current_user.areas).pluck(:id)).where(status:Internship::ACTIVE).collect {|p| [ p.full_name, p.id, {'data-internship-type':p.internship_type.name, 'data-curp':p.curp} ] }
+        =f.select :person_id,Internship.where(staff_id:Staff.where(area_id: current_user.areas).pluck(:id)).where(status:Internship::ACTIVE).collect {|p| [ p.full_name, p.id, {'data-internship-type':p.internship_type.name, 'data-curp':p.curp} ] }, {}, class:'material-select'
       -else
-        =f.select :person_id,Internship.where(staff_id:current_staff.id).where(status:Internship::ACTIVE).collect {|p| [ p.full_name, p.id, {'data-internship-type':p.internship_type.name, 'data-curp':p.curp} ] }
+        =f.select :person_id,Internship.where(staff_id:current_staff.id).where(status:Internship::ACTIVE).collect {|p| [ p.full_name, p.id, {'data-internship-type':p.internship_type.name, 'data-curp':p.curp} ] }, {}, class:'material-select'
       =f.label :person_id, 'Practicante'
     .input-field.col.s12.m6
       %p{id:'scholarship_internship_type',disabled:true}
@@ -16,7 +16,7 @@
 
   .row
     .input-field.col.s12.m4
-      =f.select :scholarship_type_id, ScholarshipType.where.not(status:ScholarshipType::DELETED).where.not(category: ScholarshipType::CONACYT).order('id DESC').map {|p| [p.name, p.id, { 'data-amount' => p.max_amount}]}
+      =f.select :scholarship_type_id, ScholarshipType.where.not(status:ScholarshipType::DELETED).where.not(category: ScholarshipType::CONACYT).order('id DESC').map {|p| [p.name, p.id, { 'data-amount' => p.max_amount}]}, {}, class:'material-select'
       =f.label :scholarship_type_id, 'Tipo de beca'
     .input-field.col.s12.m4
       =f.text_field :start_date, class: "datepicker",placeholder:'Selecciona la fecha de inicio', type:'date'
@@ -46,6 +46,8 @@
       =f.submit 'Guardar', class:'btn-large'
 
 :javascript
+  $('.material-select').material_select();
+  $(".do-select2").select2();
   $(document).on('ready turbolinks:load', function() {
     get_internship();
     calculate_amount();
