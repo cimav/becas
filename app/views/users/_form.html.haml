@@ -9,7 +9,7 @@
       = f.text_field :email
     .col.s12.m4
       = f.label :user_type, 'Tipo de usuario'
-      = f.select :user_type, User::USER_TYPES.invert.sort {|a,b| a[1] <=> b[1] }
+      = f.select :user_type, User::USER_TYPES.invert.sort {|a,b| a[1] <=> b[1] }, {}, class:'material-select'
   .row
     .col.s12.m12
       =f.label :areas,'Áreas permitidas'
@@ -23,3 +23,6 @@
       %i.material-icons
         done
 
+:javascript
+  $('.material-select').material_select();
+  $(".do-select2").select2();

@@ -17,7 +17,7 @@
           %form#scholarships-search-form{'data-remote':true, action:'/load_part_scholarships'}
             .row
               .col.l4.input-field
-                =select_tag 'scholarships-search-type', options_from_collection_for_select(ScholarshipType.all,'id','name'), include_blank: 'Todos los tipos'
+                =select_tag 'scholarships-search-type', options_from_collection_for_select(ScholarshipType.all,'id','name'), include_blank: 'Todos los tipos', class:'material-select'
                 %label{for:'scholarships-search-type'} Tipo de beca
               .col.l4.input-field
                 =select_tag 'scholarships-search-staff', options_from_collection_for_select(Staff.all,'id','full_name'), include_blank: 'Cualquiera', class:'do-select2'
@@ -30,10 +30,10 @@
                 %input#scholarships-search-amount{placeholder:'$'}
                 %label.active{for:'scholarships-search-amount'} Monto
               .col.l3.input-field
-                =select_tag 'scholarships-search-status', options_from_collection_for_select(Scholarship::STATUS.except(Scholarship::DELETED),:first, :last), include_blank: 'Todos los estatus'
+                =select_tag 'scholarships-search-status', options_from_collection_for_select(Scholarship::STATUS.except(Scholarship::DELETED),:first, :last), include_blank: 'Todos los estatus', class:'material-select'
                 %label{for:'scholarships-search-status'} Estatus
               .col.l4.input-field
-                =select_tag 'scholarships-search-area', options_from_collection_for_select(Area.all,'id','name'), include_blank: 'Todas las áreas'
+                =select_tag 'scholarships-search-area', options_from_collection_for_select(Area.all,'id','name'), include_blank: 'Todas las áreas', class:'material-select'
                 %label{for:'scholarships-search-area'} Área
               .col.l3
                 %button#scholarships-search-button.btn.btn-large.blue.waves-effect{type:'submit'}
@@ -75,6 +75,8 @@
         =link_to 'Practicante',new_scholarship_path(scholarship_person_type:'Internship'),class:'btn purple'
 
 :javascript
+  $('.material-select').material_select();
+  $(".do-select2").select2();
   var scholarships_loaded;
   var searchObject = {staff:'', student:'', amount:'', type:'', status:''};
 
@@ -97,7 +99,6 @@
   $(document).ready(function(){
     setScholarshipsHeight();
     searchScholarships();
-    $(".do-select2").select2();
   });
 
   $('#scholarships-wrapper').scroll(function (){
