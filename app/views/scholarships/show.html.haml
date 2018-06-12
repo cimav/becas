@@ -218,7 +218,7 @@
       .row
         .input-field.col.s12.m12
           =f.label :status,'Estatus', class:'active'
-          =f.select :status, Scholarship::STATUS.except(Scholarship::DELETED,Scholarship::TO_COMMITTEE).invert
+          =f.select :status, Scholarship::STATUS.except(Scholarship::DELETED,Scholarship::TO_COMMITTEE).invert, {}, class:'material-select'
         .input-field.col.s12.m12.right-align
           %button.btn-floating.green.darken-1{type:'submit',value:"Submit"}
             %i.material-icons
@@ -230,12 +230,14 @@
       .row
         .input-field.col.s12.m12
           =f.label :file_type,'Tipo de documento', class:'active'
-          =f.select :file_type, InternshipFile::REQUESTED_DOCUMENTS.except(InternshipFile::COURSE,InternshipFile::NORMAL,InternshipFile::SIGN_REQUEST).invert
+          =f.select :file_type, InternshipFile::REQUESTED_DOCUMENTS.except(InternshipFile::COURSE,InternshipFile::NORMAL,InternshipFile::SIGN_REQUEST).invert, {}, class:'material-select'
         .input-field.col.s12.m12
           =f.file_field :file
         .input-field.col.s12.m12.right-align
           =f.submit 'Subir'
 :javascript
+  $('.material-select').material_select();
+  $(".do-select2").select2();
   Turbolinks.clearCache();
   $(document).ready(function(){
     // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
