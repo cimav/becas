@@ -11,6 +11,8 @@
     %link{:crossorigin => "anonymous", :href => "https://use.fontawesome.com/releases/v5.0.10/css/all.css", :integrity => "sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg", :rel => "stylesheet"}
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js", :type => "text/javascript"}
+    %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"}
     = favicon_link_tag
   %body
 
@@ -28,6 +30,10 @@
           %a{href:'/scholarship_types'}
             %i.material-icons
               list
+        %li{class:active_class('/stats')}
+          %a{href:'/stats'}
+            %i.material-icons
+              equalizer
         %li{class:active_class('/users')}
           %a{href:'/users'}
             %i.material-icons

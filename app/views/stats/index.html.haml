@@ -1,0 +1,282 @@
+.row
+  .col.s12.m6
+    .card
+      .card-content
+        .card-title
+          Tipos de becas
+        %canvas#scholarship_types{:height => "400", :width => "400"}
+
+  .col.s12.m6
+    .card
+      .card-content
+        .card-title
+          Egresos por departamento (becas fiscales)
+        %canvas#departmentFiscalExpense{:height => "400", :width => "400"}
+
+  .col.s12.m6
+    .card
+      .card-content
+        .card-title
+          Egresos por departamento (recursos propios)
+        %canvas#departmentOwnExpense{:height => "400", :width => "400"}
+
+  .col.s12.m6
+    .card
+      .card-content
+        .card-title
+          Becas otorgadas en el año
+        %canvas#scholarshipsApprovedByMonthChart{:height => "400", :width => "400"}
+  .col.s12.m6
+    .card
+      .card-content
+        .card-title
+          Becas otorgadas en el año
+        %canvas#scholarshipsRejectedByMonthChart{:height => "400", :width => "400"}
+
+=console
+:javascript
+
+  var completedChart = document.getElementById("scholarship_types");
+  var oilData = {
+    labels: #{raw @scholarship_types_titles},
+    datasets: [
+      {
+        data: #{raw @scholarship_types_values},
+        backgroundColor: [
+          "#919595",
+          "#177199",
+          "#BCA566",
+          "#532A86",
+          "#86162D",
+          "#51A7BC",
+          "#BC7594",
+          "#47BC5D",
+          "#BC2365"
+        ]
+      }]
+  };
+
+  var pieChart = new Chart(completedChart, {
+    type: 'doughnut',
+    data: oilData,
+    options:{
+      tooltips: {
+        callbacks: {
+          label: function(tooltipItem, data) {
+              var dataset = data.datasets[tooltipItem.datasetIndex];
+            var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+              return previousValue + currentValue;
+            });
+            var currentValue = dataset.data[tooltipItem.index];
+            var precentage = Math.floor(((currentValue/total) * 100)+0.5);
+            return precentage + "%";
+          }
+        }
+      }
+    }
+  });
+
+  //////////////////////////////// Gastos en becas fiscales
+
+  var topEarningsChart = document.getElementById("departmentFiscalExpense");
+  Chart.defaults.global.legend.display = false;
+  var topEarningsData = {
+    labels: #{raw @department_fiscal_expense_titles},
+    datasets: [
+      {
+        data: #{raw @department_fiscal_expense_values},
+        backgroundColor: [
+          "#919595",
+          "#842734",
+          "#6A3972",
+          "#A17E5E",
+          "#265E84",
+          "#CB7A55",
+          "#FF5996",
+          "#265E84",
+          "#45BC57",
+          "#94BC9E"
+        ]
+      }]
+  };
+
+
+   var topEarningsBar = new Chart(topEarningsChart, {
+    type: 'bar',
+    data: topEarningsData,
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: {
+            xAxes: [{
+                display:false
+            }],
+             yAxes: [{
+               ticks: {
+                beginAtZero: true,
+                callback: function(value, index, values) {
+                  return value.toLocaleString("en-US",{style:"currency", currency:"USD"});
+                }
+               }
+            }]
+        },
+        tooltips: {
+          callbacks: {
+              label: function(tooltipItem, data) {
+                  return tooltipItem.yLabel.toLocaleString("en-US",{style:"currency", currency:"USD"});
+              }
+          }
+    }
+
+    }
+  });
+
+   //////////////////////////////// Gastos en becas de recursos propios
+
+  var topEarningsChart = document.getElementById("departmentOwnExpense");
+  Chart.defaults.global.legend.display = false;
+  var topEarningsData = {
+    labels: #{raw @department_own_expense_titles},
+    datasets: [
+      {
+        data: #{raw @department_own_expense_values},
+        backgroundColor: [
+          "#B9B9BC",
+          "#FF5996",
+          "#265E84",
+          "#A17E5E",
+          "#6A3972",
+          "#CB7A55",
+          "#265E84",
+          "#94BC9E",
+          "#842734",
+          "#45BC57"
+        ]
+      }]
+  };
+
+
+   var topEarningsBar = new Chart(topEarningsChart, {
+    type: 'bar',
+    data: topEarningsData,
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: {
+            xAxes: [{
+                display:false
+            }],
+             yAxes: [{
+               ticks: {
+                beginAtZero: true,
+                callback: function(value, index, values) {
+                  return value.toLocaleString("en-US",{style:"currency", currency:"USD"});
+                }
+               }
+            }]
+        },
+        tooltips: {
+          callbacks: {
+              label: function(tooltipItem, data) {
+                  return tooltipItem.yLabel.toLocaleString("en-US",{style:"currency", currency:"USD"});
+              }
+          }
+    }
+
+    }
+  });
+
+
+  //////////////////////////////// Becas otorgadas en el año
+  Chart.defaults.global.legend.display = false;
+  var incomeChart = document.getElementById("scholarshipsApprovedByMonthChart");
+  var incomeData = {
+    labels: [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Noviembre",
+      "Diciembre"
+    ],
+    datasets: [
+      {
+        backgroundColor: "rgba(43, 188, 150, 0.1)",
+        borderColor: "#1E7970",
+        data: #{raw @scholarhips_approved_by_month}
+      }]
+  };
+
+
+   var incomeBar = new Chart(incomeChart, {
+    type: 'line',
+    data: incomeData,
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        elements: {
+            line: {
+                tension: 0 // disables bezier curves
+            }
+        },
+        scales: {
+             yAxes: [{
+               ticks: {
+                  beginAtZero: true
+               }
+            }]
+        }
+    }
+  });
+
+  //////////////////////////////// Becas otorgadas en el año
+  Chart.defaults.global.legend.display = false;
+  var incomeChart = document.getElementById("scholarshipsRejectedByMonthChart");
+  var incomeData = {
+    labels: [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Noviembre",
+      "Diciembre"
+    ],
+    datasets: [
+      {
+        backgroundColor: "rgba(229, 68, 106, 0.1)",
+        borderColor: "#E5446A",
+        data: #{raw @scholarhips_rejected_by_month}
+      }]
+  };
+
+
+   var incomeBar = new Chart(incomeChart, {
+    type: 'line',
+    data: incomeData,
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        elements: {
+            line: {
+                tension: 0 // disables bezier curves
+            }
+        },
+        scales: {
+             yAxes: [{
+               ticks: {
+                  beginAtZero: true
+               }
+            }]
+        }
+    }
+  });

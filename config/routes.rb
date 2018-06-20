@@ -24,4 +24,7 @@ Rails.application.routes.draw do
   ########################################## home
   get '/load_scholarships' => 'home#load_scholarships'
 
+  ########################################## estadísticas
+  get '/stats' => 'stats#index'
+
 end

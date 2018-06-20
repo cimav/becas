@@ -62,4 +62,6 @@ class Student < SaposModels
     return avg.to_s
   end
 
+
+
 end
