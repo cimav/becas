@@ -198,7 +198,7 @@
       .row
         .input-field.col.s12.m12
           =label_tag :meeting_id,'Sesión', class:'active'
-          =select_tag :meeting_id, options_from_collection_for_select(Meeting.where(status:Meeting::OPENED).order('id_key desc'), "id", "id_key")
+          =select_tag :meeting_id, options_from_collection_for_select(Meeting.where(status:Meeting::OPENED).order('id_key desc'), "id", "id_key"), class:'material-select'
 
         .input-field.col.s12.m12
           =label_tag :notes,'Nota', class:'active'
