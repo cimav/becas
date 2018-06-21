@@ -12,8 +12,8 @@ class Scholarship < ApplicationRecord
   audited
   belongs_to :person, polymorphic: true
   belongs_to :scholarship_type
-  has_many :scholarship_comments
-  has_one :scholarship_token
+  has_many :scholarship_comments, dependent: :destroy
+  has_one :scholarship_token, dependent: :destroy
 
   has_one :agreement, as: :agreeable, dependent: :destroy
 
