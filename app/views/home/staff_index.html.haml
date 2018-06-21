@@ -4,10 +4,6 @@
       .card-content
         .card-title
           Becas
-          =link_to new_scholarship_path, class:'btn-floating green darken-2 tooltipped right', 'data-tooltip':'Solicitar nueva beca','data-position':'right' do
-            %i.material-icons.left
-              add
-            Solicitar nueva beca
         -if @scholarships.size > 0
           .row
             .col.l4.input-field
@@ -44,7 +40,6 @@
 
 :javascript
   $(document).ready(function(){
-    setScholarshipsHeight();
     $("#scholarships-search").on("keyup", function() {
       var value = $(this).val().toLowerCase();
       $("#scholarships-table tbody tr").filter(function() {
