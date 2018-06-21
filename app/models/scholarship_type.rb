@@ -1,6 +1,6 @@
 class ScholarshipType < ApplicationRecord
   audited
-  has_many :scholarships
+  has_many :scholarships, dependent: :destroy
   before_create :set_status
 
   FISCAL = 1
