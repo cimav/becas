@@ -1,52 +1,58 @@
-= form_for @scholarship do |f|
-  - if @scholarship.errors.any?
-    -@scholarship.errors.full_messages.each do |error|
-      :javascript
-         Materialize.toast("#{error}",4500, 'orange darken-4')
-  .row
-    .input-field.col.s12.m6
-      =f.select :person_id,Internship.where(status:Internship::ACTIVE).collect {|p| [ p.full_name, p.id, {'data-internship-type':p.internship_type.name, 'data-curp':p.curp} ] }, {},class:'do-select2'
-      =f.label :person_id, 'Practicante', class:'active'
-    .input-field.col.s12.m6
-      %p{id:'scholarship_internship_type',disabled:true}
-      =label_tag 'scholarship_internship_type', 'Tipo de servicio', class:'active'
+
+.card-panel
+
+  = form_for @scholarship do |f|
+    - if @scholarship.errors.any?
+      -@scholarship.errors.full_messages.each do |error|
+        :javascript
+           Materialize.toast("#{error}",4500, 'orange darken-4')
+    .section
+      .row
+        .input-field.col.s12.m8
+          =f.select :person_id,Internship.where(status:Internship::ACTIVE).collect {|p| [ p.full_name, p.id, {'data-internship-type':p.internship_type.name, 'data-curp':p.curp} ] }, {},class:'do-select2'
+          =f.label :person_id, 'Practicante', class:'active'
+        .input-field.col.s12.m4
+          %p{id:'scholarship_internship_type',disabled:true}
+          =label_tag 'scholarship_internship_type', 'Tipo de servicio', class:'active'
 
 
-  .row
-    .input-field.col.s12.m4
-      =f.select :scholarship_type_id, ScholarshipType.where.not(status:ScholarshipType::DELETED).order('id DESC').map {|p| [p.name, p.id, { 'data-amount' => p.max_amount}]}, {}, class:'material-select'
-      =f.label :scholarship_type_id, 'Tipo de beca'
-    .input-field.col.s12.m4
-      =f.text_field :start_date, class: "datepicker",placeholder:'Selecciona la fecha de inicio', type:'date'
-      =f.label :start_date, 'Fecha de inicio (beca)', class:'active'
-    .input-field.col.s12.m4
-      =f.text_field :end_date, class: "datepicker",placeholder:'Selecciona la fecha de término', type:'date'
-      =f.label :end_date, 'Fecha de término (beca)', class:'active'
-  .row
-    .input-field.col.s12.m4
-      %p{id:'scholarship_curp',disabled:true}
-      =label_tag 'scholarship_curp', 'Curp', class:'active'
-    .input-field.col.s12.m4
-      %i.material-icons.prefix.tooltipped{'data-tooltip':'El número de proyecto y de solicitud se pueden cosultar en el sistema Unix Help, si aun no conoce estos datos, déjelos en blanco y posteriormente regrese a llenarlos'}
-        help
-      =f.text_field :project_number,placeholder:'Número de proyecto en el Unix'
-      =f.label :project_number, 'Proyecto'
-    .input-field.col.s12.m4
-      %i.material-icons.prefix.tooltipped{'data-tooltip':'El número de proyecto y de solicitud se pueden cosultar en el sistema Unix Help, si aun no conoce estos datos, déjelos en blanco y posteriormente regrese a llenarlos'}
-        help
-      =f.text_field :request_number,placeholder:'Solicitud de beca en el Unix'
-      =f.label :request_number, 'Número de solicitud'
-  .row
-    .input-field.col.s12.m2
-      %p{id:'scholarship_max_amount',disabled:true}
-      =f.label :max_amount, 'Monto máximo', class:'active'
-    .input-field.col.s12.m4
-      =f.label :amount, 'Monto a otorgar', class:'active'
-      =f.text_field :amount
-  .row
-    .input-field.col.s12.m12
-      =f.hidden_field :person_type, value:'Internship'
-      =f.submit 'Guardar', class:'btn-large'
+    .section
+      .row
+        .input-field.col.s12.m4
+          =f.select :scholarship_type_id, ScholarshipType.where.not(status:ScholarshipType::DELETED).order('id DESC').map {|p| [p.name, p.id, { 'data-amount' => p.max_amount}]}, {}, class:'material-select'
+          =f.label :scholarship_type_id, 'Tipo de beca'
+        .input-field.col.s12.m4
+          =f.text_field :start_date, class: "datepicker",placeholder:'Selecciona la fecha de inicio', type:'date'
+          =f.label :start_date, 'Fecha de inicio (beca)', class:'active'
+        .input-field.col.s12.m4
+          =f.text_field :end_date, class: "datepicker",placeholder:'Selecciona la fecha de término', type:'date'
+          =f.label :end_date, 'Fecha de término (beca)', class:'active'
+      .row
+        .input-field.col.s12.m4
+          %p{id:'scholarship_curp',disabled:true}
+          =label_tag 'scholarship_curp', 'Curp', class:'active'
+        .input-field.col.s12.m4
+          %i.material-icons.prefix.tooltipped{'data-tooltip':'El número de proyecto y de solicitud se pueden cosultar en el sistema Unix Help, si aun no conoce estos datos, déjelos en blanco y posteriormente regrese a llenarlos'}
+            help
+          =f.text_field :project_number,placeholder:'Número de proyecto en el Unix'
+          =f.label :project_number, 'Proyecto'
+        .input-field.col.s12.m4
+          %i.material-icons.prefix.tooltipped{'data-tooltip':'El número de proyecto y de solicitud se pueden cosultar en el sistema Unix Help, si aun no conoce estos datos, déjelos en blanco y posteriormente regrese a llenarlos'}
+            help
+          =f.text_field :request_number,placeholder:'Solicitud de beca en el Unix'
+          =f.label :request_number, 'Número de solicitud'
+
+    .section
+      .row
+        .input-field.col.s12.m2
+          %p{id:'scholarship_max_amount',disabled:true}
+          =f.label :max_amount, 'Monto máximo', class:'active'
+        .input-field.col.s12.m4
+          =f.label :amount, 'Monto a otorgar', class:'active'
+          =f.text_field :amount
+        .input-field.col.s12.m6
+          =f.hidden_field :person_type, value:'Internship'
+          =f.submit 'Guardar', class:'btn-large right green darken-2'
 
 :javascript
   $('.material-select').material_select();
