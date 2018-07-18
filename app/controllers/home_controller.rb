@@ -7,7 +7,7 @@ class HomeController < ApplicationController
         internship_ids = Internship.where("first_name LIKE '%#{student}%'").or(Internship.where("last_name LIKE '%#{student}%'")).pluck(:id)
         student_ids = Student.where("first_name LIKE '%#{student}%'").or(Student.where("last_name LIKE '%#{student}%'")).pluck(:id)
         @scholarships = Scholarship.where.not(status: Scholarship::DELETED).limit(10)
-      elsif current_user.user_type.eql? User::DEPARTMENT_ASSISTANT
+      elsif current_user.user_type.in? [User::DEPARTMENT_ASSISTANT, User::DEPARTMENT_CHIEF]
         @scholarships = Scholarship.where.not(status: Scholarship::DELETED).where(person_type: 'Internship').where(person_id: Internship.where(area: current_user.areas).pluck(:id))
       end
       render template: 'home/user_index'
@@ -111,7 +111,7 @@ class HomeController < ApplicationController
                   'Área'=> (scholarship.person_type == 'Student' ? scholarship.person.supervisor.area.name : scholarship.person.area.name rescue 'Sin información')
           }
         end
-        column_order = ['Id','Tipo de beca','Estudiante','Área','Responsable','Fecha de inicio','Fecha de término','Monto','Estado']
+        column_order = ['Id','Tipo de beca','Estudiante','Área','Responsable','Fecha de inicio','Fecha de término','Monto mensual','Estado']
         to_excel(rows,column_order,"Servicios","Reporte_Becas")
       end
     end

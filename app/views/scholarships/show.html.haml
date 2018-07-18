@@ -2,7 +2,7 @@
   .nav-wrapper
     .row
       .col.s12.m12.l12
-        =link_to root_path, class:'breadcrumb' do
+        =link_to root_path, class:'breadcrumb', 'data-turbolinks':"false" do
           Listado de becas
         %a.breadcrumb{}
           =@scholarship.scholarship_type.name
@@ -106,15 +106,34 @@
                       = number_to_currency(@scholarship.max_amount,unit: "$", separator: ".", delimiter: ",", format: "%u%n")
                   %tr.grey.lighten-2
                     %th
-                      Monto a otorgar
+                      Monto mensual a otorgar
                     %th
                       = number_to_currency(@scholarship.amount,unit: "$", separator: ".", delimiter: ",", format: "%u%n")
       -if is_admin?
         -if @comments.size==0
           %button.btn-floating.btn-large.waves-effect.waves-light.purple.tooltipped{'data-tooltip':"Escribir comentario",'data-delay':30, onclick:"openModal($('#new_comment_modal'));"}
             %i.material-icons insert_comment
+        -if @admin_notes.size==0
+          %button.btn-floating.btn-large.waves-effect.waves-light.indigo.tooltipped{'data-tooltip':"Escribir nota de administrador",'data-delay':30, onclick:"openModal($('#new_admin_note'));"}
+            %i.material-icons feedback
         %button.btn-floating.btn-large.waves-effect.waves-light.indigo.tooltipped{'data-tooltip':"Enviar a comité",'data-delay':30, onclick:"openModal($('#send_to_cep_modal'));", class:"#{enable_cep_button(@scholarship)}"}
           %i.material-icons gavel
+-if is_admin?
+  -if @admin_notes.size>0
+    .row
+      %ul.collapsible
+        %li
+          .collapsible-header
+            Notas de administrador
+            %span.badge{'data-badge-caption':"#{@admin_notes.size==1?'Nota':'Notas'}"}
+              =@admin_notes.size
+          .collapsible-body.white
+            =render 'admin_notes'
+            %br
+            .right-align
+              %button.btn-floating.btn-large.waves-effect.waves-light.indigo.tooltipped{'data-tooltip':"Agregar nota", onclick:"openModal($('#new_admin_note'));"}
+                %i.material-icons feedback
+
 -if @comments.size>0
   .row
     .card
@@ -139,9 +158,10 @@
       .card-content
         .card-title
           Documentos
-          %a.btn-floating.right
-            %i.material-icons.green.darken-2{onclick:"openModal($('#upload_file_modal'));"}
-              add
+          -if is_assistant? || is_admin?
+            %a.btn-floating.right
+              %i.material-icons.green.darken-2{onclick:"openModal($('#upload_file_modal'));"}
+                add
         #internship_files
           :javascript
             refreshInternshipFiles("#{@scholarship.id}");
@@ -181,9 +201,21 @@
 
 #new_comment_modal.modal
   .modal-content
-    %h5 Escribir comentario
+    %h5 Escribir mensaje
     .row
       =form_for ScholarshipComment.new, url:"/scholarships/#{@scholarship.id}/create_comment", class:'col s12 m12' do |f|
+        .input-field.col.s12.m12
+          =f.label :content,'Mensaje'
+          =f.text_area :content, class:'materialize-textarea'
+        .input-field.col.s12.m12.right-align
+          %button.btn-floating.green.darken-1{type:'submit',value:"Submit"}
+            %i.material-icons
+              send
+#new_admin_note.modal
+  .modal-content
+    %h5 Escribir nota de administrador
+    .row
+      =form_for AdminNote.new, url:"/scholarships/#{@scholarship.id}/create_admin_note", class:'col s12 m12' do |f|
         .input-field.col.s12.m12
           =f.label :content,'Mensaje'
           =f.text_area :content, class:'materialize-textarea'

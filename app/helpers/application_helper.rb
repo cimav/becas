@@ -56,7 +56,7 @@ module ApplicationHelper
     end
   end
 
-  def is_assitant?
+  def is_assistant?
     if (user = current_user if session[:user_type].eql? 'User')
       user.user_type == User::DEPARTMENT_ASSISTANT
     end

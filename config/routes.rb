@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get '/scholarships/:id/token/:token' => 'scholarships#access_with_token'
   get '/scholarships/:id/formato_solicitud_cep' => 'scholarships#print_internship_cep_file'
   post '/scholarships/:id/create_comment' => 'scholarships#create_comment'
+  post '/scholarships/:id/create_admin_note' => 'scholarships#create_admin_note'
   get '/scholarships/:id/internship_files' => 'scholarships#internship_files'
   post '/scholarships/:id/upload_internship_file' => 'scholarships#upload_internship_file'
   post '/scholarships/:id/upload_internship_file_with_token' => 'scholarships#upload_internship_file_with_token'

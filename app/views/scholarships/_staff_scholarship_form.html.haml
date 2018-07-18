@@ -7,7 +7,7 @@
            Materialize.toast("#{error}",4500, 'orange darken-4')
     .row
       .input-field.col.s12.m6
-        -if is_assitant?
+        -if is_assistant?
           =f.select :person_id,Internship.where(staff_id:Staff.where(area_id: current_user.areas).pluck(:id)).where(status:Internship::ACTIVE).collect {|p| [ p.full_name, p.id, {'data-internship-type':p.internship_type.name, 'data-curp':p.curp} ] }, {}, class:'material-select'
         -else
           =f.select :person_id,Internship.where(staff_id:current_staff.id).where(status:Internship::ACTIVE).collect {|p| [ p.full_name, p.id, {'data-internship-type':p.internship_type.name, 'data-curp':p.curp} ] }, {}, class:'material-select'

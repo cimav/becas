@@ -1,6 +1,6 @@
 class ScholarshipsController < ApplicationController
   skip_before_action :auth_required, only: [:access_with_token, :upload_internship_file_with_token, :internship_files]
-  before_action :set_scholarship, only: [:show, :edit, :update, :destroy, :print_internship_cep_file, :create_comment, :internship_files, :upload_internship_file, :upload_internship_file_with_token, :access_with_token, :send_to_committee, :change_status]
+  before_action :set_scholarship, only: [:show, :edit, :update, :destroy, :print_internship_cep_file, :create_comment, :internship_files, :upload_internship_file, :upload_internship_file_with_token, :access_with_token, :send_to_committee, :change_status, :create_admin_note]
   include ActionView::Helpers::NumberHelper
 
   # GET /scholarships
@@ -13,6 +13,7 @@ class ScholarshipsController < ApplicationController
   # GET /scholarships/1.json
   def show
     @comments = @scholarship.scholarship_comments.where.not(status: ScholarshipComment::DELETED)
+    @admin_notes = @scholarship.admin_notes.where.not(status: ScholarshipComment::DELETED)
   end
 
   # GET /scholarships/new
@@ -133,6 +134,15 @@ class ScholarshipsController < ApplicationController
     else
       comment.person = current_staff
     end
+    if comment.save
+      redirect_to @scholarship
+    end
+  end
+
+  def create_admin_note
+    comment = @scholarship.admin_notes.new(content: params[:admin_note][:content])
+
+    comment.user = current_user
     if comment.save
       redirect_to @scholarship
     end

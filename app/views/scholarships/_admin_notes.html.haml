@@ -1,0 +1,11 @@
+-@admin_notes.each do |note|
+  -klass = 'grey'
+  .row.section.lighten-3{class:"#{klass}"}
+    .col.s12.m9.text-darken-4{class:"#{klass}-text"}
+      =note.user.full_name
+    .col.s12.m3.grey-text
+      =f_date(note.updated_at)
+    .col.s12.m12
+      .message_content.grey-text.text-darken-4
+        =note.content
+  .divider

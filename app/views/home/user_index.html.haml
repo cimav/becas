@@ -32,9 +32,10 @@
               .col.l3.input-field
                 =select_tag 'scholarships-search-status', options_from_collection_for_select(Scholarship::STATUS.except(Scholarship::DELETED),:first, :last), include_blank: 'Todos los estatus', class:'material-select'
                 %label{for:'scholarships-search-status'} Estatus
-              .col.l4.input-field
-                =select_tag 'scholarships-search-area', options_from_collection_for_select(Area.all,'id','name'), include_blank: 'Todas las áreas', class:'material-select'
-                %label{for:'scholarships-search-area'} Área
+              -if is_admin?
+                .col.l4.input-field
+                  =select_tag 'scholarships-search-area', options_from_collection_for_select(Area.all,'id','name'), include_blank: 'Todas las áreas', class:'material-select'
+                  %label{for:'scholarships-search-area'} Área
               .col.l3
                 %button#scholarships-search-button.btn.btn-large.blue.waves-effect{type:'submit'}
                   Buscar
@@ -114,7 +115,10 @@
     searchObject.amount = $("#scholarships-search-amount").val();
     searchObject.type = $("#scholarships-search-type").val();
     searchObject.status = $("#scholarships-search-status").val();
-    searchObject.area = $("#scholarships-search-area").val();
+    if (#{current_user.user_type.in? [User::DEPARTMENT_ASSISTANT,User::DEPARTMENT_CHIEF]})
+      searchObject.area = #{current_user.areas.blank? ? '0' : current_user.areas};
+    else
+      searchObject.area = $("#scholarships-search-area").val();
     console.log(searchObject);
     loadScholarships();
 
