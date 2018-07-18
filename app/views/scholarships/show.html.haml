@@ -12,6 +12,8 @@
   .card
     .card-content
       .card-title
+        %i.material-icons.left
+          info_outline
         Información de la beca
       .row
         .col.s12.m1
@@ -124,6 +126,8 @@
       %ul.collapsible
         %li
           .collapsible-header
+            %i.material-icons.left
+              feedback
             Notas de administrador
             %span.badge{'data-badge-caption':"#{@admin_notes.size==1?'Nota':'Notas'}"}
               =@admin_notes.size
@@ -139,6 +143,8 @@
     .card
       .card-content
         .card-title
+          %i.material-icons.left
+            insert_comment
           Mensajes
         %ul.collapsible
           %li
@@ -157,6 +163,8 @@
     .card
       .card-content
         .card-title
+          %i.material-icons.left
+            insert_drive_file
           Documentos
           -if is_assistant? || is_admin?
             %a.btn-floating.right
