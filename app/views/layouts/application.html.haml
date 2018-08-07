@@ -38,17 +38,41 @@
           %a{href:'/users'}
             %i.material-icons
               people
+      %li{class:active_class('/notifications')}
+
+        %a.cursor-pointer#notifications-dropdown{onclick:"showNotifications();", 'data-badge':"#{notifications.where(read:false).size}", class:"#{notifications.where(read:false).size > 0 ? 'notifications-counter bounce animated delay-1s':''}"}
+          %i.material-icons
+            notifications
       .divider
-      %li{class:active_class('/logout')}
+      %li#logout-button{class:active_class('/logout')}
         %a{href:'/logout'}
           %i.material-icons
             exit_to_app
 
+    #notifications-container
+      %i#notifications-close.material-icons.right{onclick:"showNotifications();"}
+        close
+      #notifications-title
+        %h5.center Notificaciones
+      #notifications-content
+        -if notifications.size > 0
+          -notifications.each do |notification|
+            .notification-card{class:"#{notification.read ? '':'new'}"}
+              %a{href:"/notifications/#{notification.id}", 'data-turbolinks':"false"}
+                .notification-content
+                  %ul
+                    %li.truncate=notification.message
+                    %li.grey-text=f_date(notification.created_at)
+          #all-notifications
+            %a{href:'/notifications'} Ver todas
+        -else
+          %p.grey-text.text-lighten-2 No tiene notificaciones
     %a.button-collapse{"data-activates" => "side-menu", :href => "#"}
       %i.material-icons menu
     %main
       .container
         = yield
+
 
 / Mensajes
 -if alert
@@ -57,3 +81,8 @@
       Materialize.toast("#{error}", 4500, 'orange darken-4')
 :javascript
       Materialize.toast("#{notice}", 3000)
+
+:javascript
+  function showNotifications(){
+    document.getElementById('notifications-container').classList.toggle('active');
+  }

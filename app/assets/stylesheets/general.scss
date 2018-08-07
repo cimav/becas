@@ -89,3 +89,128 @@ a.navbar-logo{
   color:#2196f3
 }
 
+.cursor-pointer{
+  cursor: pointer;
+}
+
+
+.notifications-counter[data-badge]:after{
+  content:attr(data-badge);
+  position:absolute;
+  top:5px;
+  right:19px;
+  font-size:.7em;
+  background-color: rgba(250,0,0,0.9);
+  color:white;
+  width:18px;height:18px;
+  text-align:center;
+  line-height:18px;
+  border-radius:50%;
+  box-shadow:0 0 1px #333;
+}
+
+#notifications-container{
+  display:none;
+  //cursor: pointer;
+  position: fixed;
+  background-color: rgb(255, 255, 255);
+  left: 80px;
+  color: #333333;
+  min-width: 160px;
+  max-width: 400px;
+  box-shadow: 0 8px 20px 15px rgba(0,0,0,0.2);
+  z-index: 1000;
+  height: 100%;
+
+  // animación
+  -webkit-animation-name: fade; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 110ms; /* Safari 4.0 - 8.0 */
+  animation-name: fade;
+  animation-duration: 110ms;
+
+
+  #notifications-title{
+    h5{
+      padding: 0.5em;
+      color:#fff;
+      margin:0;
+    }
+    background-color: rgb(36, 37, 38);
+  }
+
+  #notifications-content{
+    overflow-wrap: break-word;
+
+    p{padding: 1em;}
+
+    div.notification-card{
+
+      border-bottom:1px solid rgb(209, 215, 221);
+      ul{margin:0;}
+      .notification-content{
+        padding: 1em;
+      }
+      a{color: inherit;}
+      &:hover{
+        background-color: rgba(210, 210, 210, 0.23)
+      }
+      &.new{
+        background-color: #edf2fa;
+        &:hover{
+          background-color: rgba(157, 175, 197, 0.25)
+        }
+      }
+
+
+    }
+  }
+
+  #all-notifications{
+    background-color: rgb(243, 243, 243);
+    text-align: center;
+    line-height: 2em;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    min-height: 2em;
+    border-top:1px solid rgb(190, 196, 201);
+
+  }
+
+  &.active{
+    display:block;
+  }
+
+  #notifications-close{
+    cursor:pointer;
+    color: #d1d1d1;
+  }
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes fade {
+  from {opacity:0;}
+  to {opacity:1;}
+}
+
+/* Standard syntax */
+@keyframes fade {
+  from {opacity:0;}
+  to {opacity:1;}
+}
+
+.collection-link{
+  color:inherit !important;
+}
+
+.collection-link.new{
+  background-color: #edf2fa !important;
+  &:hover{
+    background-color: rgba(157, 175, 197, 0.25) !important;
+  }
+}
+
+#logout-button{
+  bottom: 4em;
+  position: absolute;
+}

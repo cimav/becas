@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180718192007) do
+ActiveRecord::Schema.define(version: 20180806165322) do
 
   create_table "admin_notes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.bigint "user_id"
@@ -43,6 +43,19 @@ ActiveRecord::Schema.define(version: 20180718192007) do
     t.index ["created_at"], name: "index_audits_on_created_at"
     t.index ["request_uuid"], name: "index_audits_on_request_uuid"
     t.index ["user_id", "user_type"], name: "user_index"
+  end
+
+  create_table "notifications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.string "person_type"
+    t.bigint "person_id"
+    t.string "message"
+    t.string "link"
+    t.integer "notification_type"
+    t.boolean "read"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id", "person_type"], name: "index_notifications_on_person_id_and_person_type"
+    t.index ["person_type", "person_id"], name: "index_notifications_on_person_type_and_person_id"
   end
 
   create_table "scholarship_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|

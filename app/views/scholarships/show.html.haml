@@ -7,7 +7,6 @@
         %a.breadcrumb{}
           =@scholarship.scholarship_type.name
 
-
 .row
   .card
     .card-content
@@ -112,50 +111,39 @@
                     %th
                       = number_to_currency(@scholarship.amount,unit: "$", separator: ".", delimiter: ",", format: "%u%n")
       -if is_admin?
-        -if @comments.size==0
-          %button.btn-floating.btn-large.waves-effect.waves-light.purple.tooltipped{'data-tooltip':"Escribir comentario",'data-delay':30, onclick:"openModal($('#new_comment_modal'));"}
-            %i.material-icons insert_comment
-        -if @admin_notes.size==0
-          %button.btn-floating.btn-large.waves-effect.waves-light.indigo.tooltipped{'data-tooltip':"Escribir nota de administrador",'data-delay':30, onclick:"openModal($('#new_admin_note'));"}
-            %i.material-icons feedback
         %button.btn-floating.btn-large.waves-effect.waves-light.indigo.tooltipped{'data-tooltip':"Enviar a comité",'data-delay':30, onclick:"openModal($('#send_to_cep_modal'));", class:"#{enable_cep_button(@scholarship)}"}
           %i.material-icons gavel
 -if is_admin?
-  -if @admin_notes.size>0
-    .row
-      %ul.collapsible
-        %li
-          .collapsible-header
-            %i.material-icons.left
-              feedback
-            Notas de administrador
-            %span.badge{'data-badge-caption':"#{@admin_notes.size==1?'Nota':'Notas'}"}
-              =@admin_notes.size
-          .collapsible-body.white
-            =render 'admin_notes'
-            %br
-            .right-align
-              %button.btn-floating.btn-large.waves-effect.waves-light.indigo.tooltipped{'data-tooltip':"Agregar nota", onclick:"openModal($('#new_admin_note'));"}
-                %i.material-icons feedback
 
--if @comments.size>0
-  .row
-    .card
-      .card-content
-        .card-title
+  .row#admin_notes
+    %ul.collapsible
+      %li
+        .collapsible-header{class:"#{'active' if params[:target] == 'admin_notes'}"}
           %i.material-icons.left
-            insert_comment
-          Mensajes
-        %ul.collapsible
-          %li
-            .collapsible-header
-              Mensajes
-              %span.badge{'data-badge-caption':"#{@comments.size==1?'Mensaje':'Mensajes'}"}
-                =@comments.size
-            .collapsible-body
-              =render 'scholarship_messages'
+            feedback
+          Notas de administrador
+          %span.badge{'data-badge-caption':"#{@admin_notes.size==1?'Nota':'Notas'}"}
+            =@admin_notes.size
+        .collapsible-body.white
+          =render 'admin_notes'
+          %br
+          .right-align
+            %button.btn-floating.btn-large.waves-effect.waves-light.indigo.tooltipped{'data-tooltip':"Agregar nota", onclick:"openModal($('#new_admin_note'));"}
+              %i.material-icons feedback
+
+.row#messages
+  %ul.collapsible
+    %li
+      .collapsible-header{class:"#{'active' if params[:target] == 'messages'}"}
+        %i.material-icons.left
+          insert_comment
+        Mensajes
+        %span.badge{'data-badge-caption':"#{@comments.size==1?'Mensaje':'Mensajes'}"}
+          =@comments.size
+      .collapsible-body.white
+        =render 'scholarship_messages'
         .right-align
-          %button.btn-floating.btn-large.waves-effect.waves-light.purple.tooltipped{'data-tooltip':"Responder", onclick:"openModal($('#new_comment_modal'));"}
+          %button.btn-floating.btn-large.waves-effect.waves-light.purple.tooltipped{'data-tooltip':"Escribir mensaje", onclick:"openModal($('#new_comment_modal'));"}
             %i.material-icons insert_comment
 
 -if @scholarship.person_type.eql?'Internship'
@@ -281,5 +269,7 @@
   Turbolinks.clearCache();
   $(document).ready(function(){
     // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
-    $('.modal').modal('close');
-  });
+    //$('.modal').modal('close');
+    if (#{!params[:target].blank?})
+      $('html, body').animate({scrollTop: $("#"+'#{params[:target]}').offset().top}, 1000);});
+

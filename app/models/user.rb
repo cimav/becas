@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :scholarship_comments, as: :person
+  has_many :notifications, as: :person
   has_many :admin_notes
   before_create :set_status
   serialize :areas, Array

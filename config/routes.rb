@@ -28,4 +28,8 @@ Rails.application.routes.draw do
   ########################################## estadísticas
   get '/stats' => 'stats#index'
 
+  ########################################## notificaciones
+  get '/notifications' => 'notifications#index'
+  get '/notifications/:id' => 'notifications#show'
+
 end

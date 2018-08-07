@@ -1,0 +1,9 @@
+%h5.center Notificaciones
+.divider
+.section
+  .collection
+    -notifications.each do |notification|
+      %a.collection-item.collection-link{href:"/notifications/#{notification.id}", class:"#{notification.read ? '':'new'}"}
+        %ul
+          %li=notification.message
+          %li.grey-text=f_date(notification.created_at)

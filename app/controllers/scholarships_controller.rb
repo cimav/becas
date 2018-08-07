@@ -135,6 +135,15 @@ class ScholarshipsController < ApplicationController
       comment.person = current_staff
     end
     if comment.save
+      #se enviará una notificación al docente responsable, al asistente y a los administradores
+      persons = []
+      if @scholarship.person_type == 'Internship'
+        persons.push(@scholarship.person.staff) if @scholarship.person.staff
+        User.where.not(status: User::DELETED).where(user_type: [User::DEPARTMENT_ASSISTANT, User::DEPARTMENT_CHIEF]).each {|user| persons.push(user) if @scholarship.person.area.in? user.areas}
+        User.where.not(status: User::DELETED).where(user_type: [User::ADMIN, User::SUPER_USER]).each {|user| persons.push(user)}
+      end
+
+      persons.each {|person| person.notifications.create(message:"Nuevo mensaje de #{current_person.full_name}", notification_type: Notification::MESSAGE, link:"/scholarships/#{@scholarship.id}") if person != current_person}
       redirect_to @scholarship
     end
   end
@@ -144,6 +153,7 @@ class ScholarshipsController < ApplicationController
 
     comment.user = current_user
     if comment.save
+      User.where(user_type:[User::ADMIN,User::SUPER_USER]).each {|person| person.notifications.create(message:"#{current_person.full_name} ha escrito una nota de administrador", notification_type: Notification::ADMIN_NOTE, link:"/scholarships/#{@scholarship.id}") if person != current_person}
       redirect_to @scholarship
     end
   end
