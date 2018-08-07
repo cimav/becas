@@ -142,9 +142,12 @@ class ScholarshipsController < ApplicationController
       persons = []
       if @scholarship.person_type == 'Internship'
         persons.push(@scholarship.person.staff) if @scholarship.person.staff
-        User.where.not(status: User::DELETED).where(user_type: [User::DEPARTMENT_ASSISTANT, User::DEPARTMENT_CHIEF]).each {|user| persons.push(user) if @scholarship.person.area.in? user.areas}
-        User.where.not(status: User::DELETED).where(user_type: [User::ADMIN, User::SUPER_USER]).each {|user| persons.push(user)}
+        User.where.not(status: User::DELETED).where(user_type: [User::DEPARTMENT_ASSISTANT, User::DEPARTMENT_CHIEF]).each {|user| persons.push(user) if @scholarship.person.area.id.in? user.areas} rescue ''
+      else
+        User.where.not(status: User::DELETED).where(user_type: [User::DEPARTMENT_ASSISTANT, User::DEPARTMENT_CHIEF]).each {|user| persons.push(user) if @scholarship.person.supervisor.area.id.in? user.areas} rescue ''
+        persons.push(@scholarship.person.supervisor) if @scholarship.person.supervisor
       end
+      User.where.not(status: User::DELETED).where(user_type: [User::ADMIN, User::SUPER_USER]).each {|user| persons.push(user)}
 
       persons.each {|person| person.notifications.create(message:"Nuevo mensaje de #{current_person.full_name}", notification_type: Notification::MESSAGE, link:"/scholarships/#{@scholarship.id}") if person != current_person}
       redirect_to @scholarship
