@@ -4,6 +4,7 @@ class Notification < ApplicationRecord
 
   MESSAGE = 1
   ADMIN_NOTE = 2
+  NEW_SCHOLARSHIP =3
 
   def target
     case self.notification_type
@@ -11,6 +12,8 @@ class Notification < ApplicationRecord
       'messages'
     when ADMIN_NOTE
       'admin_notes'
+    else
+      ''
     end
   end
 

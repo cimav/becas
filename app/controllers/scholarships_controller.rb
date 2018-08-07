@@ -42,6 +42,9 @@ class ScholarshipsController < ApplicationController
           @scholarship.notice_student # se envía correo con token para para que el alumno accese
         end
 
+        #se manda notificacion a administradores
+        User.where(user_type:[User::ADMIN,User::SUPER_USER]).each {|person| person.notifications.create(message:"#{current_person.full_name} ha creado una nueva beca", notification_type: Notification::NEW_SCHOLARSHIP, link:"/scholarships/#{@scholarship.id}") if person != current_person}
+
         format.html {redirect_to @scholarship, notice: 'Beca creada'}
         format.json {render :show, status: :created, location: @scholarship}
       else
