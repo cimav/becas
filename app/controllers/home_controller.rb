@@ -91,7 +91,7 @@ class HomeController < ApplicationController
 
     respond_to do |format|
       format.html do
-        @scholarships = @scholarships.offset(scholarships_loaded).limit(50)
+        @scholarships = @scholarships.order('created_at desc').offset(scholarships_loaded).limit(50)
         render layout:false
       end
       ############################## Exportar a excel
