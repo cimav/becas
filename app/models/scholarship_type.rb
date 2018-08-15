@@ -19,4 +19,8 @@ class ScholarshipType < ApplicationRecord
   def set_status
     self.status = ACTIVE
   end
+
+  def full_name
+    "#{self.name} (#{self.category == FISCAL ? 'Fiscales':'Propios'})"
+  end
 end

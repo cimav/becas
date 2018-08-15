@@ -82,7 +82,7 @@
                     Sin capturar
               %p
                 %b Tipo de beca:
-                = @scholarship.scholarship_type.name
+                = @scholarship.scholarship_type.full_name
               %p
                 %b Proyecto:
                 -if !@scholarship.project_number.blank?

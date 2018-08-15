@@ -15,7 +15,7 @@
 
     .row
       .input-field.col.s12.m4
-        =f.select :scholarship_type_id, ScholarshipType.where.not(status:ScholarshipType::DELETED).where.not(category: ScholarshipType::FISCAL).order('id DESC').map {|p| [p.name, p.id, { 'data-amount' => p.max_amount}]}, {}, class:'material-select'
+        =f.select :scholarship_type_id, ScholarshipType.where.not(status:ScholarshipType::DELETED).where.not(category: ScholarshipType::FISCAL).order('id DESC').map {|p| [p.full_name, p.id, { 'data-amount' => p.max_amount}]}, {}, class:'material-select'
         =f.label :scholarship_type_id, 'Tipo de beca'
       .input-field.col.s12.m4
         =f.text_field :start_date, class: "datepicker",placeholder:'Selecciona la fecha de inicio', type:'date'
