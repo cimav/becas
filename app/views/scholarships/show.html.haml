@@ -6,7 +6,14 @@
           Listado de becas
         %a.breadcrumb{}
           =@scholarship.scholarship_type.name
+-if multiple_scholarship? @scholarship
+  .row
+    .card-panel
 
+      %h5
+        %i.material-icons.left.orange-text.text-darken-2 warning
+        Múltiples becas
+      %p.grey-text.text-darken-2 Se ha detectado que existe más de una beca con este CURP. Si quiere ocultar este aviso debe cambiar el estatus de las becas repetidas a 'cancelada', 'inactiva' o 'rechazada'
 .row
   .card
     .card-content

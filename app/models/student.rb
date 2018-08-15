@@ -1,4 +1,5 @@
 class Student < SaposModels
+
   belongs_to :program
   belongs_to :campus
   has_many :scholarships, as: :person

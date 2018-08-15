@@ -14,6 +14,8 @@ module ScholarshipsHelper
         color = 'purple-text'
       when Scholarship::REJECTED
         color = 'red-text'
+      when Scholarship::CANCELED
+        color = 'black-text'
     end
   end
 
@@ -35,6 +37,15 @@ module ScholarshipsHelper
       end
     end
     true
+  end
+
+  def multiple_scholarship?(scholarship)
+    if !scholarship.person.curp.blank?
+      #se buscan becas que no estén inactivas, rechazadas o eliminadas que correspondan al mismo curp
+      (Scholarship.joins("INNER JOIN #{SaposModels.db_name}.students p ON scholarships.person_id = p.id").where(person_type:'Student').where("p.curp ='#{scholarship.person.curp}'").where.not(status: [Scholarship::DELETED, Scholarship::INACTIVE, Scholarship::REJECTED, Scholarship::CANCELED]).size > 1) || (Scholarship.joins("INNER JOIN #{SaposModels.db_name}.internships p ON scholarships.person_id = p.id").where(person_type:'Internship').where("p.curp ='#{scholarship.person.curp}'").where.not(status: [Scholarship::DELETED, Scholarship::INACTIVE, Scholarship::REJECTED, Scholarship::CANCELED]).size > 1)
+    else
+      false
+    end
   end
 
 end
