@@ -51,6 +51,10 @@
                 %p
                   %b Responsable:
                   = @scholarship.person.staff.full_name
+                %p
+                  %b Tipo de servicio:
+                  = @scholarship.person.internship_type.name
+
               %p
                 %b Curp:
                 -if !@scholarship.person.curp.blank?
