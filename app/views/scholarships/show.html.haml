@@ -99,11 +99,6 @@
                     %span.red-text
                       Sin capturar
 
-              -if !@scholarship.notes.blank?
-                %br
-                .grey-text.text-darken-2
-                  %b Notas:
-                  = @scholarship.notes
 
             .col.s12.m6
               %table.grey.lighten-4
@@ -124,6 +119,12 @@
                       Monto mensual a otorgar
                     %th
                       = number_to_currency(@scholarship.amount,unit: "$", separator: ".", delimiter: ",", format: "%u%n")
+            .col.s12
+              -if !@scholarship.notes.blank?
+                %br
+                .grey-text.text-darken-2
+                  %b Notas:
+                  = @scholarship.notes
       -if is_admin?
         %button.btn-floating.btn-large.waves-effect.waves-light.indigo.tooltipped{'data-tooltip':"Enviar a comité",'data-delay':30, onclick:"openModal($('#send_to_cep_modal'));", class:"#{enable_cep_button(@scholarship)}"}
           %i.material-icons gavel
