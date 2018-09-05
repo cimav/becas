@@ -41,7 +41,10 @@
             help
           =f.text_field :request_number,placeholder:'Solicitud de beca en el Unix'
           =f.label :request_number, 'Número de solicitud'
-
+      .row
+        .input-field.col.s12
+          =f.label :notes, 'Notas'
+          =f.text_area :notes, class:'materialize-textarea'
     .section
       .row
         .input-field.col.s12.m2

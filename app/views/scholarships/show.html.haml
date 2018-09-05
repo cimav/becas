@@ -98,6 +98,12 @@
                   -else
                     %span.red-text
                       Sin capturar
+
+              -if !@scholarship.notes.blank?
+                %br
+                %b Notas:
+                = @scholarship.notes
+
             .col.s12.m6
               %table.grey.lighten-4
                 %thead

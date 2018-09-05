@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180806165322) do
+ActiveRecord::Schema.define(version: 20180905162719) do
 
   create_table "admin_notes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.bigint "user_id"
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 20180806165322) do
     t.float "max_amount", limit: 24
     t.string "project_number"
     t.string "request_number"
+    t.string "notes"
     t.index ["person_id", "person_type"], name: "index_scholarships_on_person_id_and_person_type"
     t.index ["person_type", "person_id"], name: "index_scholarships_on_person_type_and_person_id"
     t.index ["scholarship_type_id"], name: "index_scholarships_on_scholarship_type_id"

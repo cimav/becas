@@ -35,6 +35,12 @@
           help
         =f.text_field :project_number,placeholder:'Número de proyecto en el Unix'
         =f.label :project_number, 'Proyecto'
+
+    .row
+      .input-field.col.s12
+        =f.label :notes, 'Notas'
+        =f.text_area :notes, class:'materialize-textarea'
+
     .row
       .input-field.col.s12.m2
         %p{id:'scholarship_max_amount',disabled:true}
