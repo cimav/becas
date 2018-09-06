@@ -6,14 +6,14 @@
           Listado de becas
         %a.breadcrumb{}
           =@scholarship.scholarship_type.name
--if multiple_scholarship? @scholarship
-  .row
-    .card-panel
-
-      %h5
-        %i.material-icons.left.orange-text.text-darken-2 warning
-        Múltiples becas
-      %p.grey-text.text-darken-2 Se ha detectado que existe más de una beca con este CURP. Si quiere ocultar este aviso debe cambiar el estatus de las becas repetidas a 'cancelada', 'inactiva' o 'rechazada'
+-if is_admin?
+  -if multiple_scholarship? @scholarship
+    .row
+      .card-panel.pink.lighten-5
+        %h5
+          %i.material-icons.left.orange-text.text-darken-2 warning
+          Múltiples becas
+        %p.grey-text.text-darken-2 Se ha detectado que existe más de una beca con este CURP. Si quiere ocultar este aviso debe cambiar el estatus de las becas repetidas a 'cancelada', 'inactiva' o 'rechazada'
 .row
   .card
     .card-content
@@ -132,8 +132,14 @@
       -if is_admin?
         %button.btn-floating.btn-large.waves-effect.waves-light.indigo.tooltipped{'data-tooltip':"Enviar a comité",'data-delay':30, onclick:"openModal($('#send_to_cep_modal'));", class:"#{enable_cep_button(@scholarship)}"}
           %i.material-icons gavel
--if is_admin?
 
+      -if @scholarship.scholarship_files.where(file_type: ScholarshipFile::CEP_DOCUMENT).size > 0
+        %a.btn-floating.btn-large.waves-effect.waves-light.yellow.darken-3.tooltipped{href:"/scholarship_files/#{@scholarship.scholarship_files.where(file_type: ScholarshipFile::CEP_DOCUMENT).last.id}", target:'_blank', 'data-tooltip':"Formato del CEP",'data-delay':30}
+          %i.material-icons insert_drive_file
+      -if @scholarship.agreement
+        %a.btn-floating.btn-large.waves-effect.waves-light.yellow.darken-3.tooltipped{href:"http://pruebas.cep.cimav.edu.mx/scholarships/#{@scholarship.id}/scholarship_document", target:'_blank', 'data-tooltip':"Formato del CEP",'data-delay':30}
+          %i.material-icons insert_drive_file
+-if is_admin?
   .row#admin_notes
     %ul.collapsible
       %li
@@ -199,6 +205,9 @@
       %i.material-icons
         more_vert
     %ul
+      %li
+        %button.btn-floating.waves-effect.waves-light.brown.tooltipped{"data-position":"left", "data-tooltip": "Archivos de beca","data-delay":40, onclick:"openModal($('#scholarship_files_modal'));", class:"#{@scholarship.status == Scholarship::REJECTED ? 'disabled':''}"}
+          %i.material-icons folder
       %li
         %button.btn-floating.waves-effect.waves-light.orange.tooltipped{"data-position":"left", "data-tooltip": "Cambiar estatus","data-delay":40, onclick:"openModal($('#change_status_modal'));", class:"#{@scholarship.status == Scholarship::REJECTED ? 'disabled':''}"}
           %i.material-icons settings
@@ -270,6 +279,34 @@
           %button.btn-floating.green.darken-1{type:'submit',value:"Submit"}
             %i.material-icons
               send
+#scholarship_files_modal.modal.bottom-sheet
+  .modal-content
+    %h5 Archivos de beca
+    .row#scholarship-files
+      .col.s3.m1
+        =image_tag 'add-document-icon.png', class:'responsive-img tooltipped cursor-pointer', 'data-tooltip':'Subir archivo', onclick:"openModal($('#upload_scholarship_files_modal'));"
+      -@scholarship.scholarship_files.each do |file|
+        .col.s3.m1#scholarship_file_wrapper
+          %a{href:"/scholarship_files/#{file.id}", data: {method:'delete', confirm: "¿Desea eliminar el archivo?"}}
+            %i.material-icons#delete-file-icon
+              clear
+          %a{href:"/scholarship_files/#{file.id}", target:'_blank'}
+            =image_tag 'file-icon.png', class:'responsive-img'
+          %p.truncate.tooltipped{'data-tooltip':file.name}=file.name
+
+#upload_scholarship_files_modal.modal
+  .modal-content
+    %h5 Subir archivo
+    =form_for ScholarshipFile.new, url:"/scholarships/#{@scholarship.id}/upload_scholarship_file", remote:true, html:{id:'scholarship-files-form', class:'col s12 m4'} do |f|
+      .row
+        .input-field.col.s12.m12
+          =f.label :file_type,'Tipo de documento', class:'active'
+          =f.select :file_type, ScholarshipFile::TYPES.invert, {}, class:'material-select'
+        .input-field.col.s12.m12
+          =f.file_field :file
+        .input-field.col.s12.m12.right-align
+          =f.submit 'Subir'
+
 #upload_file_modal.modal
   .modal-content
     %h5 Subir documento
@@ -277,7 +314,7 @@
       .row
         .input-field.col.s12.m12
           =f.label :file_type,'Tipo de documento', class:'active'
-          =f.select :file_type, InternshipFile::REQUESTED_DOCUMENTS.except(InternshipFile::COURSE,InternshipFile::NORMAL,InternshipFile::SIGN_REQUEST).invert, {}, class:'material-select'
+          =f.select :file_type, InternshipFile::REQUESTED_DOCUMENTS.except(InternshipFile::COURSE,InternshipFile::NORMAL,InternshipFile::SIGN_REQUEST, InternshipFile::ACTIVITY_REPORT).invert, {}, class:'material-select'
         .input-field.col.s12.m12
           =f.file_field :file
         .input-field.col.s12.m12.right-align
@@ -290,5 +327,7 @@
     // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
     //$('.modal').modal('close');
     if (#{!params[:target].blank?})
-      $('html, body').animate({scrollTop: $("#"+'#{params[:target]}').offset().top}, 1000);});
+      $('html, body').animate({scrollTop: $("#"+'#{params[:target]}').offset().top}, 1000);
+  });
+
 

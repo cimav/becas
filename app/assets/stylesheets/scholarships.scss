@@ -14,3 +14,26 @@
   display: block;
   overflow-y: scroll;
 }
+
+
+#scholarship-files{
+  padding: 3em 5em;
+}
+
+#scholarship_file_wrapper{
+  position: relative;
+
+  #delete-file-icon{
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    &:hover{color: #b41e36;}
+
+  }
+
+  &:hover{
+    #delete-file-icon{display: block;}
+  }
+}

@@ -33,6 +33,9 @@ function setScholarshipsHeight(){
 }
 
 
+function showScholarshipFilesForm() {
+    $('#scholarship-files-form').show();
+}
 
 
 //------------------------------------------------------------------------------

@@ -18,9 +18,12 @@ Rails.application.routes.draw do
   post '/scholarships/:id/create_admin_note' => 'scholarships#create_admin_note'
   get '/scholarships/:id/internship_files' => 'scholarships#internship_files'
   post '/scholarships/:id/upload_internship_file' => 'scholarships#upload_internship_file'
+  post '/scholarships/:id/upload_scholarship_file' => 'scholarships#upload_scholarship_file'
   post '/scholarships/:id/upload_internship_file_with_token' => 'scholarships#upload_internship_file_with_token'
   post '/scholarships/:id/send_to_committee' => 'scholarships#send_to_committee'
   patch '/scholarships/:id/change_status' => 'scholarships#change_status'
+  get '/scholarship_files/:id' => 'scholarships#get_scholarship_file'
+  delete '/scholarship_files/:id' => 'scholarships#delete_scholarship_file'
 
   ########################################## home
   get '/load_scholarships' => 'home#load_scholarships'

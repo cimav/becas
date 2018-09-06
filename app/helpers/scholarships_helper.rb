@@ -22,12 +22,14 @@ module ScholarshipsHelper
   def enable_cep_button(scholarship)
     if scholarship.agreement
       'disabled'
+    elsif scholarship.scholarship_files.where(file_type: ScholarshipFile::CEP_DOCUMENT).size > 0
+      'disabled'
     elsif scholarship.person_type == 'Internship'
       if !scholarship_all_documents?(scholarship)
         'disabled'
       end
     end
-    end
+  end
 
   def scholarship_all_documents?(scholarship)
     document_types = ['REGISTRATION_PROOF', 'INSTITUTION_REQUEST', 'IFE', 'BANK_ACCOUNT', 'CURP', 'ADDRESS_BILL', 'WORKPLAN', 'INSURANCE', 'CIMAV_CREDENTIAL', 'COURSE']

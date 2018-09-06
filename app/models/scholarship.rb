@@ -15,6 +15,7 @@ class Scholarship < ApplicationRecord
   has_many :scholarship_comments, dependent: :destroy
   has_many :admin_notes, dependent: :destroy
   has_one :scholarship_token, dependent: :destroy
+  has_many :scholarship_files, dependent: :destroy
 
   has_one :agreement, as: :agreeable, dependent: :destroy
 

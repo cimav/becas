@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180905162719) do
+ActiveRecord::Schema.define(version: 20180905204802) do
 
   create_table "admin_notes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.bigint "user_id"
@@ -71,6 +71,16 @@ ActiveRecord::Schema.define(version: 20180905162719) do
     t.index ["scholarship_id"], name: "index_scholarship_comments_on_scholarship_id"
   end
 
+  create_table "scholarship_files", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.string "name"
+    t.string "file"
+    t.integer "file_type"
+    t.bigint "scholarship_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["scholarship_id"], name: "index_scholarship_files_on_scholarship_id"
+  end
+
   create_table "scholarship_tokens", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.bigint "scholarship_id"
     t.string "token"
@@ -122,5 +132,6 @@ ActiveRecord::Schema.define(version: 20180905162719) do
   add_foreign_key "admin_notes", "scholarships"
   add_foreign_key "admin_notes", "users"
   add_foreign_key "scholarship_comments", "scholarships"
+  add_foreign_key "scholarship_files", "scholarships"
   add_foreign_key "scholarships", "scholarship_types"
 end

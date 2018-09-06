@@ -1,6 +1,6 @@
 class ScholarshipsController < ApplicationController
   skip_before_action :auth_required, only: [:access_with_token, :upload_internship_file_with_token, :internship_files]
-  before_action :set_scholarship, only: [:show, :edit, :update, :destroy, :print_internship_cep_file, :create_comment, :internship_files, :upload_internship_file, :upload_internship_file_with_token, :access_with_token, :send_to_committee, :change_status, :create_admin_note]
+  before_action :set_scholarship, only: [:show, :edit, :update, :destroy, :print_internship_cep_file, :create_comment, :internship_files, :upload_internship_file, :upload_internship_file_with_token, :access_with_token, :send_to_committee, :change_status, :create_admin_note, :upload_scholarship_file]
   include ActionView::Helpers::NumberHelper
 
   # GET /scholarships
@@ -244,6 +244,43 @@ class ScholarshipsController < ApplicationController
       end
       format.html {redirect_to scholarships_url, notice: message}
       format.json {head :no_content}
+    end
+  end
+
+  def upload_scholarship_file
+    response = {}
+    file = @scholarship.scholarship_files.new
+    file.file_type = params[:scholarship_file]['file_type']
+    file.file = params[:scholarship_file]['file']
+    file.name = params[:scholarship_file]['file'].original_filename rescue 'Sin nombre'
+    response[:object] = file
+    respond_to do |format|
+      if file.save
+        format.html {redirect_to @scholarship, notice: 'Se subió el documento'}
+        format.json {head :no_content}
+      else
+        format.html {redirect_to scholarships_url, notice: 'Error al subir documento'}
+        format.json {head :no_content}
+      end
+    end
+  end
+
+  def get_scholarship_file
+    file = ScholarshipFile.find(params[:id])
+    send_file file.file.to_s, disposition: :inline
+  end
+
+  def delete_scholarship_file
+    file = ScholarshipFile.find(params[:id])
+    scholarship = file.scholarship
+    respond_to do |format|
+      if file.destroy
+        format.html {redirect_to scholarship, notice: 'Se eliminó el archivo'}
+        format.json {head :no_content}
+      else
+        format.html {redirect_to scholarship, notice: 'Error al eliminar archivo'}
+        format.json {head :no_content}
+      end
     end
   end
 
