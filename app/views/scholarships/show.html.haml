@@ -137,7 +137,7 @@
         %a.btn-floating.btn-large.waves-effect.waves-light.yellow.darken-3.tooltipped{href:"/scholarship_files/#{@scholarship.scholarship_files.where(file_type: ScholarshipFile::CEP_DOCUMENT).last.id}", target:'_blank', 'data-tooltip':"Formato del CEP",'data-delay':30}
           %i.material-icons insert_drive_file
       -if @scholarship.agreement
-        %a.btn-floating.btn-large.waves-effect.waves-light.yellow.darken-3.tooltipped{href:"http://pruebas.cep.cimav.edu.mx/scholarships/#{@scholarship.id}/scholarship_document", target:'_blank', 'data-tooltip':"Formato del CEP",'data-delay':30}
+        %a.btn-floating.btn-large.waves-effect.waves-light.yellow.darken-3.tooltipped{href:"http://cep.cimav.edu.mx/scholarships/#{@scholarship.id}/scholarship_document", target:'_blank', 'data-tooltip':"Formato del CEP",'data-delay':30}
           %i.material-icons insert_drive_file
 -if is_admin?
   .row#admin_notes
