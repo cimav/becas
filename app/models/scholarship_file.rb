@@ -4,7 +4,8 @@ class ScholarshipFile < ApplicationRecord
   belongs_to :scholarship
 
   CEP_DOCUMENT = 1
-  OTHER = 2
+  NETMULTIX_DOCUMENT = 2
+  OTHER = 50
 
   TYPES = {
       CEP_DOCUMENT => 'Respuesta del CEP',
