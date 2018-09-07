@@ -8,6 +8,7 @@ class ScholarshipFile < ApplicationRecord
 
   TYPES = {
       CEP_DOCUMENT => 'Respuesta del CEP',
+      NETMULTIX_DOCUMENT => 'Carta de Netmultix',
       OTHER => 'Otro'
   }
 
