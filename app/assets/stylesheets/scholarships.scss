@@ -37,3 +37,14 @@
     #delete-file-icon{display: block;}
   }
 }
+
+.internshipFileTrigger{
+  text-align: center;
+  cursor: pointer;
+  &:hover {
+    background-color: #f8f8f8;
+    i{
+      color: #e79533;
+    }
+  }
+}

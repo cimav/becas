@@ -191,10 +191,10 @@ class ScholarshipsController < ApplicationController
     response[:object] = file
     respond_to do |format|
       if file.save
-        format.html {redirect_to @scholarship, notice: 'Se subió el documento'}
+        format.html {redirect_to "/scholarships/#{@scholarship.id}?target=internship-files", notice: 'Se subió el documento'}
         format.json {head :no_content}
       else
-        format.html {redirect_to scholarships_url, notice: 'Error al subir documento'}
+        format.html {redirect_to @scholarship, notice: 'Error al subir documento'}
         format.json {head :no_content}
       end
     end

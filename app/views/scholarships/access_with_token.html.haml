@@ -47,34 +47,47 @@
                     %p
                       %b Tipo de beca:
                       = @scholarship.scholarship_type.name
+                  .col.s12.m6
+                    %table.grey.lighten-4
+                      %thead
+                        %tr
+                          %th
+                            Concepto
+                          %th
+                            Cantidad
+                      %tbody
+                        %tr.grey.lighten-2
+                          %th
+                            Monto mensual a otorgar
+                          %th
+                            = number_to_currency(@scholarship.amount,unit: "$", separator: ".", delimiter: ",", format: "%u%n")
 
-      .row
-        .card
-          .card-content
-            .card-title
-              Documentos
-              -if (@scholarship.status.eql? Scholarship::REQUESTED) && (@scholarship.person_type.eql? 'Internship')
-                %a.btn-floating.right
-                  %i.material-icons.green.darken-2{onclick:"openModal($('#upload_file_modal'));"}
-                    add
-            #internship_files
-              :javascript
-                refreshInternshipFiles("#{@scholarship.id}");
+
+      -if @scholarship.person_type.eql? 'Internship'
+        .row
+          .card
+            .card-content
+              .card-title
+                Documentos
+                -if (@scholarship.status.eql? Scholarship::REQUESTED) && (@scholarship.person_type.eql? 'Internship')
+                  %a.btn-floating.right
+                    %i.material-icons.green.darken-2{onclick:"openModal($('#upload_file_modal'));"}
+                      add
+              #internship_files
+                :javascript
+                  refreshInternshipFiles("#{@scholarship.id}");
+
       #upload_file_modal.modal
         .modal-content
-          %h5 Subir documento
-          =form_for InternshipFile.new, url:"/scholarships/#{@scholarship.id}/upload_internship_file_with_token", class:'col s12 m12 remote-form', remote:true do |f|
+          %h5#internshipFileName Subir documento
+          =form_for InternshipFile.new, url:"/scholarships/#{@scholarship.id}/upload_internship_file_with_token", class:'col s12 m12 remote-form' do |f|
             .row
-              .input-field.col.s12.m12
-                =f.label :file_type,'Tipo de documento', class:'active'
-                =f.select :file_type, InternshipFile::REQUESTED_DOCUMENTS.except(InternshipFile::COURSE,InternshipFile::NORMAL,InternshipFile::SIGN_REQUEST).invert
+              =f.hidden_field :file_type, id:'internship_file_type'
+              =hidden_field_tag :token, @token
               .input-field.col.s12.m12
                 =f.file_field :file
-                =hidden_field_tag :token, @token
               .input-field.col.s12.m12.right-align
-                %button.btn-floating.green.darken-1{type:'submit',value:"Submit", 'data-remote':'true'}
-                  %i.material-icons
-                    send
+                =f.submit 'Subir'
 
 
 

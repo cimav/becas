@@ -1,5 +1,6 @@
 class ScholarshipFile < ApplicationRecord
   mount_uploader :file, ScholarshipFileUploader
+  after_destroy_commit :delete_file
   belongs_to :scholarship
 
   CEP_DOCUMENT = 1
@@ -12,6 +13,10 @@ class ScholarshipFile < ApplicationRecord
 
   def get_type
     TYPES[self.file_type]
+  end
+
+  def delete_file
+    remove_file!
   end
 
 end

@@ -33,8 +33,10 @@ function setScholarshipsHeight(){
 }
 
 
-function showScholarshipFilesForm() {
-    $('#scholarship-files-form').show();
+function showInternshipFilesForm(file_type, file_name) {
+    $('#upload_file_modal').modal('open');
+    $('#internship_file_type').val(file_type);
+    $('#internshipFileName').text(file_name);
 }
 
 

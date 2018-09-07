@@ -23,7 +23,7 @@ class InternshipFile < SaposModels
       REGISTRATION_PROOF  => 'Constancia de estudios',
       COURSE              => 'Curso de seguridad e higiene aprobado',
       IFE                 => 'Credencial del INE o IFE',
-      BANK_ACCOUNT        => 'Cuenta bancaria',
+      BANK_ACCOUNT        => 'Cuenta bancaria con CLABE',
       CURP                => 'CURP',
       ADDRESS_BILL        => 'Comprobante de domicilio',
       WORKPLAN            => 'Plan de trabajo',

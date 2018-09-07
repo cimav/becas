@@ -172,7 +172,7 @@
             %i.material-icons insert_comment
 
 -if @scholarship.person_type.eql?'Internship'
-  .row
+  .row#internship-files
     .card
       .card-content
         .card-title
@@ -309,12 +309,10 @@
 
 #upload_file_modal.modal
   .modal-content
-    %h5 Subir documento
+    %h5#internshipFileName Subir documento
     =form_for InternshipFile.new, url:"/scholarships/#{@scholarship.id}/upload_internship_file", remote:true, html:{id:'internship-files-form', class:'col s12 m12'} do |f|
       .row
-        .input-field.col.s12.m12
-          =f.label :file_type,'Tipo de documento', class:'active'
-          =f.select :file_type, InternshipFile::REQUESTED_DOCUMENTS.except(InternshipFile::COURSE,InternshipFile::NORMAL,InternshipFile::SIGN_REQUEST, InternshipFile::ACTIVITY_REPORT).invert, {}, class:'material-select'
+        =f.hidden_field :file_type, id:'internship_file_type'
         .input-field.col.s12.m12
           =f.file_field :file
         .input-field.col.s12.m12.right-align
@@ -327,7 +325,7 @@
     // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
     //$('.modal').modal('close');
     if (#{!params[:target].blank?})
-      $('html, body').animate({scrollTop: $("#"+'#{params[:target]}').offset().top}, 1000);
+      $('html, body').animate({scrollTop: $("#"+'#{params[:target]}').offset().top}, 800);
   });
 
 

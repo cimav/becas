@@ -3,57 +3,86 @@
     %tr
       %th Tipo de documento
       %th Archivo
+      %th
   %tbody
     %tr
       %td
         Constancia de estudios
       %td
         =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::REGISTRATION_PROOF).last}
+      %td.internshipFileTrigger{onclick:"showInternshipFilesForm(#{InternshipFile::REGISTRATION_PROOF},'#{InternshipFile::REQUESTED_DOCUMENTS[InternshipFile::REGISTRATION_PROOF]}');"}
+        %i.material-icons
+          cloud_upload
     %tr
       %td
         Solicitud oficial de la institución de procedencia
       %td
         =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::INSTITUTION_REQUEST).last}
+      %td.internshipFileTrigger{onclick:"showInternshipFilesForm(#{InternshipFile::INSTITUTION_REQUEST},'#{InternshipFile::REQUESTED_DOCUMENTS[InternshipFile::INSTITUTION_REQUEST]}');"}
+        %i.material-icons
+          cloud_upload
     %tr
       %td
         Copia de credencial del IFE o INE
       %td
         =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::IFE).last}
+      %td.internshipFileTrigger{onclick:"showInternshipFilesForm(#{InternshipFile::IFE},'#{InternshipFile::REQUESTED_DOCUMENTS[InternshipFile::IFE]}');"}
+        %i.material-icons
+          cloud_upload
     %tr
       %td
         Centa bancaria con CLABE
       %td
         =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::BANK_ACCOUNT).last}
+      %td.internshipFileTrigger{onclick:"showInternshipFilesForm(#{InternshipFile::BANK_ACCOUNT},'#{InternshipFile::REQUESTED_DOCUMENTS[InternshipFile::BANK_ACCOUNT]}');"}
+        %i.material-icons
+          cloud_upload
     %tr
       %td
         Copia del CURP
       %td
         =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::CURP).last}
+      %td.internshipFileTrigger{onclick:"showInternshipFilesForm(#{InternshipFile::CURP},'#{InternshipFile::REQUESTED_DOCUMENTS[InternshipFile::CURP]}');"}
+        %i.material-icons
+          cloud_upload
     %tr
       %td
         Comprobante de domicilio
       %td
         =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::ADDRESS_BILL).last}
+      %td.internshipFileTrigger{onclick:"showInternshipFilesForm(#{InternshipFile::ADDRESS_BILL},'#{InternshipFile::REQUESTED_DOCUMENTS[InternshipFile::ADDRESS_BILL]}');"}
+        %i.material-icons
+          cloud_upload
     %tr
       %td
         Plan de trabajo detallado
       %td
         =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::WORKPLAN).last}
+      %td.internshipFileTrigger{onclick:"showInternshipFilesForm(#{InternshipFile::WORKPLAN},'#{InternshipFile::REQUESTED_DOCUMENTS[InternshipFile::WORKPLAN]}');"}
+        %i.material-icons
+          cloud_upload
     %tr
       %td
         Comprobante de seguro médico
       %td
         =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::INSURANCE).last}
+      %td.internshipFileTrigger{onclick:"showInternshipFilesForm(#{InternshipFile::INSURANCE},'#{InternshipFile::REQUESTED_DOCUMENTS[InternshipFile::INSURANCE]}');"}
+        %i.material-icons
+          cloud_upload
     %tr
       %td
         Credencial del CIMAV vigente
       %td
         =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::CIMAV_CREDENTIAL).last}
+      %td.internshipFileTrigger{onclick:"showInternshipFilesForm(#{InternshipFile::CIMAV_CREDENTIAL},'#{InternshipFile::REQUESTED_DOCUMENTS[InternshipFile::CIMAV_CREDENTIAL]}');"}
+        %i.material-icons
+          cloud_upload
     %tr
       %td
         Curso de seguridad e higiene
       %td
         =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::COURSE).last}
+
 
 
 
