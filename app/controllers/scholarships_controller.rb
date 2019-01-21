@@ -83,7 +83,7 @@ class ScholarshipsController < ApplicationController
   def print_internship_cep_file
 
 
-    pdf = Prawn::Document.new(background: "private/membretada2018.png", background_scale: 0.36, right_margin: 20)
+    pdf = Prawn::Document.new(background: "private/membretada.png", background_scale: 0.36, right_margin: 20)
     pdf.font_size 12
     # Cabecera
     text = "Coordinación de Estudios de Posgrado

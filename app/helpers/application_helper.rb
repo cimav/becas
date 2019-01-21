@@ -64,7 +64,7 @@ module ApplicationHelper
 
 
   def print_document(to, content,file_name)
-    pdf = Prawn::Document.new(background: "private/membretada2018.png", background_scale: 0.36, right_margin: 20)
+    pdf = Prawn::Document.new(background: "private/membretada.png", background_scale: 0.36, right_margin: 20)
     y= 620
     pdf.font_size 12
     # Cabecera

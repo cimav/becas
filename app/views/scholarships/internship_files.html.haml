@@ -31,7 +31,7 @@
           cloud_upload
     %tr
       %td
-        Centa bancaria con CLABE
+        Cuenta bancaria con CLABE
       %td
         =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::BANK_ACCOUNT).last}
       %td.internshipFileTrigger{onclick:"showInternshipFilesForm(#{InternshipFile::BANK_ACCOUNT},'#{InternshipFile::REQUESTED_DOCUMENTS[InternshipFile::BANK_ACCOUNT]}');"}
