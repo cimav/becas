@@ -45,7 +45,9 @@ class ScholarshipTypesController < ApplicationController
         format.html { redirect_to scholarship_types_path, notice: 'Tipo de beca actualizado.' }
         format.json { render :show, status: :ok, location: @scholarship_type }
       else
-        format.html { render :edit }
+        format.html {
+          flash[:alert] = @scholarship_type.errors.full_messages
+          render :edit }
         format.json { render json: @scholarship_type.errors, status: :unprocessable_entity }
       end
     end
@@ -65,6 +67,18 @@ class ScholarshipTypesController < ApplicationController
     end
   end
 
+  def update_uma
+    respond_to do |format|
+      if UmaValue.create(value:params[:uma_value][:value])
+        format.html { redirect_to scholarship_types_url, notice: 'Se actualizó el valor de la UMA' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to scholarship_types_url, notice: 'Error al actualizar el valor de la UMA' }
+        format.json { head :no_content }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_scholarship_type
@@ -73,6 +87,6 @@ class ScholarshipTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def scholarship_type_params
-      params.require(:scholarship_type).permit(:name, :description, :category, :max_amount)
+      params.require(:scholarship_type).permit(:name, :description, :max_amount, :in_umas, :umas_max_amount)
     end
 end

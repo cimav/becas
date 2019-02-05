@@ -21,7 +21,7 @@ class StatsController < ApplicationController
 
     #obtener egresos fiscales por departamento
     department_expense_hash = Hash.new(0)
-    @scholarships.where(scholarship_type:ScholarshipType.where(category:ScholarshipType::FISCAL)).each do |scholarship|
+    @scholarships.where(category:Scholarship::FISCAL).each do |scholarship|
       if scholarship.person_type == 'Student'
         department_expense_hash[scholarship.person.supervisor.area.name] += scholarship.amount
       elsif scholarship.person_type == 'Internship'
@@ -36,7 +36,7 @@ class StatsController < ApplicationController
 
     #obtener egresos propios por departamento
     department_expense_hash = Hash.new(0)
-    @scholarships.where(scholarship_type:ScholarshipType.where(category:ScholarshipType::OWN_RESOURCES)).each do |scholarship|
+    @scholarships.where(category:Scholarship::OWN_RESOURCES).each do |scholarship|
       if scholarship.person_type == 'Student'
         department_expense_hash[scholarship.person.supervisor.area.name] += scholarship.amount
       elsif scholarship.person_type == 'Internship'

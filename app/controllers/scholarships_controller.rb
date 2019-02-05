@@ -31,7 +31,13 @@ class ScholarshipsController < ApplicationController
   def create
     @scholarship = Scholarship.new(scholarship_params)
     @scholarship.status = Scholarship::REQUESTED
-    @scholarship.max_amount = @scholarship.scholarship_type.max_amount
+    uma_value = UmaValue.last.value rescue 0
+    if @scholarship.scholarship_type.in_umas
+      @scholarship.max_amount = @scholarship.scholarship_type.umas_max_amount * uma_value
+    else
+      @scholarship.max_amount = @scholarship.scholarship_type.max_amount
+    end
+
     @person = @scholarship.person_type
 
     respond_to do |format|
@@ -293,6 +299,6 @@ class ScholarshipsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def scholarship_params
-    params.require(:scholarship).permit(:person_type, :person_id, :scholarship_type_id, :amount, :start_date, :end_date, :scholarship_type, :max_amount, :project_number, :request_number, :notes)
+    params.require(:scholarship).permit(:person_type, :person_id, :scholarship_type_id, :category, :amount, :start_date, :end_date, :scholarship_type, :max_amount, :project_number, :request_number, :notes)
   end
 end

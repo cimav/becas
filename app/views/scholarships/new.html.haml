@@ -9,6 +9,9 @@
 
 %h1 Nueva beca
 
+
+-@uma_value = UmaValue.last.value rescue 0
+
 -if is_admin?
   -if @person.eql?'Internship'
     = render 'internships_form'

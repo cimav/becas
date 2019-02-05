@@ -1,0 +1,2 @@
+class UmaValue < ApplicationRecord
+end

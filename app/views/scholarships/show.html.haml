@@ -18,8 +18,9 @@
   .card
     .card-content
       .card-title
-        %i.material-icons.left
-          info_outline
+        %a.no-link{href:"/scholarships/token/#{@scholarship.scholarship_token.token rescue "no hay token"}", target:'_blank'}
+          %i.material-icons.left
+            info_outline
         Información de la beca
       .row
         .col.s12.m1
@@ -86,7 +87,14 @@
                     Sin capturar
               %p
                 %b Tipo de beca:
-                = @scholarship.scholarship_type.full_name
+                = @scholarship.scholarship_type.name
+              %p
+                %b Categoría:
+                -if !@scholarship.category.blank?
+                  = @scholarship.get_category
+                -else
+                  %span.red-text
+                    Sin capturar
               %p
                 %b Proyecto:
                 -if !@scholarship.project_number.blank?

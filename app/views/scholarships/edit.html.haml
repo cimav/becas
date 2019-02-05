@@ -11,6 +11,7 @@
             Editar beca
 
   %h1 Editar beca
+  -@uma_value = UmaValue.last.value rescue 0
 
   -if is_admin?
     -if @scholarship.person_type.eql?'Internship'

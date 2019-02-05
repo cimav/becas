@@ -16,13 +16,16 @@
         .row
           %form#scholarships-search-form{action:'/load_part_scholarships'}
             .row
-              .col.l4.input-field
+              .col.l3.input-field
                 =select_tag 'scholarships-search-type', options_from_collection_for_select(ScholarshipType.all,'id','name'), include_blank: 'Todos los tipos', class:'material-select'
                 %label{for:'scholarships-search-type'} Tipo de beca
-              .col.l4.input-field
+              .col.l3.input-field
+                =select_tag 'scholarships-search-category', options_from_collection_for_select(Scholarship::CATEGORIES,:first,:last), include_blank: 'Todos los tipos', class:'material-select'
+                %label{for:'scholarships-search-category'} Categoría
+              .col.l3.input-field
                 =select_tag 'scholarships-search-staff', options_from_collection_for_select(Staff.all,'id','full_name'), include_blank: 'Cualquiera', class:'do-select2'
                 %label.active{for:'scholarships-search-staff'} Responsable
-              .col.l4.input-field
+              .col.l3.input-field
                 %input#scholarships-search-student{placeholder:'Nombre del estudiante'}
                 %label.active{for:'scholarships-search-student'} Estudiante
             .row
@@ -94,6 +97,9 @@
   $("#scholarships-search-status").on('change', function() {
     searchScholarships();
   });
+  $("#scholarships-search-category").on('change', function() {
+    searchScholarships();
+  });
   $("#scholarships-search-area").on('change', function() {
     searchScholarships();
   });
@@ -116,6 +122,7 @@
     searchObject.amount = $("#scholarships-search-amount").val();
     searchObject.type = $("#scholarships-search-type").val();
     searchObject.status = $("#scholarships-search-status").val();
+    searchObject.category = $("#scholarships-search-category").val();
     if (#{current_user.user_type.in? [User::DEPARTMENT_ASSISTANT,User::DEPARTMENT_CHIEF]})
       searchObject.area = #{current_user.areas.blank? ? '0' : current_user.areas};
     else

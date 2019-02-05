@@ -6,9 +6,13 @@
     = f.label :description, 'Descripción'
     = f.text_field :description
   .row
+    .col.s12
+      %p
+        =f.check_box :in_umas
+        =f.label :in_umas
     .col.s12.m6
-      = f.label :category, 'Categoría', class:'active'
-      = f.select :category, ScholarshipType::CATEGORIES.invert, {}, class:'material-select'
+      = f.label :umas_max_amount, "Monto máximo en UMA's"
+      = f.number_field :umas_max_amount, step: :any
     .col.s12.m6
       = f.label :max_amount, 'Monto máximo'
       = f.number_field :max_amount, step: :any
@@ -30,6 +34,23 @@
             %i.material-icons.tooltipped.grey-text{'data-tooltip':'No se puede eliminar ya que hay becas de este tipo'}
               help
 
+
 :javascript
   $('.material-select').material_select();
   $(".do-select2").select2();
+  inUmas();
+
+  $('#scholarship_type_in_umas').change(function() {
+    inUmas();
+  });
+
+  function inUmas(){
+    if ($('#scholarship_type_in_umas').is(':checked')){
+      $('#scholarship_type_max_amount').prop('disabled', true);
+      $('#scholarship_type_umas_max_amount').prop('disabled', false);
+     }
+    else{
+      $('#scholarship_type_max_amount').prop('disabled', false);
+      $('#scholarship_type_umas_max_amount').prop('disabled', true);
+    }
+  }

@@ -14,6 +14,10 @@ es:
           end_date: Fecha de término
           project_number: Número de proyecto
           amount: Monto
+          category: Categoría
+      scholarship_type:
+          umas_max_amount: Monto máximo en UMA's
+          in_umas: En UMA's
 
   date:
     abbr_day_names:

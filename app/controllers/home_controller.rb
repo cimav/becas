@@ -34,6 +34,7 @@ class HomeController < ApplicationController
     scholarship_type_id = params[:search_object][:type]
     status = params[:search_object][:status]
     amount = params[:search_object][:amount]
+    category = params[:search_object][:category]
 
     student_ids = []
     internship_ids = []
@@ -77,6 +78,8 @@ class HomeController < ApplicationController
     @scholarships = Scholarship.where.not(status: Scholarship::DELETED)
     # filtro por el tipo de beca
     @scholarships = @scholarships.where(scholarship_type_id:scholarship_type_id) if !scholarship_type_id.blank?
+    # filtro por categoría
+    @scholarships = @scholarships.where(category:category) if !category.blank?
     # filtro por estatus
     @scholarships = @scholarships.where(status:status) unless status.blank?
 

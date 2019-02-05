@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180905204802) do
+ActiveRecord::Schema.define(version: 20190205185107) do
 
   create_table "admin_notes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.bigint "user_id"
@@ -93,11 +93,12 @@ ActiveRecord::Schema.define(version: 20180905204802) do
   create_table "scholarship_types", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "name"
     t.string "description"
-    t.integer "category"
     t.float "max_amount", limit: 24
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "status"
+    t.boolean "in_umas"
+    t.float "umas_max_amount", limit: 24
   end
 
   create_table "scholarships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
@@ -114,9 +115,16 @@ ActiveRecord::Schema.define(version: 20180905204802) do
     t.string "project_number"
     t.string "request_number"
     t.string "notes"
+    t.integer "category"
     t.index ["person_id", "person_type"], name: "index_scholarships_on_person_id_and_person_type"
     t.index ["person_type", "person_id"], name: "index_scholarships_on_person_type_and_person_id"
     t.index ["scholarship_type_id"], name: "index_scholarships_on_scholarship_type_id"
+  end
+
+  create_table "uma_values", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.float "value", limit: 24
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|

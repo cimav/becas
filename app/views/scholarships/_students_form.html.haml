@@ -14,13 +14,16 @@
         =label_tag 'scholarship_student_program', 'Programa', class:'active'
 
     .row
-      .input-field.col.s12.m4
-        =f.select :scholarship_type_id, ScholarshipType.where.not(status:ScholarshipType::DELETED).where.not(category: ScholarshipType::FISCAL).order('id DESC').map {|p| [p.full_name, p.id, { 'data-amount' => p.max_amount}]}, {}, class:'material-select'
+      .input-field.col.s12.m3
+        =f.select :scholarship_type_id, ScholarshipType.where.not(status:ScholarshipType::DELETED).order('id DESC').map {|p| [p.name, p.id, { 'data-amount' => p.in_umas ? p.umas_max_amount * @uma_value : p.max_amount}]}, {}, class:'material-select'
         =f.label :scholarship_type_id, 'Tipo de beca'
-      .input-field.col.s12.m4
+      .input-field.col.s12.m3
+        =f.select :category, Scholarship::CATEGORIES.invert, {}, class:'material-select'
+        =f.label :category, 'Categoría'
+      .input-field.col.s12.m3
         =f.text_field :start_date, class: "datepicker",placeholder:'Selecciona la fecha de inicio', type:'date'
         =f.label :start_date, 'Fecha de inicio (beca)', class:'active'
-      .input-field.col.s12.m4
+      .input-field.col.s12.m3
         =f.text_field :end_date, class: "datepicker",placeholder:'Selecciona la fecha de término', type:'date'
         =f.label :end_date, 'Fecha de término (beca)', class:'active'
     .row

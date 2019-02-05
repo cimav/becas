@@ -1,11 +1,19 @@
 %h1 Tipos de beca
+-uma_value = UmaValue.last.value rescue 0
+.row
+  .col.s12
+    .right
+      %p.center.grey-text
+        Valor de UMA mensual
+        %br
+        %a.cursor-pointer.tooltipped.no-link{onclick:"openModal($('#update_uma_modal'));", data:{tooltip:'Actualizar valor de la UMA'}}
+          =number_to_currency(uma_value ,unit: "$", separator: ".", delimiter: ",", format: "%u%n") rescue "Sin designar"
 
 %table.responsive-table.bordered
   %thead
     %tr
       %th Nombre
       %th Decripción
-      %th Categoría
       %th Monto máximo
       %th
 
@@ -14,8 +22,7 @@
       %tr
         %td= scholarship_type.name
         %td= scholarship_type.description
-        %td= scholarship_type.get_category
-        %td= "$#{scholarship_type.max_amount}"
+        %td= scholarship_type.in_umas ? number_to_currency(scholarship_type.umas_max_amount * uma_value ,unit: "$", separator: ".", delimiter: ",", format: "%u%n") : number_to_currency(scholarship_type.max_amount ,unit: "$", separator: ".", delimiter: ",", format: "%u%n")
         %td
           = link_to edit_scholarship_type_path(scholarship_type), class:'grey-text' do
             %i.material-icons.blue-hover
@@ -27,3 +34,16 @@
   Nuevo tipo de beca
   %i.material-icons.left
     add
+
+#update_uma_modal.modal
+  .modal-content
+    %h5 Actualizar UMA mensual
+    .row
+      =form_for UmaValue.new, url:"/update_uma_value", class:'col s12 m12' do |f|
+        .input-field.col.s12.m12
+          =f.label :value,'Valor mensual'
+          = f.number_field :value, step: :any
+        .input-field.col.s12.m12.right-align
+          %button.btn-floating.green.darken-1{type:'submit',value:"Submit"}
+            %i.material-icons
+              send

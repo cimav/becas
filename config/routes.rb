@@ -35,4 +35,7 @@ Rails.application.routes.draw do
   get '/notifications' => 'notifications#index'
   get '/notifications/:id' => 'notifications#show'
 
+  ########################################## UMA's
+  post '/update_uma_value' => 'scholarship_types#update_uma'
+
 end

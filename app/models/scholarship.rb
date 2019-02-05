@@ -1,9 +1,7 @@
 class MaxAmountGreaterThanAmount < ActiveModel::Validator
   def validate(record)
     if record.amount
-      unless record.max_amount >= record.amount
-        record.errors[:amount] << 'no puede ser mayor al monto máximo'
-      end
+      record.errors[:amount] << 'no puede ser mayor al monto máximo' unless record.max_amount >= record.amount
     end
   end
 end
@@ -22,12 +20,16 @@ class Scholarship < ApplicationRecord
   validates :start_date, presence: true
   validates :amount, presence: true
   validates :end_date, presence: true
+  validates :category, presence: true
   validates :amount, numericality: true
   validates_with MaxAmountGreaterThanAmount
 
   before_create do
     self.status = REQUESTED
   end
+
+  FISCAL = 1
+  OWN_RESOURCES = 2
 
   REQUESTED =   1
   APPROVED =   2
@@ -48,6 +50,11 @@ class Scholarship < ApplicationRecord
             DELETED=> 'Eliminada'
   }
 
+  CATEGORIES = {
+      FISCAL => 'Recursos fiscales',
+      OWN_RESOURCES => 'Recursos propios'
+  }
+
   def get_status
     STATUS[self.status]
   end
@@ -62,4 +69,7 @@ class Scholarship < ApplicationRecord
     ScholarshipNoticeStudentJob.perform_later(self.id, self.person_id, self.person_type)
   end
 
+  def get_category
+    CATEGORIES[self.category]
+  end
 end
