@@ -18,7 +18,7 @@
   .card
     .card-content
       .card-title
-        %a.no-link{href:"/scholarships/token/#{@scholarship.scholarship_token.token rescue "no hay token"}", target:'_blank'}
+        %a.no-link{href:"/scholarships/#{@scholarship.id}/token/#{@scholarship.scholarship_token.token rescue "no hay token"}", target:'_blank'}
           %i.material-icons.left
             info_outline
         Información de la beca
