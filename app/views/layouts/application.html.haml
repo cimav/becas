@@ -20,26 +20,25 @@
 
       %a.navbar-logo{href:'/', 'data-turbolinks':"false"}
         =image_tag 'logo-becas-osc.png', class:'responsive-img navbar-logo'
-      %li{class:"#{active_class('/scholarships')} #{'active' if request.path.eql?'/'}"}
+      %li.tooltipped{class:"#{active_class('/scholarships')} #{'active' if request.path.eql?'/'}", data:{tooltip:'Becas', position:'right', delay:'50'}}
         %a{href:'/scholarships','data-turbolinks':"false"}
           %i.material-icons
             school
       -if is_admin? || current_user.user_type == User::DEPARTMENT_CHIEF
-        %li{class:active_class('/scholarship_types')}
+        %li.tooltipped{class:active_class('/scholarship_types'), data:{tooltip:'Tipos de beca', position:'right', delay:'50'}}
           %a{href:'/scholarship_types'}
             %i.material-icons
               list
-          %li{class:active_class('/stats')}
+          %li.tooltipped{class:active_class('/stats'), data:{tooltip:'Estadísticas', position:'right', delay:'50'}}
             %a{href:'/stats'}
               %i.material-icons
                 equalizer
       -if is_admin?
-        %li{class:active_class('/users')}
+        %li.tooltipped{class:active_class('/users'), data:{tooltip:'Usuarios', position:'right', delay:'50'}}
           %a{href:'/users'}
             %i.material-icons
               people
-      %li{class:active_class('/notifications')}
-
+      %li.tooltipped{class:active_class('/notifications'), data:{tooltip:'Notificaciones', position:'right', delay:'50'}}
         %a.cursor-pointer#notifications-dropdown{onclick:"showNotifications();", 'data-badge':"#{notifications.where(read:false).size}", class:"#{notifications.where(read:false).size > 0 ? 'notifications-counter bounce animated delay-1s':''}"}
           %i.material-icons
             notifications
