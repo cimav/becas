@@ -12,6 +12,6 @@ class ScholarshipsMailer < ApplicationMailer
 
     @from = "Notificaciones CIMAV <notificaciones@cimav.edu.mx>"
     @to = to
-    mail(to: 'geovanygameros@gmail.com',  :from => @from, subject: "[BECAS] #{@scholarship.person.full_name}")
+    mail(to:" #{@scholarship.person.email}",  :from => @from, subject: "[BECAS] #{@scholarship.person.full_name}")
   end
 end
