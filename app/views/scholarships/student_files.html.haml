@@ -1,16 +1,48 @@
 %table.bordered.file-table
   %thead
     %tr
-      %th Tipo de documentos
+      %th Tipo de documento
       %th Archivo
       %th
   %tbody
     %tr
       %td
-        Solicitud oficial de la institución de procedencia
+        Constancia de estudios
       %td
-        =render partial: 'student_file', locals:{file: @files.where(file_type:StudentFile::INSTITUTION_REQUEST).last}
-      %td.studentFileTrigger{onclick:"showStudentFilesForm(#{StudentFile::INSTITUTION_REQUEST},'#{StudentFile::REQUESTED_DOCUMENTS[StudentFile::INSTITUTION_REQUEST]}');"}
+        =render partial: 'student_file', locals:{file: @files.where(file_type:StudentFile::REGISTRATION_PROOF).last}
+      %td.studentFileTrigger{onclick:"showStudentFilesForm(#{StudentFile::REGISTRATION_PROOF},'#{StudentFile::REQUESTED_DOCUMENTS[StudentFile::REGISTRATION_PROOF]}');"}
+        %i.material-icons
+          cloud_upload
+    %tr
+      %td
+        Copia de credencial del IFE o INE
+      %td
+        =render partial: 'student_file', locals:{file: @files.where(file_type:StudentFile::IFE).last}
+      %td.studentFileTrigger{onclick:"showStudentFilesForm(#{StudentFile::IFE},'#{StudentFile::REQUESTED_DOCUMENTS[StudentFile::IFE]}');"}
+        %i.material-icons
+          cloud_upload
+    %tr
+      %td
+        Cuenta bancaria con CLABE
+      %td
+        =render partial: 'student_file', locals:{file: @files.where(file_type:StudentFile::BANK_ACCOUNT).last}
+      %td.studentFileTrigger{onclick:"showStudentFilesForm(#{StudentFile::BANK_ACCOUNT},'#{StudentFile::REQUESTED_DOCUMENTS[StudentFile::BANK_ACCOUNT]}');"}
+        %i.material-icons
+          cloud_upload
+    %tr
+      %td
+        Copia del CURP
+      %td
+        =render partial: 'student_file', locals:{file: @files.where(file_type:StudentFile::CURP).last}
+      %td.studentFileTrigger{onclick:"showStudentFilesForm(#{StudentFile::CURP},'#{StudentFile::REQUESTED_DOCUMENTS[StudentFile::CURP]}');"}
+        %i.material-icons
+          cloud_upload
+    %tr
+      %td
+        Comprobante de domicilio
+      %td
+        =render partial: 'student_file', locals:{file: @files.where(file_type:StudentFile::ADDRESS_BILL).last}
+      %td.studentFileTrigger{onclick:"showStudentFilesForm(#{StudentFile::ADDRESS_BILL},'#{StudentFile::REQUESTED_DOCUMENTS[StudentFile::ADDRESS_BILL]}');"}
         %i.material-icons
           cloud_upload
     %tr
@@ -19,6 +51,22 @@
       %td
         =render partial: 'student_file', locals:{file: @files.where(file_type:StudentFile::WORKPLAN).last}
       %td.studentFileTrigger{onclick:"showStudentFilesForm(#{StudentFile::WORKPLAN},'#{StudentFile::REQUESTED_DOCUMENTS[StudentFile::WORKPLAN]}');"}
+        %i.material-icons
+          cloud_upload
+    %tr
+      %td
+        Comprobante de seguro médico
+      %td
+        =render partial: 'student_file', locals:{file: @files.where(file_type:StudentFile::INSURANCE).last}
+      %td.studentFileTrigger{onclick:"showStudentFilesForm(#{StudentFile::INSURANCE},'#{StudentFile::REQUESTED_DOCUMENTS[StudentFile::INSURANCE]}');"}
+        %i.material-icons
+          cloud_upload
+    %tr
+      %td
+        Credencial del CIMAV vigente
+      %td
+        =render partial: 'student_file', locals:{file: @files.where(file_type:StudentFile::CIMAV_CREDENTIAL).last}
+      %td.studentFileTrigger{onclick:"showStudentFilesForm(#{StudentFile::CIMAV_CREDENTIAL},'#{StudentFile::REQUESTED_DOCUMENTS[StudentFile::CIMAV_CREDENTIAL]}');"}
         %i.material-icons
           cloud_upload
 

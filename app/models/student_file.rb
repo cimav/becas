@@ -18,8 +18,18 @@ class StudentFile < SaposModels
 
   REQUESTED_DOCUMENTS = {
       NORMAL              => 'Documento genérico',
+      SIGN_REQUEST        => 'Solicitud con firmas',
       INSTITUTION_REQUEST => 'Solicitud oficial de la institución de procedencia',
+      REGISTRATION_PROOF  => 'Constancia de estudios',
+      COURSE              => 'Curso de seguridad e higiene aprobado',
+      IFE                 => 'Credencial del INE o IFE',
+      BANK_ACCOUNT        => 'Cuenta bancaria con CLABE',
+      CURP                => 'CURP',
+      ADDRESS_BILL        => 'Comprobante de domicilio',
       WORKPLAN            => 'Plan de trabajo',
+      INSURANCE           => 'Seguro médico',
+      CIMAV_CREDENTIAL    => 'Credencial del CIMAV',
+      ACTIVITY_REPORT     => 'Reporte de actividades'
   }
 
   def get_document_text
