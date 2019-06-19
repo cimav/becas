@@ -196,6 +196,22 @@
             refreshInternshipFiles("#{@scholarship.id}");
 
 
+-if @scholarship.person_type.eql?'Student'
+  .row#students-files
+    .card
+      .card-content
+        .card-title
+          %i.material-icons.left
+            insert_drive_file
+          Documentos
+          -if is_assistant? || is_admin?
+            %a.btn-floating.right
+              %i.material-icons.green.darken-2{onclick:"openModal($('#upload_student_file_modal'));"}
+                add
+        #student_files
+          :javascript
+            refreshStudentFiles("#{@scholarship.id}");
+
 
 -#if @scholarship.status.eql?Scholarship::REQUESTED
   .fixed-action-btn
@@ -325,6 +341,19 @@
           =f.file_field :file
         .input-field.col.s12.m12.right-align
           =f.submit 'Subir'
+
+#upload_student_file_modal.modal
+  .modal-content
+    %h5#studentFileName Subir documento
+    =form_for StudentFile.new, url:"/scholarships/#{@scholarship.id}/upload_student_file", remote:true, html:{id:'student-files-form', class:'col s12 m12'} do |f|
+      .row
+        =f.hidden_field :file_type, id:'student_file_type'
+        .input-field.col.s12.m12
+          =f.file_field :file
+        .input-field.col.s12.m12.right-align
+          =f.submit 'Subir'
+
+
 :javascript
   $('.material-select').material_select();
   $(".do-select2").select2();

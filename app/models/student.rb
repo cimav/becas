@@ -5,6 +5,8 @@ class Student < SaposModels
   has_many :scholarships, as: :person
   has_many :term_students
   belongs_to :supervisor, :foreign_key => "supervisor", :class_name => "Staff"
+  has_many :student_files
+
 
   DELETED      = 0
   ACTIVE       = 1

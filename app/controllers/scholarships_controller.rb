@@ -1,6 +1,6 @@
 class ScholarshipsController < ApplicationController
-  skip_before_action :auth_required, only: [:access_with_token, :upload_internship_file_with_token, :internship_files]
-  before_action :set_scholarship, only: [:show, :edit, :update, :destroy, :print_internship_cep_file, :create_comment, :internship_files, :upload_internship_file, :upload_internship_file_with_token, :access_with_token, :send_to_committee, :change_status, :create_admin_note, :upload_scholarship_file]
+  skip_before_action :auth_required, only: [:access_with_token, :upload_internship_file_with_token, :upload_student_file_with_token, :internship_files]
+  before_action :set_scholarship, only: [:show, :edit, :update, :destroy, :print_internship_cep_file, :create_comment, :internship_files, :upload_internship_file, :upload_student_file, :upload_internship_file_with_token, :access_with_token, :send_to_committee, :change_status, :create_admin_note, :upload_scholarship_file, :upload_student_file_with_token, :student_files]
   include ActionView::Helpers::NumberHelper
 
   # GET /scholarships
@@ -187,6 +187,11 @@ class ScholarshipsController < ApplicationController
     render layout: false
   end
 
+  def student_files
+    @files = @scholarship.person.student_files
+    render layout: false
+  end
+
   def upload_internship_file
     response = {}
     file = InternshipFile.new
@@ -206,11 +211,54 @@ class ScholarshipsController < ApplicationController
     end
   end
 
+  def upload_student_file
+    response = {}
+    file = StudentFile.new
+    file.student_id = @scholarship.person.id
+    file.file_type = params[:student_file]['file_type']
+    file.file = params[:student_file]['file']
+    file.description = params[:student_file]['file'].original_filename rescue 'Sin nombre'
+    response[:object] = file
+    respond_to do |format|
+      if file.save
+        format.html {redirect_to "/scholarships/#{@scholarship.id}?target=student-files", notice: 'Se subió el documento'}
+        format.json {head :no_content}
+      else
+        format.html {redirect_to @scholarship, notice: 'Error al subir documento'}
+        format.json {head :no_content}
+      end
+    end
+  end
+
   def upload_internship_file_with_token
     token = ScholarshipToken.find_by_token(params[:token])
     response = {}
     file = InternshipFile.new
     file.internship_id = @scholarship.person.id
+    file.file_type = params[:internship_file]['file_type']
+    file.file = params[:internship_file]['file']
+    file.description = params[:internship_file]['file'].original_filename rescue 'Sin nombre'
+    response[:object] = file
+    respond_to do |format|
+      if token.status.eql? ScholarshipToken::ACTIVE
+        if file.save
+          message = 'Se subió el documento'
+        else
+          message = 'Error al subir documento'
+        end
+      else
+        message = 'Se ha cerrado la carga de documentos'
+      end
+      format.html {redirect_to "/scholarships/#{@scholarship.id}/token/#{token.token}", notice: message}
+      format.json {head :no_content}
+    end
+  end
+
+  def upload_student_file_with_token
+    token = ScholarshipToken.find_by_token(params[:token])
+    response = {}
+    file = StudentFile.new
+    file.student_id = @scholarship.person.id
     file.file_type = params[:internship_file]['file_type']
     file.file = params[:internship_file]['file']
     file.description = params[:internship_file]['file'].original_filename rescue 'Sin nombre'
