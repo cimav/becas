@@ -1,0 +1,30 @@
+%table.bordered.file-table
+  %thead
+    %tr
+      %th Tipo de documentos
+      %th Archivo
+      %th
+  %tbody
+    %tr
+      %td
+        Solicitud oficial de la institución de procedencia
+      %td
+        =render partial: 'student_file', locals:{file: @files.where(file_type:StudentFile::INSTITUTION_REQUEST).last}
+      %td.studentFileTrigger{onclick:"showStudentFilesForm(#{StudentFile::INSTITUTION_REQUEST},'#{StudentFile::REQUESTED_DOCUMENTS[StudentFile::INSTITUTION_REQUEST]}');"}
+        %i.material-icons
+          cloud_upload
+    %tr
+      %td
+        Plan de trabajo detallado
+      %td
+        =render partial: 'student_file', locals:{file: @files.where(file_type:StudentFile::WORKPLAN).last}
+      %td.studentFileTrigger{onclick:"showStudentFilesForm(#{StudentFile::WORKPLAN},'#{StudentFile::REQUESTED_DOCUMENTS[StudentFile::WORKPLAN]}');"}
+        %i.material-icons
+          cloud_upload
+
+
+      -#%td
+      -#%td
+        =link_to "/scholarships/#{@scholarship.id}/delete_image/#{image.id}", class:'delete_image grey-text', method:'delete', pc_id:@product_category.id, psc_id:@product_sub_category.id,p_id:@product.id, remote:true do
+          %i.material-icons.red-hover
+            close
