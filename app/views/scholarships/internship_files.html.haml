@@ -79,6 +79,14 @@
           cloud_upload
     %tr
       %td
+        Carta de solicitud de beca del CIMAV con monto a pagar y firma del responsable
+      %td
+        =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::REQUEST_LETTER).last}
+      %td.internshipFileTrigger{onclick:"showInternshipFilesForm(#{InternshipFile::REQUEST_LETTER},'#{InternshipFile::REQUESTED_DOCUMENTS[InternshipFile::REQUEST_LETTER]}');"}
+        %i.material-icons
+          cloud_upload
+    %tr
+      %td
         Curso de seguridad e higiene
       %td
         =render partial: 'internship_file', locals:{file: @files.where(file_type:InternshipFile::COURSE).last}

@@ -69,6 +69,14 @@
       %td.studentFileTrigger{onclick:"showStudentFilesForm(#{StudentFile::CIMAV_CREDENTIAL},'#{StudentFile::REQUESTED_DOCUMENTS[StudentFile::CIMAV_CREDENTIAL]}');"}
         %i.material-icons
           cloud_upload
+    %tr
+      %td
+        Carta de solicitud de beca del CIMAV con monto a pagar y firma del responsable
+      %td
+        =render partial: 'student_file', locals:{file: @files.where(file_type:StudentFile::REQUEST_LETTER).last}
+      %td.studentFileTrigger{onclick:"showStudentFilesForm(#{StudentFile::REQUEST_LETTER},'#{StudentFile::REQUESTED_DOCUMENTS[StudentFile::REQUEST_LETTER]}');"}
+        %i.material-icons
+          cloud_upload
 
 
       -#%td
