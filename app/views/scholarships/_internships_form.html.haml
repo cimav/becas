@@ -9,7 +9,7 @@
     .section
       .row
         .input-field.col.s12.m8
-          =f.select :person_id,Internship.where(status:[Internship::ACTIVE, Internship::FINISHED]).collect {|p| [ p.full_name, p.id, {'data-internship-type':p.internship_type.name, 'data-curp':p.curp} ] }, {},class:'do-select2'
+          =f.select :person_id,Internship.where(status:[Internship::ACTIVE]).collect {|p| [ p.full_name, p.id, {'data-internship-type':p.internship_type.name, 'data-curp':p.curp} ] }, {},class:'do-select2'
           =f.label :person_id, 'Practicante', class:'active'
         .input-field.col.s12.m4
           %p{id:'scholarship_internship_type',disabled:true}
