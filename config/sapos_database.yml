@@ -21,4 +21,4 @@ production:
   <<: *default
   database: sapos_production
   username: root
-  password: <%= ENV['SAPOS_DATABASE_PASSWORD'] %>
+  password: 

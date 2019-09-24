@@ -21,4 +21,4 @@ production:
   <<: *default
   database: netmultix
   username: root
-  password: <%= ENV['NETMULTIX_DATABASE_PASSWORD'] %>
+  password: 

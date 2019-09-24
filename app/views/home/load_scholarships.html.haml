@@ -4,11 +4,11 @@
       =scholarship.scholarship_type.name
     %td
       -if scholarship.person_type.eql?'Student'
-        =scholarship.person.supervisor.full_name
+        =scholarship.person.supervisor.full_name rescue 'SIN SUPERVISOR'
       -else
-        =scholarship.person.staff.full_name
+        =scholarship.person.staff.full_name rescue 'SIN STAFF'
     %td
-      =scholarship.person.full_name
+      =scholarship.person.full_name rescue 'SIN PERSONA'
     %td
       =number_to_currency(scholarship.amount,unit: "$", separator: ".", delimiter: ",", format: "%u%n")
     %td

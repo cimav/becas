@@ -117,7 +117,7 @@ class ScholarshipsController < ApplicationController
     pdf.table table_data, :position => :center, header: @person = 'Internship'
     true
     pdf.font_size 12
-    text = "\n\n Sin más por el momento reciba un cordial saludo.."
+    text = "\n\n Por lo anterior le solicito de la manera más atenta se sirva a generar el apoyo correspondiente."
     pdf.move_down 20
     pdf.text text, inline_format: true
     # nota
