@@ -10,6 +10,9 @@ class Agreement < CepModels
   CLOSE = 2
   DELETED = 5
 
+  NOT_SENT = 1
+  SENT = 2
+
 
   STATUS = {OPEN=>'Abierto', CLOSE=>'Cerrado', DELETED =>'Eliminado'}
 

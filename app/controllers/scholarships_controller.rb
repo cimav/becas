@@ -287,7 +287,7 @@ class ScholarshipsController < ApplicationController
     meeting_id = params[:meeting_id]
     notes = params[:notes]
 
-    agreement = @scholarship.build_agreement(meeting_id: meeting_id, notes: notes)
+    agreement = @scholarship.build_agreement(meeting_id: meeting_id, notes: notes, notification_sent: Agreement::NOT_SENT)
     respond_to do |format|
       if agreement.save
         @scholarship.status = Scholarship::TO_COMMITTEE
